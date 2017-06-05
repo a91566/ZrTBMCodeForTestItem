@@ -1,0 +1,5 @@
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\CommonFunctions\bin\Debug\CommonFunctions.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\CommonFunctions\bin\Debug\CommonFunctions.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\CommonFunctions\obj\Debug\CommonFunctions.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\CommonFunctions\obj\Debug\CommonFunctions.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\CommonFunctions\obj\Debug\CommonFunctions.csprojResolveAssemblyReference.cache

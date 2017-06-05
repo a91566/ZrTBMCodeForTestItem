@@ -1,0 +1,12 @@
+D:\zsb\code\ZrTBM.2\5-Business\ZrTBMMain\bin\Debug\CHK_Accelerator.dll
+D:\zsb\code\ZrTBM.2\5-Business\ZrTBMMain\bin\Debug\CHK_Accelerator.pdb
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\CHK_Accelerator\obj\Debug\CHK_Accelerator.UcProcessInfo.resources
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\CHK_Accelerator\obj\Debug\CHK_Accelerator.UcSampleInfo.resources
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\CHK_Accelerator\obj\Debug\CHK_Accelerator.csproj.GenerateResource.Cache
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\CHK_Accelerator\obj\Debug\CHK_Accelerator.dll
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\CHK_Accelerator\obj\Debug\CHK_Accelerator.pdb
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\CHK_Accelerator\obj\Debug\CHK_Accelerator.csprojResolveAssemblyReference.cache
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\Bin\Debug\CHK_Accelerator.dll
+D:\zsb\code\ZrTBM.2\7-ZrCheckItems\Bin\Debug\CHK_Accelerator.pdb
+D:\zsb\code\ZrTBM.2\Bin\Debug\CHK_Accelerator.dll
+D:\zsb\code\ZrTBM.2\Bin\Debug\CHK_Accelerator.pdb

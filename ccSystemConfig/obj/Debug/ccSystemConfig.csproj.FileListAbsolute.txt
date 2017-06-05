@@ -1,0 +1,13 @@
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccSystemConfig.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccSystemConfig.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.csprojResolveAssemblyReference.cache
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccCommonFunctions.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccCommonFunctions.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\DBHelper.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\MySql.Data.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.Data.SQLite.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\MySql.Data.xml
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.Data.SQLite.dll.config
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.Data.SQLite.pdb

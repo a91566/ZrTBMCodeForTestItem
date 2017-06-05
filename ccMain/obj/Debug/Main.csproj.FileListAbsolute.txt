@@ -1,0 +1,11 @@
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\obj\Debug\Main.csprojResolveAssemblyReference.cache
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\obj\Debug\ZrTBMCodeForTestItem.Main.FormMain.resources
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\obj\Debug\ZrTBMCodeForTestItem.Main.Properties.Resources.resources
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\obj\Debug\Main.csproj.GenerateResource.Cache
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\bin\Debug\Main.exe.config
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\bin\Debug\Main.exe
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\bin\Debug\Main.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\obj\Debug\Main.exe
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\obj\Debug\Main.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\bin\Debug\CommonFunctions.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\Main\bin\Debug\CommonFunctions.pdb

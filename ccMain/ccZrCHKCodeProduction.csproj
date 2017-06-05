@@ -1,0 +1,143 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{434EC62D-421D-41F2-A7C3-E669051B4EA0}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <RootNamespace>ZrTBMCodeForTestItem.ccMain</RootNamespace>
+    <AssemblyName>ccZrCHKCodeProduction</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>x64</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>web_code_48px_1179075_easyicon.net.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Deployment" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Net.Http" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+    <Reference Include="ZrControl, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>bin\Debug\ZrControl.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="FormDataBaseConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormDataBaseConfig.Designer.cs">
+      <DependentUpon>FormDataBaseConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FormMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormMain.Designer.cs">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="FormDataBaseConfig.resx">
+      <DependentUpon>FormDataBaseConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormMain.resx">
+      <DependentUpon>FormMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>PublicResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
+    </Compile>
+    <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ccCells\ccCells.csproj">
+      <Project>{872d2a19-01ce-46d6-b302-48419d3a160e}</Project>
+      <Name>ccCells</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ccCommonFunctions\ccCommonFunctions.csproj">
+      <Project>{4950ed8e-19fe-4a21-8c27-d9d0a58d8bce}</Project>
+      <Name>ccCommonFunctions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ccSystemConfig\ccSystemConfig.csproj">
+      <Project>{670debd4-3196-41d7-9a66-3665769d9891}</Project>
+      <Name>ccSystemConfig</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cancel_48px_1205790_easyicon.net.png" />
+    <None Include="Resources\Close_48px_1183468_easyicon.net.png" />
+    <None Include="Resources\C_48px_1064966_easyicon.net.png" />
+    <None Include="Resources\folder_31.942652329749px_1206689_easyicon.net.png" />
+    <None Include="Resources\Excel_24px_1173663_easyicon.net.png" />
+    <None Include="Resources\Excel_48px_1185986_easyicon.net.png" />
+    <None Include="Resources\text_39.856373429084px_1206719_easyicon.net.png" />
+    <Content Include="Other\UseRemark.html" />
+    <None Include="Resources\database_46.515463917526px_1201721_easyicon.net.png" />
+    <None Include="Resources\link_48px_1204370_easyicon.net.png" />
+    <None Include="Resources\Save_48px_1186318_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205831_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205822_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205823_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205824_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205825_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205826_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205827_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205828_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205829_easyicon.net.png" />
+    <None Include="Resources\number_48px_1205830_easyicon.net.png" />
+    <Content Include="web_code_48px_1179075_easyicon.net.ico" />
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+</Project>
