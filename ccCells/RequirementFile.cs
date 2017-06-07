@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using ZrTBMCodeForTestItem.ccCells;
+using ZrTBMCodeForTestItem.ccEcternal;
 
 namespace ccCells
 {
@@ -24,84 +25,86 @@ namespace ccCells
 		{
 			FileStream fstream = new FileStream(filePath, FileMode.Open);
 			this.workbook = new Workbook(fstream);
-		}
-
-		/// <summary>
-		/// 获取表名
-		/// </summary>
-		/// <returns></returns>
-		public string GetTableName()
-		{
-			return this.workbook.Worksheets[0].Cells["d2"].Value.ToString();
-		}
-
-		/// <summary>
-		/// 获取字段信息
-		/// </summary>
-		/// <param name="tableHeaderRowIndex">表头行号</param>
-		/// <returns></returns>
-		public List<ColumnInfo> GetColumns(int tableHeaderRowIndex)
-		{
-			Worksheet sheet = this.workbook.Worksheets[0];
-			List<ColumnInfo> list = new List<ColumnInfo>();
-			for (int i = tableHeaderRowIndex + 1; i < 1000; i++)
-			{
-				if (sheet.Cells[$"G{i}"].Value == null) break;
-				try
-				{
-					list.Add(
-						new ColumnInfo()
-						{
-							ID = Convert.ToInt16(sheet.Cells[$"A{i}"].Value.ToString()),
-							Name = sheet.Cells[$"G{i}"].Value.ToString(),
-							Type = sheet.Cells[$"H{i}"].Value.ToString(),
-							Length = sheet.Cells[$"I{i}"].Value.ToString(),
-							Default = sheet.Cells[$"J{i}"].Value == null ? "" : sheet.Cells[$"J{i}"].Value.ToString(),
-							Remark = sheet.Cells[$"F{i}"].Value == null ? "" : sheet.Cells[$"F{i}"].Value.ToString()
-						}
-					);
-				}
-				catch (Exception ex)
-				{
-					ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgError($"发生异常，行号：{i+1},异常信息:{ex.Message}");
-					throw ex;
-				}
-			}
-			return list;
-		}
-
+		}	
+		
 		/// <summary>
 		/// 获取控件信息
 		/// </summary>
-		/// <param name="tableHeaderRowIndex">表头行号</param>
 		/// <returns></returns>
-		public List<ControlInfo> GetControls(int tableHeaderRowIndex)
+		public List<ControlDBInfo> GetControlDBInfoForTrust()
 		{
-			Worksheet sheet = this.workbook.Worksheets[0];
-			List<ControlInfo> list = new List<ControlInfo>();
-			for (int i = tableHeaderRowIndex + 1; i < 1000; i++)
+			List<ControlDBInfo> list = new List<ControlDBInfo>();
+			//连续空行的数量，连续 5 行都为空则退出
+			int emptyRowCount = 0;
+			for (int x = 1; x < workbook.Worksheets.Count; x++)
 			{
-				if (sheet.Cells[$"G{i}"].Value == null) break;
-				try
+				Worksheet sheet = this.workbook.Worksheets[x];
+				for (int i = 2; i < 1000; i++)
 				{
-					list.Add(
-						new ControlInfo()
+					if (sheet.Cells[$"A{i}"].Value == null)
+					{
+						emptyRowCount++;
+						if (emptyRowCount >= 5) break;
+						continue;
+					}
+					else
+					{
+						if (emptyRowCount > 0) emptyRowCount = 0;
+						try
 						{
-							ID = Convert.ToInt16(sheet.Cells[$"A{i}"].Value.ToString()),
-							Classify = sheet.Cells[$"C{i}"].Value.ToString(),
-							Label = sheet.Cells[$"D{i}"].Value.ToString(),
-							Size = sheet.Cells[$"E{i}"].Value == null ? "" : sheet.Cells[$"E{i}"].Value.ToString(),
-							Description = sheet.Cells[$"F{i}"].Value == null ? sheet.Cells[$"D{i}"].Value.ToString() : sheet.Cells[$"F{i}"].Value.ToString()
+							list.Add(
+								new ControlDBInfo()
+								{
+									TableName = sheet.Cells[$"A{i}"].Value.ToString(),
+									Description = sheet.Cells[$"B{i}"].Value.ToString(),
+									ColumnName = sheet.Cells[$"C{i}"].Value.ToString(),
+									TypeLength = sheet.Cells[$"D{i}"].Value.ToString(),
+									Default = sheet.Cells[$"E{i}"].Value.ObjToString(),
+									Format = sheet.Cells[$"F{i}"].Value.ObjToString(),
+									IsEnum = sheet.Cells[$"G{i}"].Value.ToString().ToBool(),
+									IsNotNull = sheet.Cells[$"H{i}"].Value.ToString().ToBool(),
+									IsReadOnly = sheet.Cells[$"I{i}"].Value.ToString().ToBool(),
+									Verify = sheet.Cells[$"J{i}"].Value.ObjToString()
+								}
+							);
 						}
-					);
+						catch (Exception ex)
+						{
+							ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgError($"发生异常，行号：{i},异常信息:{ex.Message}");
+							throw ex;
+						}
+					}
 				}
-				catch (Exception ex)
+			}			
+			return list;
+		}
+
+		public void ccControl()
+		{
+			System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
+			for (int x = 3; x < workbook.Worksheets.Count; x++)
+			{
+				Worksheet sheet = this.workbook.Worksheets[x];
+				int endX = 15;
+				string endY = "N";
+				for (int y = 65; y <= (int)asciiEncoding.GetBytes(endY)[0]; y++)
 				{
-					ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgError($"发生异常，行号：{i + 1},异常信息:{ex.Message}");
-					throw ex;
+					string letter = asciiEncoding.GetString(new byte[] { (byte)y });
+					for (int z = 1; z <= endX; z++)
+					{
+						var temp = sheet.Cells[$"{letter}{z}"].Value.ObjToString();
+						if ($"{letter}{z}" == "D10")
+						{
+							if (sheet.Cells[$"{letter}{z}"].GetStyle().Font.Color.Name == "Black")
+							{
+
+							}
+							int xxxx = 1;
+							ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgInfo($"{letter}{z}:{temp}");
+						}
+					}
 				}
 			}
-			return list;
 		}
 	}
 }

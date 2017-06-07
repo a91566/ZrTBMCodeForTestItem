@@ -1,0 +1,6 @@
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\ccExternal.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\ccExternal.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.csprojResolveAssemblyReference.cache
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\System.ValueTuple.dll

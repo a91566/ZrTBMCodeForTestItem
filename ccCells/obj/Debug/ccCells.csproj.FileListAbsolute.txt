@@ -7,3 +7,15 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccC
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCommonFunctions.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCommonFunctions.pdb
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ZrControl.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCells.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCells.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\Aspose.Cells.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCommonFunctions.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ZrControl.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCommonFunctions.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.csprojResolveAssemblyReference.cache
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.ValueTuple.dll

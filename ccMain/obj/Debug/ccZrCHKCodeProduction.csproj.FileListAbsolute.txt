@@ -22,3 +22,29 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZr
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZrCHKCodeProduction.exe
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZrCHKCodeProduction.pdb
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\System.ValueTuple.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccZrCHKCodeProduction.exe.config
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccZrCHKCodeProduction.exe
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccZrCHKCodeProduction.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccCells.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccCommonFunctions.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccSystemConfig.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\System.ValueTuple.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\Aspose.Cells.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\DBHelper.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\MySql.Data.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\System.Data.SQLite.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccCells.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccCommonFunctions.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccSystemConfig.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\MySql.Data.xml
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\System.Data.SQLite.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\System.Data.SQLite.dll.config
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZrCHKCodeProduction.csprojResolveAssemblyReference.cache
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ZrTBMCodeForTestItem.ccMain.FormDataBaseConfig.resources
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ZrTBMCodeForTestItem.ccMain.FormMain.resources
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ZrTBMCodeForTestItem.ccMain.Properties.Resources.resources
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZrCHKCodeProduction.csproj.GenerateResource.Cache
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZrCHKCodeProduction.exe
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\obj\Debug\ccZrCHKCodeProduction.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccExternal.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccExternal.pdb

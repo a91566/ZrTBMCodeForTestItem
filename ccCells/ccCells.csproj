@@ -36,6 +36,8 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,9 +49,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColumnInfo.cs" />
     <Compile Include="ControlClassify.cs" />
-    <Compile Include="ControlInfo.cs" />
+    <Compile Include="ControlDBInfo.cs" />
+    <Compile Include="CreateControl.cs" />
     <Compile Include="RequirementFile.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -57,6 +59,10 @@
     <ProjectReference Include="..\ccCommonFunctions\ccCommonFunctions.csproj">
       <Project>{4950ed8e-19fe-4a21-8c27-d9d0a58d8bce}</Project>
       <Name>ccCommonFunctions</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\ccExternal\ccExternal.csproj">
+      <Project>{73d4881a-291d-4693-ac7c-56ffbdafb16b}</Project>
+      <Name>ccExternal</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

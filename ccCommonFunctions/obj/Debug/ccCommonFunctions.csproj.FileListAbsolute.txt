@@ -3,3 +3,8 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.csprojResolveAssemblyReference.cache
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommonFunctions.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommonFunctions.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.csprojResolveAssemblyReference.cache
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.pdb

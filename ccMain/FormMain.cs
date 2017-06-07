@@ -19,6 +19,7 @@ using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
 using ZrTBMCodeForTestItem.ccSystemConfig;
+using ZrTBMCodeForTestItem.ccEcternal;
 
 namespace ZrTBMCodeForTestItem.ccMain
 {
@@ -29,9 +30,13 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// </summary>
 		private ExportCodeFile exportCode;
 		/// <summary>
-		/// 需求文件操作类
+		/// 收样控件列表
 		/// </summary>
-		private RequirementFile requirementFile;
+		private List<ControlDBInfo> listControlDBTrust;
+		/// <summary>
+		/// 试验控件列表
+		/// </summary>
+		private List<ControlDBInfo> listControlDBTrial;
 		public FormMain()
 		{
 			InitializeComponent();
@@ -52,15 +57,17 @@ namespace ZrTBMCodeForTestItem.ccMain
 		private void initTextBox()
 		{
 			UserConfig config = new UserConfig(false);
-			this.txbTableHeaderRowIndex.Text = config.GetConfig("TableHeaderRowIndex");
 			this.txbTargetFrameworkVersion.Text = config.GetConfig("TargetFrameworkVersion");
 			this.txbFolder.Text = config.GetConfig("Folder");
+			this.txbMaxWidth.Text = config.GetConfig("MaxWidth");
 			this.setTextBoxReadOnly(this.txbRootNamespace, true); 
 			this.setTextBoxReadOnly(this.txbRequirementFile, true);
+			this.setTextBoxReadOnly(this.txbDBFile, true);
 		}
 
 		private void toolStripButton1_Click(object sender, EventArgs e)
 		{
+			
 		}
 
 		private void btnFolder_Click(object sender, EventArgs e)
@@ -84,11 +91,63 @@ namespace ZrTBMCodeForTestItem.ccMain
 		private void tsbRequirementFile_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
+			openFileDialog.Title = "请多选";
+			openFileDialog.Multiselect = true;
 			openFileDialog.Filter = Language.RequirementFileFilter;
 
 			if (openFileDialog.ShowDialog(this) != DialogResult.OK) return;
-			this.txbRequirementFile.Text = openFileDialog.FileName;
-			this.requirementFile = new RequirementFile(openFileDialog.FileName);
+			for (int i = 0; i < openFileDialog.FileNames.Length; i++)
+			{
+				string name = openFileDialog.FileNames.GetValue(i).ToString();
+				if (name.Contains("数据库") || name.Contains("字段"))
+				{
+					this.txbDBFile.Text = name;
+				}
+				else if (name.Contains("收样") || name.Contains("试验") || name.Contains("窗体"))
+				{
+					this.txbRequirementFile.Text = name;
+				}
+			}
+			if (string.IsNullOrEmpty(this.txbRequirementFile.Text) || string.IsNullOrEmpty(this.txbDBFile.Text))
+			{
+				Function.MsgError("文件选择错误.");
+				return;
+			}
+			this.loadRequirementFile(this.txbRequirementFile.Text, this.txbDBFile.Text);
+		}
+
+		/// <summary>
+		/// 载入去求文件到内存
+		/// </summary>
+		/// <param name="filePath">文件绝对路径</param>
+		/// <param name="filePath">文件绝对路径</param>
+		private void loadRequirementFile(string fileRequirementFile, string fileDB)
+		{
+			var load = new Loading();
+			System.Timers.Timer t = new System.Timers.Timer(30);
+			t.Interval = 30;
+			t.Enabled = true;
+			t.Elapsed += (s, e1) =>
+			{
+				t.Enabled = false;
+				Action done = () =>
+				{
+					load.HideLoading();
+				};
+				try
+				{
+					var rf = new RequirementFile(fileDB);
+					this.listControlDBTrust = rf.GetControlDBInfoForTrust();
+				}
+				catch (Exception ex)
+				{
+					Function.MsgError(ex.Message);
+				}
+				finally
+				{
+					this.Invoke(done);
+				}
+			};
 		}
 
 		private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -117,15 +176,15 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void btnDataRefresh_Click(object sender, EventArgs e)
 		{
-			if (this.requirementFile == null)
+			if (this.listControlDBTrust == null)
 			{
 				Function.MsgError(Language.NoRequirementFile);
 				return;
 			}
 			var loading = new Loading();
 			this.initListView();
-			addColumnsInfo(this.requirementFile.GetColumns(Convert.ToInt16(this.txbTableHeaderRowIndex.Text)), true);
-			Function.MsgInfo(this.requirementFile.GetTableName());
+			addColumnsInfo(this.listControlDBTrust, true);
+			//Function.MsgInfo(this.requirementFile.GetTableName());
 			loading.HideLoading();
 		}
 
@@ -167,68 +226,84 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// </summary>
 		/// <param name="list">字段信息列表</param>
 		/// <param name="clear">是否清空原来的数据</param>
-		private void addColumnsInfo(List<ColumnInfo> list, bool clear)
+		private void addColumnsInfo(List<ControlDBInfo> list, bool clear)
 		{
 			if (clear)
 			{
 				this.listView1.Items.Clear();
 				this.listView1.Columns.Clear();
 				this.listView1.Columns.Add(null, "序号", 80, HorizontalAlignment.Center, 0);
-				this.listView1.Columns.Add(null, "字段名称", 200, HorizontalAlignment.Left, 1);
-				this.listView1.Columns.Add(null, "字段类型", 140, HorizontalAlignment.Center, 2);
-				this.listView1.Columns.Add(null, "长度", 100, HorizontalAlignment.Center, 3);
-				this.listView1.Columns.Add(null, "默认值", 200, HorizontalAlignment.Left, 4);
-				this.listView1.Columns.Add(null, "说明", 400, HorizontalAlignment.Left, 5);
+				this.listView1.Columns.Add(null, "表名", 200, HorizontalAlignment.Left, 1);
+				this.listView1.Columns.Add(null, "描述", 400, HorizontalAlignment.Left, 2);
+				this.listView1.Columns.Add(null, "字段名称", 200, HorizontalAlignment.Left, 3);
+				this.listView1.Columns.Add(null, "字段类型长度", 140, HorizontalAlignment.Center, 4);
+				this.listView1.Columns.Add(null, "默认值", 200, HorizontalAlignment.Left, 5);
+				this.listView1.Columns.Add(null, "不为空", 100, HorizontalAlignment.Center, 6);
 			}
-
-			foreach (var item in list)
+			for (int i = 0; i < list.Count; i++)
 			{
 				ListViewItem lvi = new ListViewItem();
-				lvi.Text = item.ID.ToString();
-				lvi.SubItems.Add(item.Name);
-				lvi.SubItems.Add(item.Type);
-				lvi.SubItems.Add(item.Length);
-				lvi.SubItems.Add(item.Default);
-				lvi.SubItems.Add(item.Remark);
+				lvi.Text = $"{i+1}";
+				lvi.SubItems.Add(list[i].TableName);
+				lvi.SubItems.Add(list[i].Description);
+				lvi.SubItems.Add(list[i].ColumnName);
+				lvi.SubItems.Add(list[i].TypeLength);
+				lvi.SubItems.Add(list[i].Default.ToString());
+				lvi.SubItems.Add(list[i].IsNotNull.ToString());
 				this.listView1.Items.Add(lvi);
 			}
+			
 		}
 
-		
 
+		/// <summary>
+		/// 预览收样窗体 async
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnTrustRefresh_Click(object sender, EventArgs e)
 		{
-			if (this.requirementFile == null)
+			if (this.listControlDBTrust == null)
 			{
 				Function.MsgError(Language.NoRequirementFile);
 				return;
 			}
+			btnTrustRefresh.Enabled = false;
 			var loading = new Loading();
-			this.initListView();
-			List<ControlInfo> list = this.requirementFile.GetControls(Convert.ToInt16(this.txbTableHeaderRowIndex.Text));
 			this.panTrust.Controls.Clear();
-			Point startLocation = new Point(10,10);
-			foreach (ControlInfo item in list)
-			{
-				addLabelTextBox(ref startLocation, item);
-			}
+			Point startLocation = new Point(10, 10);
+			//int x = this.txbRowHeight.Text.ToInt();
+			//new CreateControl(this.panTrust, this.txbMaxWidth.Text.ToInt(), this.txbRowHeight.Text.ToInt()).Create(this.listControlDBTrust, startLocation);
 			loading.HideLoading();
+			btnTrustRefresh.Enabled = true;
 		}
 
-		//(int right, int top) return (txb.Location.X + txb.Width, txb.Top);
-		private void addLabelTextBox(ref Point startLocation, ControlInfo item)
+		private void button2_Click(object sender, EventArgs e)
 		{
-			Label lbl = new Label();
-			lbl.TextAlign = ContentAlignment.MiddleRight;
-			lbl.AutoSize = true;
-			lbl.Text = item.Label;
-			lbl.Parent = this.panTrust;
-			lbl.Location = new Point(startLocation.X + 20, startLocation.Y);
-			ZrControl.ZrDynamicTextBox txb = new ZrControl.ZrDynamicTextBox();
-			txb.Name = $"txb{item.Label}";
-			txb.Parent = this.panTrust;
-			txb.Location = new Point(lbl.Location.X + lbl.Width + 6, startLocation.Y - 4);
-			startLocation = new Point(txb.Location.X + txb.Width, startLocation.Y);
+		
+		}
+
+		private void btnTrialRefresh_Click(object sender, EventArgs e)
+		{
+			showTrial(this.txbRequirementFile.Text);
+		}
+
+		private void showTrial(string filePath)
+		{
+			var load = new Loading();
+			var rf = new RequirementFile(filePath);
+			rf.ccControl();
+			load.HideLoading();
+		}
+
+		private void button2_Click_1(object sender, EventArgs e)
+		{
+
+			System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
+			string strCharacter = asciiEncoding.GetString(new byte[] { 65,90 });
+			MessageBox.Show(strCharacter);
 		}
 	}
+
+	
 }

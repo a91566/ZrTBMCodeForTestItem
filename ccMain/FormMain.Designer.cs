@@ -39,7 +39,9 @@
 			this.tcMain = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.txbTableHeaderRowIndex = new System.Windows.Forms.TextBox();
+			this.txbMaxWidth = new System.Windows.Forms.TextBox();
+			this.label9 = new System.Windows.Forms.Label();
+			this.txbDBFile = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
 			this.txbZrCode = new System.Windows.Forms.TextBox();
 			this.label6 = new System.Windows.Forms.Label();
@@ -70,6 +72,7 @@
 			this.btnDataRefresh = new System.Windows.Forms.Button();
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+			this.button2 = new System.Windows.Forms.Button();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -202,25 +205,27 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-			this.tableLayoutPanel1.Controls.Add(this.txbTableHeaderRowIndex, 1, 1);
+			this.tableLayoutPanel1.Controls.Add(this.txbMaxWidth, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txbDBFile, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.label7, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.txbZrCode, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txbZrCode, 1, 3);
+			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 3);
 			this.tableLayoutPanel1.Controls.Add(this.txbRequirementFile, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.txbTargetFrameworkVersion, 3, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label4, 2, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 4);
-			this.tableLayoutPanel1.Controls.Add(this.txbRootNamespace, 3, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 2, 3);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 3);
-			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 4);
+			this.tableLayoutPanel1.Controls.Add(this.txbTargetFrameworkVersion, 3, 3);
+			this.tableLayoutPanel1.Controls.Add(this.label4, 2, 3);
+			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 5);
+			this.tableLayoutPanel1.Controls.Add(this.txbRootNamespace, 3, 4);
+			this.tableLayoutPanel1.Controls.Add(this.label2, 2, 4);
+			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 4);
+			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 5);
+			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 5);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 9;
+			this.tableLayoutPanel1.RowCount = 10;
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
@@ -229,20 +234,41 @@
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
-			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(1286, 501);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
-			// txbTableHeaderRowIndex
+			// txbMaxWidth
 			// 
-			this.txbTableHeaderRowIndex.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbTableHeaderRowIndex.BackColor = System.Drawing.Color.White;
-			this.txbTableHeaderRowIndex.Location = new System.Drawing.Point(153, 47);
-			this.txbTableHeaderRowIndex.Name = "txbTableHeaderRowIndex";
-			this.txbTableHeaderRowIndex.ReadOnly = true;
-			this.txbTableHeaderRowIndex.Size = new System.Drawing.Size(394, 26);
-			this.txbTableHeaderRowIndex.TabIndex = 14;
+			this.txbMaxWidth.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.txbMaxWidth.BackColor = System.Drawing.Color.White;
+			this.txbMaxWidth.Location = new System.Drawing.Point(153, 87);
+			this.txbMaxWidth.Name = "txbMaxWidth";
+			this.txbMaxWidth.Size = new System.Drawing.Size(394, 26);
+			this.txbMaxWidth.TabIndex = 18;
+			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label9.Location = new System.Drawing.Point(3, 80);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(144, 40);
+			this.label9.TabIndex = 17;
+			this.label9.Text = "限宽";
+			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// txbDBFile
+			// 
+			this.txbDBFile.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.txbDBFile.BackColor = System.Drawing.Color.White;
+			this.tableLayoutPanel1.SetColumnSpan(this.txbDBFile, 3);
+			this.txbDBFile.Location = new System.Drawing.Point(153, 47);
+			this.txbDBFile.Name = "txbDBFile";
+			this.txbDBFile.ReadOnly = true;
+			this.txbDBFile.Size = new System.Drawing.Size(944, 26);
+			this.txbDBFile.TabIndex = 14;
 			// 
 			// label7
 			// 
@@ -252,13 +278,13 @@
 			this.label7.Name = "label7";
 			this.label7.Size = new System.Drawing.Size(144, 40);
 			this.label7.TabIndex = 13;
-			this.label7.Text = "表头行号";
+			this.label7.Text = "数据库文件";
 			this.label7.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// txbZrCode
 			// 
 			this.txbZrCode.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbZrCode.Location = new System.Drawing.Point(153, 87);
+			this.txbZrCode.Location = new System.Drawing.Point(153, 127);
 			this.txbZrCode.MaxLength = 10;
 			this.txbZrCode.Name = "txbZrCode";
 			this.txbZrCode.Size = new System.Drawing.Size(394, 26);
@@ -269,7 +295,7 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label6.Location = new System.Drawing.Point(3, 80);
+			this.label6.Location = new System.Drawing.Point(3, 120);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(144, 40);
 			this.label6.TabIndex = 11;
@@ -300,7 +326,7 @@
 			// 
 			this.txbTargetFrameworkVersion.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.txbTargetFrameworkVersion.BackColor = System.Drawing.Color.White;
-			this.txbTargetFrameworkVersion.Location = new System.Drawing.Point(703, 87);
+			this.txbTargetFrameworkVersion.Location = new System.Drawing.Point(703, 127);
 			this.txbTargetFrameworkVersion.Name = "txbTargetFrameworkVersion";
 			this.txbTargetFrameworkVersion.ReadOnly = true;
 			this.txbTargetFrameworkVersion.Size = new System.Drawing.Size(394, 26);
@@ -310,7 +336,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label4.Location = new System.Drawing.Point(553, 80);
+			this.label4.Location = new System.Drawing.Point(553, 120);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(144, 40);
 			this.label4.TabIndex = 7;
@@ -321,7 +347,7 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label3.Location = new System.Drawing.Point(3, 160);
+			this.label3.Location = new System.Drawing.Point(3, 200);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(144, 40);
 			this.label3.TabIndex = 4;
@@ -331,7 +357,7 @@
 			// txbRootNamespace
 			// 
 			this.txbRootNamespace.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbRootNamespace.Location = new System.Drawing.Point(703, 127);
+			this.txbRootNamespace.Location = new System.Drawing.Point(703, 167);
 			this.txbRootNamespace.Name = "txbRootNamespace";
 			this.txbRootNamespace.Size = new System.Drawing.Size(394, 26);
 			this.txbRootNamespace.TabIndex = 3;
@@ -341,7 +367,7 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label2.Location = new System.Drawing.Point(553, 120);
+			this.label2.Location = new System.Drawing.Point(553, 160);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(144, 40);
 			this.label2.TabIndex = 2;
@@ -352,7 +378,7 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label1.Location = new System.Drawing.Point(3, 120);
+			this.label1.Location = new System.Drawing.Point(3, 160);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(144, 40);
 			this.label1.TabIndex = 1;
@@ -362,7 +388,7 @@
 			// txbAssemblyName
 			// 
 			this.txbAssemblyName.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbAssemblyName.Location = new System.Drawing.Point(153, 127);
+			this.txbAssemblyName.Location = new System.Drawing.Point(153, 167);
 			this.txbAssemblyName.MaxLength = 50;
 			this.txbAssemblyName.Name = "txbAssemblyName";
 			this.txbAssemblyName.Size = new System.Drawing.Size(394, 26);
@@ -373,7 +399,7 @@
 			// 
 			this.txbFolder.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.tableLayoutPanel1.SetColumnSpan(this.txbFolder, 3);
-			this.txbFolder.Location = new System.Drawing.Point(153, 167);
+			this.txbFolder.Location = new System.Drawing.Point(153, 207);
 			this.txbFolder.Name = "txbFolder";
 			this.txbFolder.Size = new System.Drawing.Size(944, 26);
 			this.txbFolder.TabIndex = 5;
@@ -383,7 +409,7 @@
 			this.btnFolder.FlatAppearance.BorderColor = System.Drawing.Color.White;
 			this.btnFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnFolder.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Folder_24;
-			this.btnFolder.Location = new System.Drawing.Point(1103, 163);
+			this.btnFolder.Location = new System.Drawing.Point(1103, 203);
 			this.btnFolder.Name = "btnFolder";
 			this.btnFolder.Size = new System.Drawing.Size(52, 34);
 			this.btnFolder.TabIndex = 6;
@@ -480,6 +506,7 @@
 			this.btnTrialRefresh.Text = "刷新";
 			this.btnTrialRefresh.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnTrialRefresh.UseVisualStyleBackColor = true;
+			this.btnTrialRefresh.Click += new System.EventHandler(this.btnTrialRefresh_Click);
 			// 
 			// tabPage4
 			// 
@@ -514,6 +541,7 @@
 			// 
 			// panel6
 			// 
+			this.panel6.Controls.Add(this.button2);
 			this.panel6.Controls.Add(this.button1);
 			this.panel6.Controls.Add(this.btnDataRefresh);
 			this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
@@ -575,6 +603,23 @@
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.Size = new System.Drawing.Size(1286, 501);
 			this.webBrowser1.TabIndex = 0;
+			// 
+			// button2
+			// 
+			this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
+			this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
+			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.button2.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Database_48;
+			this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button2.Location = new System.Drawing.Point(574, 11);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(139, 50);
+			this.button2.TabIndex = 2;
+			this.button2.Text = "...";
+			this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click_1);
 			// 
 			// FormMain
 			// 
@@ -651,8 +696,11 @@
 		private System.Windows.Forms.Button btnDataRefresh;
 		private System.Windows.Forms.Button button1;
 		private System.Windows.Forms.ListView listView1;
-		private System.Windows.Forms.TextBox txbTableHeaderRowIndex;
+		private System.Windows.Forms.TextBox txbDBFile;
 		private System.Windows.Forms.Label label7;
+		private System.Windows.Forms.TextBox txbMaxWidth;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.Button button2;
 	}
 }
 

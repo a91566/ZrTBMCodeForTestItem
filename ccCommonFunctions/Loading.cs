@@ -10,6 +10,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 	public class Loading
 	{
 		private Process pLoading;
+		private bool isShowing;
 
 		public Loading()
 		{
@@ -26,8 +27,46 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		public void HideLoading()
 		{
 			if (pLoading != null)
-				pLoading.Kill();
+			{
+				try
+				{
+					pLoading.Kill();
+				}
+				catch (Exception ex)
+				{
+					Console.WriteLine(ex.Message);
+				}
+			}
 		}
+
+		//public Loading()
+		//{
+		//	try
+		//	{
+		//		new System.Threading.Thread(delegate ()
+		//			{
+		//				isShowing = true;
+		//				pLoading = Process.Start($@"{Application.StartupPath}\ccLoading.exe");
+		//			}
+		//		).Start();
+		//	}
+		//	catch (ArgumentException ex)
+		//	{
+		//		MessageBox.Show(ex.Message);
+		//	}
+		//}
+
+		//public void HideLoading()
+		//{
+		//	do
+		//	{
+		//		if (pLoading != null)
+		//		{
+		//			pLoading.Kill();
+		//			isShowing = false;
+		//		}
+		//	} while (isShowing);
+		//}
 
 	}
 }

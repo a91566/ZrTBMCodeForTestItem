@@ -109,6 +109,10 @@
       <Project>{4950ed8e-19fe-4a21-8c27-d9d0a58d8bce}</Project>
       <Name>ccCommonFunctions</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ccExternal\ccExternal.csproj">
+      <Project>{73d4881a-291d-4693-ac7c-56ffbdafb16b}</Project>
+      <Name>ccExternal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ccSystemConfig\ccSystemConfig.csproj">
       <Project>{670debd4-3196-41d7-9a66-3665769d9891}</Project>
       <Name>ccSystemConfig</Name>
