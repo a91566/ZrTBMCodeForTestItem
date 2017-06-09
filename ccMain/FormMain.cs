@@ -123,7 +123,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <param name="filePath">文件绝对路径</param>
 		private void loadRequirementFile(string fileRequirementFile, string fileDB)
 		{
-			var load = new Loading();
+			var load = new Loading(this.Handle);
 			System.Timers.Timer t = new System.Timers.Timer(30);
 			t.Interval = 30;
 			t.Enabled = true;
@@ -181,7 +181,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError(Language.NoRequirementFile);
 				return;
 			}
-			var loading = new Loading();
+			var loading = new Loading(this.Handle);
 			this.initListView();
 			addColumnsInfo(this.listControlDBTrust, true);
 			//Function.MsgInfo(this.requirementFile.GetTableName());
@@ -269,7 +269,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				return;
 			}
 			btnTrustRefresh.Enabled = false;
-			var loading = new Loading();
+			var loading = new Loading(this.Handle);
 			this.panTrust.Controls.Clear();
 			Point startLocation = new Point(10, 10);
 			//int x = this.txbRowHeight.Text.ToInt();
@@ -290,9 +290,9 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void showTrial(string filePath)
 		{
-			var load = new Loading();
+			var load = new Loading(this.Handle);
 			var rf = new RequirementFile(filePath);
-			rf.ccControl();
+			rf.ccControl(this.panTrial);
 			load.HideLoading();
 		}
 

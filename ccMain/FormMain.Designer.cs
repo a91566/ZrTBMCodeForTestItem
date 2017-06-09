@@ -56,6 +56,7 @@
 			this.txbAssemblyName = new System.Windows.Forms.TextBox();
 			this.txbFolder = new System.Windows.Forms.TextBox();
 			this.btnFolder = new System.Windows.Forms.Button();
+			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.panTrust = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -68,11 +69,11 @@
 			this.panData = new System.Windows.Forms.Panel();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.panel6 = new System.Windows.Forms.Panel();
+			this.button2 = new System.Windows.Forms.Button();
 			this.button1 = new System.Windows.Forms.Button();
 			this.btnDataRefresh = new System.Windows.Forms.Button();
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-			this.button2 = new System.Windows.Forms.Button();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -222,6 +223,7 @@
 			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 4);
 			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 5);
 			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 5);
+			this.tableLayoutPanel1.Controls.Add(this.dateTimePicker1, 3, 9);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -416,6 +418,13 @@
 			this.btnFolder.UseVisualStyleBackColor = true;
 			this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
 			// 
+			// dateTimePicker1
+			// 
+			this.dateTimePicker1.Location = new System.Drawing.Point(703, 363);
+			this.dateTimePicker1.Name = "dateTimePicker1";
+			this.dateTimePicker1.Size = new System.Drawing.Size(128, 26);
+			this.dateTimePicker1.TabIndex = 19;
+			// 
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.panTrust);
@@ -550,6 +559,23 @@
 			this.panel6.Size = new System.Drawing.Size(1286, 72);
 			this.panel6.TabIndex = 3;
 			// 
+			// button2
+			// 
+			this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
+			this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
+			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.button2.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Database_48;
+			this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button2.Location = new System.Drawing.Point(574, 11);
+			this.button2.Name = "button2";
+			this.button2.Size = new System.Drawing.Size(139, 50);
+			this.button2.TabIndex = 2;
+			this.button2.Text = "...";
+			this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.button2.UseVisualStyleBackColor = true;
+			this.button2.Click += new System.EventHandler(this.button2_Click_1);
+			// 
 			// button1
 			// 
 			this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
@@ -603,23 +629,6 @@
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.Size = new System.Drawing.Size(1286, 501);
 			this.webBrowser1.TabIndex = 0;
-			// 
-			// button2
-			// 
-			this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.button2.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Database_48;
-			this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.button2.Location = new System.Drawing.Point(574, 11);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(139, 50);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "...";
-			this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click_1);
 			// 
 			// FormMain
 			// 
@@ -701,6 +710,7 @@
 		private System.Windows.Forms.TextBox txbMaxWidth;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.DateTimePicker dateTimePicker1;
 	}
 }
 

@@ -10,13 +10,12 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 	public class Loading
 	{
 		private Process pLoading;
-		private bool isShowing;
 
-		public Loading()
+		public Loading(IntPtr hwd)
 		{
 			try
 			{
-				pLoading = Process.Start($@"{Application.StartupPath}\ccLoading.exe");
+				StartProcess($@"{Application.StartupPath}\ccLoading.exe", new string[1] { hwd.ToString() }); 
 			}
 			catch (ArgumentException ex)
 			{
@@ -39,34 +38,28 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			}
 		}
 
-		//public Loading()
-		//{
-		//	try
-		//	{
-		//		new System.Threading.Thread(delegate ()
-		//			{
-		//				isShowing = true;
-		//				pLoading = Process.Start($@"{Application.StartupPath}\ccLoading.exe");
-		//			}
-		//		).Start();
-		//	}
-		//	catch (ArgumentException ex)
-		//	{
-		//		MessageBox.Show(ex.Message);
-		//	}
-		//}
 
-		//public void HideLoading()
-		//{
-		//	do
-		//	{
-		//		if (pLoading != null)
-		//		{
-		//			pLoading.Kill();
-		//			isShowing = false;
-		//		}
-		//	} while (isShowing);
-		//}
+
+		public bool StartProcess(string filename, string[] args)
+		{
+			try
+			{
+				pLoading = new Process();
+				ProcessStartInfo startInfo = new ProcessStartInfo(filename, string.Join(" ", args));
+				pLoading.StartInfo = startInfo;
+				//通过以下参数可以控制exe的启动方式，具体参照 myprocess.StartInfo.下面的参数，如以无界面方式启动exe等
+				pLoading.StartInfo.UseShellExecute = false;
+				pLoading.Start();
+				return true;
+			}
+			catch (Exception ex)
+			{
+				Console.WriteLine("loading error：" + ex.Message);
+			}
+			return false;
+		}
+
+
 
 	}
 }

@@ -6,7 +6,9 @@
 using Aspose.Cells;
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccEcternal;
 
@@ -17,6 +19,15 @@ namespace ccCells
 	/// </summary>
 	public class RequirementFile
 	{
+		 
+		/// <summary>
+		/// 目标窗体宽度
+		/// </summary>
+		private int formWidth = 1000;
+		/// <summary>
+		/// 行高
+		/// </summary>
+		private const int rowHeight = 40;
 		/// <summary>
 		/// 工作簿
 		/// </summary>
@@ -79,32 +90,125 @@ namespace ccCells
 			return list;
 		}
 
-		public void ccControl()
+		public void ccControl(Panel pan)
 		{
 			System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
-			for (int x = 3; x < workbook.Worksheets.Count; x++)
+			for (int sheetIndex = 3; sheetIndex < workbook.Worksheets.Count; sheetIndex++)
 			{
-				Worksheet sheet = this.workbook.Worksheets[x];
+				Worksheet sheet = this.workbook.Worksheets[sheetIndex];
+				
 				int endX = 15;
 				string endY = "N";
-				for (int y = 65; y <= (int)asciiEncoding.GetBytes(endY)[0]; y++)
-				{
-					string letter = asciiEncoding.GetString(new byte[] { (byte)y });
-					for (int z = 1; z <= endX; z++)
-					{
-						var temp = sheet.Cells[$"{letter}{z}"].Value.ObjToString();
-						if ($"{letter}{z}" == "D10")
-						{
-							if (sheet.Cells[$"{letter}{z}"].GetStyle().Font.Color.Name == "Black")
-							{
+				List<double> listSheetWidths = getColumnWidth(sheet, out double sheetWidthsSum);
 
-							}
+				//列
+				for (int columnIndex = 65; columnIndex <= (int)asciiEncoding.GetBytes(endY)[0]; columnIndex++)
+				{
+					string letter = asciiEncoding.GetString(new byte[] { (byte)columnIndex });
+					//行
+					for (int rowIndex = 1; rowIndex <= endX; rowIndex++)
+					{
+						var cell = sheet.Cells[$"{letter}{rowIndex}"];
+						var cellValue = cell.Value.ObjToString();
+						if (string.IsNullOrEmpty(cellValue)) continue;
+
+						if ($"{letter}{rowIndex}" == "C10")
+						{
 							int xxxx = 1;
-							ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgInfo($"{letter}{z}:{temp}");
+							//ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgInfo($"{letter}{rowIndex}:{cellValue}");
 						}
+						if ($"{letter}{rowIndex}" == "H14")
+						{
+							int xxxx = 1;
+							//ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgInfo($"{letter}{rowIndex}:{cellValue}");
+						}
+						//int pointX = getLeft(listSheetWidths, columnIndex - 65, sheetWidthsSum);
+						//int pointY = rowIndex * 40;
+						//黑体代表是控件
+						if (sheet.Cells[$"{letter}{rowIndex}"].GetStyle().Font.Color.Name == "Black")
+						{
+							TextBox txb = new TextBox();
+							txb.Parent = pan;
+							//txb.Text = cellValue;
+							//txb.Width = widths[columnIndex-65];
+							setLabelLocation(cell, txb, sheetWidthsSum, listSheetWidths);
+						}
+						else
+						{							
+							Label lbl = new Label();
+							lbl.Parent = pan;
+							lbl.Text = cellValue;
+							lbl.AutoSize = true;
+							setLabelLocation(cell, lbl, sheetWidthsSum, listSheetWidths);
+						}
+
 					}
 				}
 			}
+		}
+
+		private void setLabelLocation(Cell cell, Control c, double sheetWidthsSum, List<double> sheetWidths)
+		{
+			int width = (int)(sheetWidths[cell.Column]);
+			int x = this.getLeft(sheetWidths, cell.Column, sheetWidthsSum);
+			int y = cell.Row * 40;
+			if (cell.GetStyle().HorizontalAlignment == TextAlignmentType.Center)
+			{
+				int marginLeft = (width - c.Width) / 2;
+				x += marginLeft;
+			}
+			else if (cell.GetStyle().HorizontalAlignment == TextAlignmentType.Right)
+			{
+				int marginLeft = width - c.Width;
+				x += marginLeft;
+			}
+
+			if (cell.GetStyle().VerticalAlignment == TextAlignmentType.Center)
+			{
+				int marginTop = (rowHeight - c.Height) / 2;
+				y += marginTop;
+			}
+			else if (cell.GetStyle().VerticalAlignment == TextAlignmentType.Bottom)
+			{
+				int marginTop = rowHeight - c.Height;
+				y += marginTop;
+			}
+			c.Location = new Point(x, y);
+		}
+
+		/// <summary>
+		/// 得到左坐标
+		/// </summary>
+		/// <param name="list"></param>
+		/// <param name="index"></param>
+		/// <returns></returns>
+		private int getLeft(List<double> list, int index, double sheetWidthsSum)
+		{
+			double result = 0;
+			for (int i = 0; i < list.Count; i++)
+			{
+				result += list[i];
+				if (i + 1 > index) break;
+			}
+			return (int)(result * formWidth / sheetWidthsSum);
+		}
+
+		/// <summary>
+		/// 获取列宽，用于计算位置
+		/// </summary>
+		/// <param name="sheet"></param>
+		/// <returns></returns>
+		private List<double> getColumnWidth(Worksheet sheet, out double sheetWidthsSum)
+		{
+			var result = new List<double>();
+			sheetWidthsSum = 0;
+			for (int i = 0; i <= sheet.Cells.MaxColumn; i++)
+			{
+				//result.Add((int)(sheet.Cells.Columns[i].Width*8.35));
+				result.Add(sheet.Cells.Columns[i].Width); // 单位是镑，根据这个，计算总宽度，在根据目标宽度来计算占比，因为这个跟 dpi 有关
+				sheetWidthsSum += sheet.Cells.Columns[i].Width;
+			}
+			return result;
 		}
 	}
 }
