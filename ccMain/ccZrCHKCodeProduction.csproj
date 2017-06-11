@@ -126,7 +126,6 @@
     <None Include="Resources\Excel_24px_1173663_easyicon.net.png" />
     <None Include="Resources\Excel_48px_1185986_easyicon.net.png" />
     <None Include="Resources\text_39.856373429084px_1206719_easyicon.net.png" />
-    <Content Include="Other\UseRemark.html" />
     <None Include="Resources\database_46.515463917526px_1201721_easyicon.net.png" />
     <None Include="Resources\link_48px_1204370_easyicon.net.png" />
     <None Include="Resources\Save_48px_1186318_easyicon.net.png" />
@@ -140,8 +139,11 @@
     <None Include="Resources\number_48px_1205828_easyicon.net.png" />
     <None Include="Resources\number_48px_1205829_easyicon.net.png" />
     <None Include="Resources\number_48px_1205830_easyicon.net.png" />
+    <Content Include="bin\Debug\UseRemark.html" />
     <Content Include="web_code_48px_1179075_easyicon.net.ico" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Other\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

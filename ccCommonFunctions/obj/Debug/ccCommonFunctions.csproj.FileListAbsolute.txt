@@ -8,3 +8,4 @@ D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommon
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.csprojResolveAssemblyReference.cache
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.dll
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\System.ValueTuple.dll

@@ -39,7 +39,9 @@
 			this.tcMain = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-			this.txbMaxWidth = new System.Windows.Forms.TextBox();
+			this.txbExitColor = new System.Windows.Forms.TextBox();
+			this.label8 = new System.Windows.Forms.Label();
+			this.txbExcelWithToPxScale = new System.Windows.Forms.TextBox();
 			this.label9 = new System.Windows.Forms.Label();
 			this.txbDBFile = new System.Windows.Forms.TextBox();
 			this.label7 = new System.Windows.Forms.Label();
@@ -56,7 +58,6 @@
 			this.txbAssemblyName = new System.Windows.Forms.TextBox();
 			this.txbFolder = new System.Windows.Forms.TextBox();
 			this.btnFolder = new System.Windows.Forms.Button();
-			this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.panTrust = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -64,6 +65,7 @@
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.panTrial = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
+			this.button3 = new System.Windows.Forms.Button();
 			this.btnTrialRefresh = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.panData = new System.Windows.Forms.Panel();
@@ -206,7 +208,9 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-			this.tableLayoutPanel1.Controls.Add(this.txbMaxWidth, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txbExitColor, 3, 2);
+			this.tableLayoutPanel1.Controls.Add(this.label8, 2, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txbExcelWithToPxScale, 1, 2);
 			this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
 			this.tableLayoutPanel1.Controls.Add(this.txbDBFile, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.label7, 0, 1);
@@ -223,7 +227,6 @@
 			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 4);
 			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 5);
 			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 5);
-			this.tableLayoutPanel1.Controls.Add(this.dateTimePicker1, 3, 9);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -241,14 +244,34 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(1286, 501);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
-			// txbMaxWidth
+			// txbExitColor
 			// 
-			this.txbMaxWidth.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbMaxWidth.BackColor = System.Drawing.Color.White;
-			this.txbMaxWidth.Location = new System.Drawing.Point(153, 87);
-			this.txbMaxWidth.Name = "txbMaxWidth";
-			this.txbMaxWidth.Size = new System.Drawing.Size(394, 26);
-			this.txbMaxWidth.TabIndex = 18;
+			this.txbExitColor.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.txbExitColor.BackColor = System.Drawing.Color.White;
+			this.txbExitColor.Location = new System.Drawing.Point(703, 87);
+			this.txbExitColor.Name = "txbExitColor";
+			this.txbExitColor.Size = new System.Drawing.Size(394, 26);
+			this.txbExitColor.TabIndex = 20;
+			// 
+			// label8
+			// 
+			this.label8.AutoSize = true;
+			this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label8.Location = new System.Drawing.Point(553, 80);
+			this.label8.Name = "label8";
+			this.label8.Size = new System.Drawing.Size(144, 40);
+			this.label8.TabIndex = 19;
+			this.label8.Text = "退出颜色";
+			this.label8.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// txbExcelWithToPxScale
+			// 
+			this.txbExcelWithToPxScale.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.txbExcelWithToPxScale.BackColor = System.Drawing.Color.White;
+			this.txbExcelWithToPxScale.Location = new System.Drawing.Point(153, 87);
+			this.txbExcelWithToPxScale.Name = "txbExcelWithToPxScale";
+			this.txbExcelWithToPxScale.Size = new System.Drawing.Size(394, 26);
+			this.txbExcelWithToPxScale.TabIndex = 18;
 			// 
 			// label9
 			// 
@@ -258,7 +281,7 @@
 			this.label9.Name = "label9";
 			this.label9.Size = new System.Drawing.Size(144, 40);
 			this.label9.TabIndex = 17;
-			this.label9.Text = "限宽";
+			this.label9.Text = "Excel 列宽与像素比例";
 			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// txbDBFile
@@ -418,13 +441,6 @@
 			this.btnFolder.UseVisualStyleBackColor = true;
 			this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
 			// 
-			// dateTimePicker1
-			// 
-			this.dateTimePicker1.Location = new System.Drawing.Point(703, 363);
-			this.dateTimePicker1.Name = "dateTimePicker1";
-			this.dateTimePicker1.Size = new System.Drawing.Size(128, 26);
-			this.dateTimePicker1.TabIndex = 19;
-			// 
 			// tabPage2
 			// 
 			this.tabPage2.Controls.Add(this.panTrust);
@@ -456,6 +472,7 @@
 			// 
 			// btnTrustRefresh
 			// 
+			this.btnTrustRefresh.Enabled = false;
 			this.btnTrustRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnTrustRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnTrustRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -485,6 +502,7 @@
 			// 
 			// panTrial
 			// 
+			this.panTrial.AutoScroll = true;
 			this.panTrial.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.panTrial.Location = new System.Drawing.Point(3, 75);
 			this.panTrial.Name = "panTrial";
@@ -493,6 +511,7 @@
 			// 
 			// panel4
 			// 
+			this.panel4.Controls.Add(this.button3);
 			this.panel4.Controls.Add(this.btnTrialRefresh);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel4.Location = new System.Drawing.Point(3, 3);
@@ -500,8 +519,26 @@
 			this.panel4.Size = new System.Drawing.Size(1286, 72);
 			this.panel4.TabIndex = 3;
 			// 
+			// button3
+			// 
+			this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
+			this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
+			this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.button3.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
+			this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.button3.Location = new System.Drawing.Point(585, 11);
+			this.button3.Name = "button3";
+			this.button3.Size = new System.Drawing.Size(116, 50);
+			this.button3.TabIndex = 1;
+			this.button3.Text = "刷新";
+			this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.button3.UseVisualStyleBackColor = true;
+			this.button3.Click += new System.EventHandler(this.button3_Click);
+			// 
 			// btnTrialRefresh
 			// 
+			this.btnTrialRefresh.Enabled = false;
 			this.btnTrialRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnTrialRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnTrialRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -595,6 +632,7 @@
 			// 
 			// btnDataRefresh
 			// 
+			this.btnDataRefresh.Enabled = false;
 			this.btnDataRefresh.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnDataRefresh.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnDataRefresh.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -707,10 +745,12 @@
 		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.TextBox txbDBFile;
 		private System.Windows.Forms.Label label7;
-		private System.Windows.Forms.TextBox txbMaxWidth;
+		private System.Windows.Forms.TextBox txbExcelWithToPxScale;
 		private System.Windows.Forms.Label label9;
 		private System.Windows.Forms.Button button2;
-		private System.Windows.Forms.DateTimePicker dateTimePicker1;
+		private System.Windows.Forms.TextBox txbExitColor;
+		private System.Windows.Forms.Label label8;
+		private System.Windows.Forms.Button button3;
 	}
 }
 

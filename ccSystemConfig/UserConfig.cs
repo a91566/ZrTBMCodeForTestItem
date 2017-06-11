@@ -61,6 +61,17 @@ namespace ZrTBMCodeForTestItem.ccSystemConfig
 			return this.dictConfig.Where(i => i.Key == key).Single().Value;
 		}
 
+
+		/// <summary>
+		/// 获取配置
+		/// </summary>
+		/// <param name="key">主键</param>
+		/// <returns></returns>
+		public string GetConfig(ConfigKey key)
+		{			
+			return this.GetConfig(key.ToString());
+		}
+
 		public int UpdateConfig(Dictionary<string, string> dict)
 		{
 			List<string> list = new List<string>();

@@ -19,3 +19,14 @@ D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.pdb
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.dll
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.pdb
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.ValueTuple.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.ValueTuple.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccSystemConfig.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\DBHelper.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccSystemConfig.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.xml
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.dll.config

@@ -24,3 +24,4 @@ D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\MySql.Data.
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.csprojResolveAssemblyReference.cache
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.dll
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.ValueTuple.dll

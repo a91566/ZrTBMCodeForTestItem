@@ -4,22 +4,13 @@
  * 也曾想过不顾一切陪你去远方，后来发现你只是说说，我只是想想。
  * 
  */
-using ccCells;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
 using System.Drawing;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
 using ZrTBMCodeForTestItem.ccSystemConfig;
-using ZrTBMCodeForTestItem.ccEcternal;
 
 namespace ZrTBMCodeForTestItem.ccMain
 {
@@ -30,13 +21,14 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// </summary>
 		private ExportCodeFile exportCode;
 		/// <summary>
-		/// 收样控件列表
+		/// 需求文件读取类
 		/// </summary>
-		private List<ControlDBInfo> listControlDBTrust;
+		private FormRequirementFile requirementFile;
 		/// <summary>
-		/// 试验控件列表
+		/// 字段对照
 		/// </summary>
-		private List<ControlDBInfo> listControlDBTrial;
+		private Dictionary<string, List<ZrControlExternalInfoFromFile>>  dictZrControlInfo;
+
 		public FormMain()
 		{
 			InitializeComponent();
@@ -57,9 +49,10 @@ namespace ZrTBMCodeForTestItem.ccMain
 		private void initTextBox()
 		{
 			UserConfig config = new UserConfig(false);
-			this.txbTargetFrameworkVersion.Text = config.GetConfig("TargetFrameworkVersion");
-			this.txbFolder.Text = config.GetConfig("Folder");
-			this.txbMaxWidth.Text = config.GetConfig("MaxWidth");
+			this.txbTargetFrameworkVersion.Text = config.GetConfig(ConfigKey.TargetFrameworkVersion.ToString());
+			this.txbFolder.Text = config.GetConfig(ConfigKey.Folder.ToString());
+			this.txbExcelWithToPxScale.Text = config.GetConfig(ConfigKey.ExcelWithToPxScale.ToString());
+			this.txbExitColor.Text = config.GetConfig(ConfigKey.ExitColor.ToString());
 			this.setTextBoxReadOnly(this.txbRootNamespace, true); 
 			this.setTextBoxReadOnly(this.txbRequirementFile, true);
 			this.setTextBoxReadOnly(this.txbDBFile, true);
@@ -113,31 +106,45 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError("文件选择错误.");
 				return;
 			}
-			this.loadRequirementFile(this.txbRequirementFile.Text, this.txbDBFile.Text);
+			this.loadDBRequirementFile(this.txbDBFile.Text);
+			this.initRequirementFile(this.txbRequirementFile.Text);
+			this.btnDataRefresh.Enabled = true;
+			this.btnTrustRefresh.Enabled = true;
+			this.btnTrialRefresh.Enabled = true;
 		}
 
 		/// <summary>
-		/// 载入去求文件到内存
+		/// 载入数据库字段对照内容到内存
 		/// </summary>
 		/// <param name="filePath">文件绝对路径</param>
-		/// <param name="filePath">文件绝对路径</param>
-		private void loadRequirementFile(string fileRequirementFile, string fileDB)
+		private void loadDBRequirementFile(string filePath)
 		{
+			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
+			while (occupied)
+			{
+				if (Function.MsgOK($"文件：{System.IO.Path.GetFileName(filePath)} 被占用，是否重试？"))
+				{
+					occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
+				}
+				else
+				{
+					return;
+				}
+			}
+
 			var load = new Loading(this.Handle);
-			System.Timers.Timer t = new System.Timers.Timer(30);
-			t.Interval = 30;
-			t.Enabled = true;
+			System.Timers.Timer t = new System.Timers.Timer(100);
 			t.Elapsed += (s, e1) =>
 			{
-				t.Enabled = false;
+				(s as System.Timers.Timer).Enabled = false;
 				Action done = () =>
 				{
 					load.HideLoading();
 				};
 				try
 				{
-					var rf = new RequirementFile(fileDB);
-					this.listControlDBTrust = rf.GetControlDBInfoForTrust();
+					var rf = new DBRequirementFile(filePath);
+					this.dictZrControlInfo = rf.GetControlDBInfoForTrust();
 				}
 				catch (Exception ex)
 				{
@@ -148,6 +155,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 					this.Invoke(done);
 				}
 			};
+			t.Enabled = true;
 		}
 
 		private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
@@ -176,15 +184,14 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void btnDataRefresh_Click(object sender, EventArgs e)
 		{
-			if (this.listControlDBTrust == null)
+			if (this.dictZrControlInfo == null)
 			{
 				Function.MsgError(Language.NoRequirementFile);
 				return;
 			}
 			var loading = new Loading(this.Handle);
 			this.initListView();
-			addColumnsInfo(this.listControlDBTrust, true);
-			//Function.MsgInfo(this.requirementFile.GetTableName());
+			addColumnsInfo(this.dictZrControlInfo, true);
 			loading.HideLoading();
 		}
 
@@ -224,9 +231,9 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <summary>
 		/// 添加数据到 ListView
 		/// </summary>
-		/// <param name="list">字段信息列表</param>
+		/// <param name="dict">字段信息列表</param>
 		/// <param name="clear">是否清空原来的数据</param>
-		private void addColumnsInfo(List<ControlDBInfo> list, bool clear)
+		private void addColumnsInfo(Dictionary<string, List<ZrControlExternalInfoFromFile>> dict, bool clear)
 		{
 			if (clear)
 			{
@@ -236,25 +243,53 @@ namespace ZrTBMCodeForTestItem.ccMain
 				this.listView1.Columns.Add(null, "表名", 200, HorizontalAlignment.Left, 1);
 				this.listView1.Columns.Add(null, "描述", 400, HorizontalAlignment.Left, 2);
 				this.listView1.Columns.Add(null, "字段名称", 200, HorizontalAlignment.Left, 3);
-				this.listView1.Columns.Add(null, "字段类型长度", 140, HorizontalAlignment.Center, 4);
-				this.listView1.Columns.Add(null, "默认值", 200, HorizontalAlignment.Left, 5);
+				this.listView1.Columns.Add(null, "字段类型长度", 160, HorizontalAlignment.Center, 4);
+				this.listView1.Columns.Add(null, "默认值", 120, HorizontalAlignment.Left, 5);
 				this.listView1.Columns.Add(null, "不为空", 100, HorizontalAlignment.Center, 6);
 			}
-			for (int i = 0; i < list.Count; i++)
+			foreach (var item in dict)
 			{
-				ListViewItem lvi = new ListViewItem();
-				lvi.Text = $"{i+1}";
-				lvi.SubItems.Add(list[i].TableName);
-				lvi.SubItems.Add(list[i].Description);
-				lvi.SubItems.Add(list[i].ColumnName);
-				lvi.SubItems.Add(list[i].TypeLength);
-				lvi.SubItems.Add(list[i].Default.ToString());
-				lvi.SubItems.Add(list[i].IsNotNull.ToString());
-				this.listView1.Items.Add(lvi);
-			}
-			
+				ListViewGroup group = new ListViewGroup();
+				group.Header = item.Key;
+				group.HeaderAlignment = HorizontalAlignment.Left;   //设置组标题文本的对齐方式。（默认为Left）  
+				for (int i = 0; i < item.Value.Count; i++)
+				{
+					ListViewItem lvi = new ListViewItem();
+					lvi.Text = $"{i + 1}";
+					lvi.SubItems.Add(item.Value[i].ZrTable);
+					lvi.SubItems.Add(item.Value[i].ZrDescription);
+					lvi.SubItems.Add(item.Value[i].ZrField);
+					lvi.SubItems.Add(item.Value[i].TypeLength);
+					lvi.SubItems.Add(item.Value[i].Default.ToString());
+					lvi.SubItems.Add(item.Value[i].ZrIsNotNull.ToString());
+					group.Items.Add(lvi);
+					this.listView1.Items.Add(lvi);
+				}
+				this.listView1.Groups.Add(group);
+			}		
 		}
 
+		/// <summary>
+		/// 初始化需求文件处理类
+		/// </summary>
+		/// <param name="filePath">文件绝对路径</param>
+		private void initRequirementFile(string filePath)
+		{			
+			if (this.requirementFile != null) return;
+			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
+			while (occupied)
+			{
+				if (Function.MsgOK($"文件：{System.IO.Path.GetFileName(filePath)} 被占用，是否重试？"))
+				{
+					occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
+				}
+				else
+				{
+					return;
+				}
+			}
+			this.requirementFile = new FormRequirementFile(filePath);
+		}
 
 		/// <summary>
 		/// 预览收样窗体 async
@@ -263,19 +298,15 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <param name="e"></param>
 		private void btnTrustRefresh_Click(object sender, EventArgs e)
 		{
-			if (this.listControlDBTrust == null)
-			{
-				Function.MsgError(Language.NoRequirementFile);
-				return;
-			}
-			btnTrustRefresh.Enabled = false;
-			var loading = new Loading(this.Handle);
-			this.panTrust.Controls.Clear();
-			Point startLocation = new Point(10, 10);
-			//int x = this.txbRowHeight.Text.ToInt();
-			//new CreateControl(this.panTrust, this.txbMaxWidth.Text.ToInt(), this.txbRowHeight.Text.ToInt()).Create(this.listControlDBTrust, startLocation);
-			loading.HideLoading();
-			btnTrustRefresh.Enabled = true;
+			this.initRequirementFile(this.txbRequirementFile.Text);
+			showTrust(this.txbRequirementFile.Text);			
+		}
+
+		private void showTrust(string filePath)
+		{
+			var load = new Loading(this.Handle);
+			this.requirementFile.ccControl(this.panTrust, this.dictZrControlInfo, true);
+			load.HideLoading();
 		}
 
 		private void button2_Click(object sender, EventArgs e)
@@ -285,14 +316,14 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void btnTrialRefresh_Click(object sender, EventArgs e)
 		{
+			this.initRequirementFile(this.txbRequirementFile.Text);
 			showTrial(this.txbRequirementFile.Text);
 		}
 
 		private void showTrial(string filePath)
-		{
+		{			
 			var load = new Loading(this.Handle);
-			var rf = new RequirementFile(filePath);
-			rf.ccControl(this.panTrial);
+			this.requirementFile.ccControl(this.panTrial, this.dictZrControlInfo, false);
 			load.HideLoading();
 		}
 
@@ -303,6 +334,13 @@ namespace ZrTBMCodeForTestItem.ccMain
 			string strCharacter = asciiEncoding.GetString(new byte[] { 65,90 });
 			MessageBox.Show(strCharacter);
 		}
+
+		private void button3_Click(object sender, EventArgs e)
+		{
+
+		}
+
+
 	}
 
 	
