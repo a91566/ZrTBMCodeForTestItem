@@ -13,6 +13,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
+using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
 
 namespace ZrTBMCodeForTestItem.ccMain

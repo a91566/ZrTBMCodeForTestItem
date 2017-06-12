@@ -392,7 +392,6 @@
             this.Controls.Add(this.labeltxb_批号_vch);
             this.Name = "UcSampleInfo";
             this.Size = new System.Drawing.Size(650, 152);
-            this.Load += new System.EventHandler(this.UcSampleInfo_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 

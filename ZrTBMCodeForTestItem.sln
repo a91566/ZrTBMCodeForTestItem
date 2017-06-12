@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.12
+VisualStudioVersion = 15.0.26430.13
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccZrCHKCodeProduction", "ccMain\ccZrCHKCodeProduction.csproj", "{434EC62D-421D-41F2-A7C3-E669051B4EA0}"
 EndProject
@@ -12,6 +12,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccSystemConfig", "ccSystemConfig\ccSystemConfig.csproj", "{670DEBD4-3196-41D7-9A66-3665769D9891}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccExternal", "ccExternal\ccExternal.csproj", "{73D4881A-291D-4693-AC7C-56FFBDAFB16B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccLanguage", "ccLanguage\ccLanguage.csproj", "{C542B2BE-FEF9-4CD7-9127-9697E24630DF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{73D4881A-291D-4693-AC7C-56FFBDAFB16B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73D4881A-291D-4693-AC7C-56FFBDAFB16B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73D4881A-291D-4693-AC7C-56FFBDAFB16B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

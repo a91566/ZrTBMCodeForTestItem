@@ -10,6 +10,7 @@ using System.Drawing;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
+using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
 
 namespace ZrTBMCodeForTestItem.ccMain
@@ -171,15 +172,40 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void tsbExportProject_Click(object sender, EventArgs e)
 		{
+			if (string.IsNullOrEmpty(this.txbDBFile.Text) || string.IsNullOrEmpty(this.txbRequirementFile.Text))
+			{
+				Function.MsgError(Language.NoRequirementFile);
+				return;
+			}
+
+			if (this.panTrust.Controls.Count == 0 || this.panTrial.Controls.Count == 0)
+			{
+				this.btnTrustRefresh_Click(null,null);
+				this.btnTrialRefresh_Click(null, null);
+			}
+			if (this.panTrust.Controls.Count == 0 || this.panTrial.Controls.Count == 0)
+			{
+				Function.MsgError(Language.RequirementFileNotUse);
+				return;
+			}
+
 			if (!Function.MsgOK($"{Language.OutFolderAsk}{this.txbFolder.Text}")) return;
+			var load = new Loading(this.Handle);
 			this.exportCode = new ExportCodeFile(this.txbZrCode.Text, this.txbAssemblyName.Text, this.txbRootNamespace.Text, this.txbFolder.Text);
+			this.exportCode.ShowOperateInfoEvent += (text) => this.tslOperateInfo.Text = text;
 			this.exportCode.InitFolder();
 			this.exportCode.Export_csproj();
 			this.exportCode.Export_CheckClassControl();
 			this.exportCode.Export_AssemblyInfo();
-			this.exportCode.Export_Trust();
-			this.exportCode.Export_Trial();
-			Function.MsgInfo("ok");
+			this.exportCode.Export_Trust(this.panTrust);
+			this.exportCode.Export_Trial(this.panTrust);
+			load.HideLoading();
+			if (Function.MsgOK(Language.ExportDone))
+			{
+				System.Diagnostics.Process open = new System.Diagnostics.Process();
+				open.StartInfo.FileName = "explorer";
+				open.Start();
+			}
 		}
 
 		private void btnDataRefresh_Click(object sender, EventArgs e)
@@ -309,10 +335,6 @@ namespace ZrTBMCodeForTestItem.ccMain
 			load.HideLoading();
 		}
 
-		private void button2_Click(object sender, EventArgs e)
-		{
-		
-		}
 
 		private void btnTrialRefresh_Click(object sender, EventArgs e)
 		{
@@ -327,20 +349,40 @@ namespace ZrTBMCodeForTestItem.ccMain
 			load.HideLoading();
 		}
 
-		private void button2_Click_1(object sender, EventArgs e)
-		{
+	
 
-			System.Text.ASCIIEncoding asciiEncoding = new System.Text.ASCIIEncoding();
-			string strCharacter = asciiEncoding.GetString(new byte[] { 65,90 });
-			MessageBox.Show(strCharacter);
+		private void tsbSaveDefault_Click(object sender, EventArgs e)
+		{
+			UserConfig uc = new UserConfig(true);
+			int result = uc.UpdateConfig(this.getDefault());
+			if (result > 0)
+			{
+				Function.MsgInfo("ok");
+			}
+			else
+			{
+				Function.MsgError("false");
+			}			
 		}
 
-		private void button3_Click(object sender, EventArgs e)
+		/// <summary>
+		/// 获取默认值信息
+		/// </summary>
+		/// <returns></returns>
+		private Dictionary<string, string> getDefault()
 		{
-
+			Dictionary<string, string> dict = new Dictionary<string, string>();
+			dict.Add(ConfigKey.TargetFrameworkVersion.ToString(), this.txbTargetFrameworkVersion.Text);
+			dict.Add(ConfigKey.Folder.ToString(), this.txbFolder.Text);
+			dict.Add(ConfigKey.ExcelWithToPxScale.ToString(), this.txbExcelWithToPxScale.Text);
+			dict.Add(ConfigKey.ExitColor.ToString(), this.txbExitColor.Text);
+			return dict;
 		}
 
-
+		private void toolStripButton2_Click(object sender, EventArgs e)
+		{
+			
+		}
 	}
 
 	

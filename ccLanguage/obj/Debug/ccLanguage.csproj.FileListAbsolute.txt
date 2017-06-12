@@ -1,0 +1,5 @@
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\bin\Debug\ccLanguage.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\bin\Debug\ccLanguage.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.csprojResolveAssemblyReference.cache
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.pdb

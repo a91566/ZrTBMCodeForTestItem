@@ -7,7 +7,7 @@ using Aspose.Cells;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.IO;
+using System.Linq;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccEcternal;
 using ZrTBMCodeForTestItem.ccSystemConfig;
@@ -77,7 +77,27 @@ namespace ZrTBMCodeForTestItem.ccCells
 			base.InitFile(filePath);
 		}
 
+		#region 字段操作
+		/// <summary>
+		/// 获取字段对象信息
+		/// </summary>
+		/// <param name="columnName">字段名</param>
+		/// <returns></returns>
+		private ZrControlExternalInfoFromFile getZrControlExternalInfo(string columnName)
+		{
+			if (this.dictZrControlInfo == null || this.dictZrControlInfo.Count == 0) return null;
+			foreach (var item in this.dictZrControlInfo)
+			{
+				var a = item.Value.FirstOrDefault(i => i.ZrField == columnName);
+				if (a != null)
+				return a;
+			}
+			return null;
+		}
 
+		#endregion
+
+		#region 表格控件窗体操作
 
 		/// <summary>
 		/// 生成控件，并处理容器的逻辑关系
@@ -135,6 +155,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 			Control realParent = null;
 			TabControlInfo tcInfo = new TabControlInfo();
 			int columnCount = currentSheet.Cells.MaxColumn;
+			int tabIndex = 1;
 			//行
 			for (int rowIndex = 1; rowIndex < 1000; rowIndex++)
 			{
@@ -157,10 +178,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 					var cellValue = currentCell.Value.ObjToString();
 					if (string.IsNullOrEmpty(cellValue)) continue;
 
-					if (rowIndex == 24)
-					{
-						int xa = 0;
-					}
+					
 
 					if (tttttt.Contains($"{letter}{rowIndex}"))
 					{
@@ -197,23 +215,29 @@ namespace ZrTBMCodeForTestItem.ccCells
 					if (this.getCurrentCellFontColorName() == "Black" || this.getCurrentCellFontColorName() == "0")//黑色字体代表是控件cell.GetMergedRange().ColumnCount
 					{
 						//生成控件
-						//Control c = this.createControl.CreateZrControl();
-						TextBox txb = new TextBox();
-						txb.Parent = realParent == null ? parent : realParent; 
-						txb.ForeColor = Color.Gray;
-						txb.TextAlign = HorizontalAlignment.Center;
-						txb.Text = $"{letter}{rowIndex}";
-						new ToolTip().SetToolTip(txb, $"{letter}{rowIndex}:{cellValue}");
-						setControlLocation(txb, true, tcInfo);
+						ZrControlExternalInfoFromFile dbInfo = this.getZrControlExternalInfo(cellValue);
+						Control c = this.createControl.CreateZrControl(dbInfo);
+						c.TabIndex = tabIndex;
+						tabIndex++;
+						//TextBox c = new TextBox();
+						//c.ForeColor = Color.Gray;
+						//c.TextAlign = HorizontalAlignment.Center;
+						//c.Text = $"{letter}{rowIndex}";
+						c.Parent = realParent == null ? parent : realParent; 
+						new ToolTip().SetToolTip(c, $"{letter}{rowIndex}:{cellValue}");
+						setControlLocation(c, true, tcInfo);
 					}
 					else
 					{
 						Label lbl = new Label();
+						lbl.Name = $"lbl{cellValue}";
 						lbl.Parent = realParent == null ? parent : realParent; 
 						lbl.Text = cellValue;
 						lbl.Font = new System.Drawing.Font(currentCell.GetStyle().Font.Name, currentCell.GetStyle().Font.Size);
 						//lbl.Text = $"{letter}{rowIndex}";
 						lbl.AutoSize = true;
+						lbl.TabIndex = tabIndex;
+						tabIndex++;
 						setControlLocation(lbl, false, tcInfo);
 					}
 				}
@@ -559,5 +583,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 			if (this.currentCell == null) return null;
 			return this.currentCell.GetStyle().Font.Color.Name;
 		}
+		
+		#endregion
 	}
 }

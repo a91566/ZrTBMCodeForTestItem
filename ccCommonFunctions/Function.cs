@@ -22,6 +22,32 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		/// <param name="list">列表内容</param>
 		/// <param name="filepath">文件全路径</param>
+		/// <param name="header">写入头部标识文件</param>
+		public static void WriteFile(List<string> list, string filepath, bool header)
+		{
+			if (header)
+			{
+				List<string> headerInfo = new List<string>()
+				{
+					"/*",
+					$" * {DateTime.Now.ToString("yyyy年M月d日 HH:mm:ss")} 中润代码生成器",
+					" *",
+					" */"
+				};
+				list.InsertRange(0, headerInfo);
+				WriteFile(list, filepath);
+			}
+			else
+			{
+				WriteFile(list, filepath);
+			}
+		}
+
+		/// <summary>
+		/// 写文件
+		/// </summary>
+		/// <param name="list">列表内容</param>
+		/// <param name="filepath">文件全路径</param>
 		public static void WriteFile(List<string> list, string filepath)
 		{
 			using (FileStream fs = new FileStream(filepath, FileMode.Create))
@@ -67,15 +93,15 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			if (header)
 			{				
-				List<string> list = new List<string>()
+				List<string> headerInfo = new List<string>()
 				{
 					"/*",
 					$" * {DateTime.Now.ToString("yyyy年M月d日 HH:mm:ss")} 中润代码生成器",
 					" *",
 					" */"
 				};
-				list.AddRange(words);
-				WriteFile(list, filepath);
+				headerInfo.AddRange(words);
+				WriteFile(headerInfo, filepath);
 			}
 			else
 			{

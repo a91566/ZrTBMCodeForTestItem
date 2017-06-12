@@ -30,3 +30,11 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccS
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.xml
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.pdb
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.dll.config
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccSystemConfig.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\DBHelper.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccSystemConfig.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.xml
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.dll.config

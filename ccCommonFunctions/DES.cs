@@ -1,5 +1,9 @@
 ﻿/*
  * 2017年6月4日 12:48:48 郑少宝 DES 加解密
+ * 
+ * 你有没有那么一刻
+ * 抱着某人
+ * 感觉就像拥有了整个世界
  */
 using System;
 using System.Security.Cryptography;

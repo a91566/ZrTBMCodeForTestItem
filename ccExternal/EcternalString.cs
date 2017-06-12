@@ -1,6 +1,10 @@
 ﻿/*
  * 2017年6月6日 14:16:22 郑少宝 扩展方法
  * 此扩展类 针对中润代码生成器，其他未必适用
+ * 
+ * 从来不偷东西的你，却爱偷笑
+ * 于是从来不偷东西的我
+ * 便学会了偷看
  */
 using System;
 using System.Collections.Generic;
@@ -21,7 +25,7 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 		public static bool ToBool(this string s)
 		{
 			if (string.IsNullOrEmpty(s)) return false;
-			if (s == "1" || s.ToLower() == "true") return true;
+			if (s == "1" || s == "是" || s.ToLower() == "true") return true;
 			return false;
 		}
 

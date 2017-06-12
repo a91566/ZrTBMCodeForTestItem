@@ -1,5 +1,9 @@
 ﻿/*
  * 2017年6月11日 12:58:54 郑少宝 内嵌页的信息
+ * 
+ * 我那么爱吃醋不是因为不相信你
+ * 而是你在我心中太美好
+ * 尽管你并没那么优秀
  */
 using System.Collections.Generic;
 using System.Drawing;

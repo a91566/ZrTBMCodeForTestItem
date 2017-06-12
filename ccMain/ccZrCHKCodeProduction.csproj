@@ -113,6 +113,10 @@
       <Project>{73d4881a-291d-4693-ac7c-56ffbdafb16b}</Project>
       <Name>ccExternal</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ccLanguage\ccLanguage.csproj">
+      <Project>{c542b2be-fef9-4cd7-9127-9697e24630df}</Project>
+      <Name>ccLanguage</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ccSystemConfig\ccSystemConfig.csproj">
       <Project>{670debd4-3196-41d7-9a66-3665769d9891}</Project>
       <Name>ccSystemConfig</Name>

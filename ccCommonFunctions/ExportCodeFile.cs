@@ -6,12 +6,13 @@
  */
 using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
+using System.Reflection;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using ZrTBMCodeForTestItem.ccLanguage;
 
 namespace ZrTBMCodeForTestItem.ccCommonFunctions
 {
@@ -44,6 +45,15 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// 模版的应用程序集
 		/// </summary>
 		private const string sourceAssembly = "CHK_Accelerator";
+		/// <summary>
+		/// 显示信息委托
+		/// </summary>
+		/// <param name="operateInfo">输出信息</param>
+		public delegate void ShowOperateInfoHandle(string operateInfo);
+		/// <summary>
+		/// 显示信息事件
+		/// </summary>
+		public event ShowOperateInfoHandle ShowOperateInfoEvent;
 
 		/// <summary>
 		/// 导出文件类
@@ -62,6 +72,17 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		}
 
 		/// <summary>
+		/// 输出状态嘻嘻你
+		/// </summary>
+		/// <param name="text"></param>
+		private void outPut(string text)
+		{
+			if (this.ShowOperateInfoEvent == null) return;
+			Application.DoEvents();
+			ShowOperateInfoEvent(text);
+		}
+
+		/// <summary>
 		/// 创建所需的目录
 		/// </summary>
 		/// <returns></returns>
@@ -69,6 +90,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			try
 			{
+				outPut(Language.OutputInfo_CreateFolder);
 				string caFilePath = $@"{this.path}\{this.assemblyName}";
 				if (Directory.Exists(caFilePath)) Directory.Delete(caFilePath, true);
 				List<string> list = new List<string>()
@@ -99,7 +121,8 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		public void Export_csproj()
 		{
-			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}.csproj";
+			outPut(Language.OutputInfo_CreateCsproj);
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\{sourceAssembly}.csproj";
 			string[] words = Function.ReadFile(sourcePath);
 			for (int i = 0; i < words.Length; i++)
 			{
@@ -127,7 +150,8 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		public void Export_CheckClassControl()
 		{
-			string sourcePath = $@"{Application.StartupPath}\masterplate\CheckClassControl.cs";
+			outPut(Language.OutputInfo_CreateControlClass);
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\CheckClassControl.cs";
 			string[] words = Function.ReadFile(sourcePath);
 			for (int i = 0; i < words.Length; i++)
 			{
@@ -150,7 +174,8 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		public void Export_AssemblyInfo()
 		{
-			string sourcePath = $@"{Application.StartupPath}\masterplate\AssemblyInfo.cs";
+			outPut(Language.OutputInfo_CreateAssembly);
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\Properties\AssemblyInfo.cs";
 			string[] words = Function.ReadFile(sourcePath);
 			for (int i = 0; i < words.Length; i++)
 			{
@@ -181,6 +206,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		public void Export_AssemblyInfo_Masterplate()
 		{
+			outPut(Language.OutputInfo_CreateAssembly);
 			string sourcePath = $@"{Application.StartupPath}\masterplate\AssemblyInfo.cs";
 			string[] words = Function.ReadFile(sourcePath);
 			for (int i = 0; i < words.Length; i++)
@@ -241,34 +267,103 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <summary>
 		/// 导出收样的设计文件
 		/// </summary>
-		public void Export_Trust()
+		/// <param name="panModel">控件列表大小等属性</param>
+		public void Export_Trust(Control panModel)
 		{
-			this.Export_Trust_CS();
-			this.Export_Trust_Designer();
-			this.Export_Trust_Resx();
+			List<int> listRight = new List<int>();
+			List<int> listTop = new List<int>();
+			getUCSize(panModel, ref listRight, ref listTop);
+			listRight.Sort();
+			Size ucSize = new Size(listRight[listRight.Count - 1] + 10, listTop[listTop.Count - 1] + 10);
+
+			outPut(Language.OutputInfo_CreateTrust);
+			this.export_Trust_CS();
+
+			outPut(Language.OutputInfo_CreateTrustDesigner);
+			this.export_Trust_Designer(panModel, ucSize);
+
+			outPut(Language.OutputInfo_CreateTrustResx);
+			this.export_Trust_Resx();
 		}
 		/// <summary>
 		/// 导出收样的设计文件 后台代码
 		/// </summary>
-		private void Export_Trust_CS()
+		private void export_Trust_CS()
 		{
-
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcSampleInfo.cs";
+			string[] words = Function.ReadFile(sourcePath);
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (words[i].Contains(sourceAssembly))
+				{
+					words[i] = words[i].Replace(sourceAssembly, this.assemblyName);
+					break;
+				}
+			}
+			string targetPath = $@"{this.path}\{this.assemblyName}\UcSampleInfo.cs";
+			Function.WriteFile(words, targetPath, true);
 		}
 		/// <summary>
 		/// 导出收样的设计文件 窗体设计
 		/// </summary>
-		private void Export_Trust_Designer()
+		/// <param name="panModel">控件列表大小等属性</param>
+		private void export_Trust_Designer(Control panModel, Size ucSize)
 		{
-
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcSampleInfo.Designer.cs";
+			string[] words = Function.ReadFile(sourcePath);
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (words[i].Contains(sourceAssembly))
+				{
+					words[i] = words[i].Replace(sourceAssembly, this.assemblyName);
+				}
+				if (words[i].Contains("InitializeComponent"))
+				{
+					operateDesigner(words, i, panModel, ucSize);
+				}
+			}
 		}
 		/// <summary>
 		/// 导出收样的设计文件 资源文件
 		/// </summary>
-		private void Export_Trust_Resx()
+		private void export_Trust_Resx()
 		{
-			string sourcePath = $@"{Application.StartupPath}\masterplate\UcSampleInfo.resx";
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcSampleInfo.resx";
 			string targetPath = $@"{this.path}\{this.assemblyName}\UcSampleInfo.resx";
 			File.Copy(sourcePath, targetPath, true);
+		}
+
+		/// <summary>
+		/// 处理设计文件
+		/// </summary>
+		/// <param name="words">原内容</param>
+		/// <param name="index">所处位置</param>
+		/// <param name="panModel">控件列表大小等属性</param>
+		private void operateDesigner(string[] words, int index, Control panModel, Size ucSize)
+		{
+			string[] temp = new string[index + 3];
+			Array.Copy(words, temp, temp.Length);
+			List<string> list = temp.ToList();
+			//生成控件的语句
+			var listNewControl = new List<string>();
+			///控件属性的语句
+			var listProperty = new List<string>();
+			///控件属性的语句
+			var listControlsAdd = new List<string>();
+			///控件定义的语句
+			var listDefine = new List<string>();
+
+			this.addControlPropertyDefineInfo(panModel, ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine);
+			this.operateControlPropertyDefineInfo(ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine, ucSize);
+			
+			list.AddRange(listNewControl);
+			list.AddRange(listProperty);
+			list.AddRange(listControlsAdd);
+			list.AddRange(listDefine);
+			list.Add("	}");
+			list.Add("}");
+			string targetPath = $@"{this.path}\{this.assemblyName}\UcSampleInfo.Designer.cs";
+			Function.WriteFile(list, targetPath, true);
 		}
 		#endregion
 
@@ -276,35 +371,239 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <summary>
 		/// 导出试验的设计文件
 		/// </summary>
-		public void Export_Trial()
+		/// <param name="panModel">控件列表大小等属性</param>
+		public void Export_Trial(Control panModel)
 		{
-			this.Export_Trial_CS();
-			this.Export_Trial_Designer();
-			this.Export_Trial_Resx();
+			outPut(Language.OutputInfo_CreateTrial);
+			this.export_Trial_CS();
+
+			outPut(Language.OutputInfo_CreateTrial);
+			this.export_Trial_Designer(panModel);
+
+			outPut(Language.OutputInfo_CreateTrial);
+			this.export_Trial_Resx();
+
+			outPut(Language.OutputInfo_Done);
 		}
 		/// <summary>
 		/// 导出试验的设计文件 后台代码
 		/// </summary>
-		private void Export_Trial_CS()
+		private void export_Trial_CS()
 		{
 
 		}
 		/// <summary>
 		/// 导出试验的设计文件 窗体设计
 		/// </summary>
-		private void Export_Trial_Designer()
+		/// <param name="panModel">控件列表大小等属性</param>
+		private void export_Trial_Designer(Control panModel)
 		{
 
 		}
 		/// <summary>
 		/// 导出试验的设计文件 资源文件
 		/// </summary>
-		private void Export_Trial_Resx()
+		private void export_Trial_Resx()
 		{
-			string sourcePath = $@"{Application.StartupPath}\masterplate\UcProcessInfo.resx";
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcProcessInfo.resx";
 			string targetPath = $@"{this.path}\{this.assemblyName}\UcProcessInfo.resx";
 			File.Copy(sourcePath, targetPath, true);
 		}
 		#endregion
+
+		
+
+		/// <summary>
+		/// 添加控件的定义及属性信息
+		/// 如：private System.Windows.Forms.TabControl tcTest;
+		/// </summary>
+		/// <param name="pan">控件容器</param>
+		/// <param name="listNewControl">new 语句</param>
+		/// <param name="listProperty">属性语句</param>
+		/// <param name="listDefine">定义语句</param>
+		private void addControlPropertyDefineInfo(Control pan, ref List<string> listNewControl, ref List<string> listProperty, ref List<string> listControlsAdd, ref List<string> listDefine)
+		{
+			foreach (Control item in pan.Controls)
+			{
+				listNewControl.Add(this.getControlNew(item));
+				listProperty.AddRange(this.getControlProperty(item));
+				listControlsAdd.Add(this.getControlAddToParent(item));
+				listDefine.Add(this.getControlDefine(item));
+				if (item.Controls.Count > 0)
+				{
+					addControlPropertyDefineInfo(item, ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine);
+				}
+			}
+		}
+		/// <summary>
+		/// 获取创建控件的语句
+		/// </summary>
+		/// <param name="c">控件</param>
+		/// <returns></returns>
+		private string getControlNew(Control c)
+		{
+			if (c is Label)
+			{
+				return $"			this.{c.Name} = new System.Windows.Forms.Label();";
+			}
+			else
+			{
+				return $"			this.{c.Name} = new {c.GetType().FullName}(this.components);";
+			}
+		}
+
+
+		/// <summary>
+		/// 获取控件属性的语句
+		/// </summary>
+		/// <param name="c">控件</param>
+		/// <returns></returns>
+		private List<string> getControlProperty(Control c)
+		{
+			var result = new List<string>();
+			result.Add($"			//");
+			result.Add($"			// {c.Name}");
+			result.Add($"			//");
+			result.Add($@"			this.{c.Name}.Name = ""{c.Name}""");
+			result.Add($@"			this.{c.Name}.Location = new System.Drawing.Point({c.Location.X}, {c.Location.Y});");
+			result.Add($@"			this.{c.Name}.Size = new System.Drawing.Size({c.Size.Width}, {c.Size.Height});");
+			result.AddRange(this.getControlPropertySpecial(c));
+			//switch (c)
+			//{
+			//	case Label lbl:
+			//		result.Add($@"			this.{c.Name}.AutoSize = ""{lbl.AutoSize.ToString()}""");
+			//		break;
+			//	case ZrControl.ZrDynamicTextBox txb:
+			//		result.Add($@"			this.{c.Name}.ZrDescription = ""{txb.ZrDescription}""");
+			//		break;
+			//}
+			return result;
+		}
+
+		/// <summary>
+		/// 获取创建控件的语句
+		/// </summary>
+		/// <param name="c">控件</param>
+		/// <returns></returns>
+		private string getControlAddToParent(Control c)
+		{
+			return $"			this.Controls.Add(this.{c.Name});";
+		}
+
+		/// <summary>
+		/// 获取创建控件的语句
+		/// </summary>
+		/// <param name="c">控件</param>
+		/// <returns></returns>
+		private string getControlDefine(Control c)
+		{
+			return $"		private {c.GetType().FullName} {c.Name};";
+		}
+
+		/// <summary>
+		/// 信息再处理
+		/// </summary>
+		/// <param name="listNewControl">new 语句</param>
+		/// <param name="listProperty">属性语句</param>
+		/// <param name="listDefine">定义语句</param>
+		private void operateControlPropertyDefineInfo(ref List<string> listNewControl, ref List<string> listProperty, 
+			ref List<string> listControlsAdd, ref List<string> listDefine, Size ucSize)
+		{
+			//使用 Tab 制表符
+			listNewControl.Add("			this.SuspendLayout()");
+
+			
+			listControlsAdd.Insert(0, $"			this.AutoScroll = true;");
+			listControlsAdd.Insert(0, $"			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;");
+			listControlsAdd.Insert(0, $"			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);");
+			listControlsAdd.Insert(0, "");
+			listControlsAdd.Add(@"			this.Name = ""UcSampleInfo"";");
+			listControlsAdd.Add($"			this.Size = new System.Drawing.Size({ucSize.Width}, {ucSize.Height});");
+			listControlsAdd.Add("			this.ResumeLayout(false);");
+			listControlsAdd.Add("			this.PerformLayout();");
+			listControlsAdd.Add("		}");
+			listControlsAdd.Add("");
+			listControlsAdd.Add("		#endregion");
+			listControlsAdd.Add("");
+		}
+
+		/// <summary>
+		/// 获取用户控件的宽度
+		/// </summary>
+		/// <param name="pan">容器</param>
+		/// <param name="listRight">集合</param>
+		/// <param name="listTop">集合</param>
+		private void getUCSize(Control pan, ref List<int> listRight, ref List<int> listTop)
+		{
+			foreach (Control item in pan.Controls)
+			{
+				listRight.Add(item.Left + item.Width);
+				listTop.Add(item.Top + item.Height);
+				if (item.Controls.Count > 0)
+				{
+					getUCSize(item, ref listRight, ref listTop);
+				}
+			}
+		}
+
+		/// <summary>
+		/// 通过反射获取属性的值（必要）
+		/// </summary>
+		/// <param name="c">控件</param>
+		/// <returns></returns>
+		private List<string> getControlPropertySpecial(Control c)
+		{
+			List<string> list = new List<string>();
+			List<string> listStringPropertyInfo = new List<string>() { "ZrDescription", "ZrField", "ZrFormat", "ZrTable", "ZrVerify" };
+			List<string> listIntPropertyInfo = new List<string>() { "TabIndex", "ZrFieldLength" };
+
+			Type type = c.GetType();
+			PropertyInfo property = null;
+			foreach (var item in listStringPropertyInfo)
+			{
+				property = type.GetProperty(item);
+				if (property != null)
+				{
+					object obj = property.GetValue(c, null);
+					list.Add(string.Format("			this.{0}.{1} = {2};", c.Name, item,
+						obj == null ? "null" : string.Format(@"""{0}""", obj.ToString())));
+				}
+			}
+
+			foreach (var item in listIntPropertyInfo)
+			{
+				property = type.GetProperty(item);
+				if (property != null)
+				{
+					object obj = property.GetValue(c, null);
+					list.Add(string.Format("			this.{0}.{1} = {2};", c.Name, item,
+						obj == null ? "0" : obj.ToString()));
+				}
+			}
+
+			property = type.GetProperty("ZrIsNotNull");
+			if (property != null)
+			{
+				object obj = property.GetValue(c, null);
+				list.Add(string.Format("			this.{0}.ZrIsNotNull = {1};", c.Name,
+					obj == null ? "false" : obj.ToString().ToLower()));
+			}
+
+			property = type.GetProperty("ZrIsReadOnly");
+			if (property != null)
+			{
+				object obj = property.GetValue(c, null);
+				list.Add(string.Format("			this.{0}.ZrIsReadOnly = {1};", c.Name,
+					obj == null ? "false" : obj.ToString().ToLower()));
+			}
+
+			property = type.GetProperty("BorderColor");
+			if (property != null)
+			{
+				object obj = property.GetValue(c, null);
+				list.Add(string.Format("			this.{0}.BorderColor = System.Drawing.Color.{1};", c.Name, ((Color)obj).Name));
+			}
+			return list;
+		}
 	}
 }

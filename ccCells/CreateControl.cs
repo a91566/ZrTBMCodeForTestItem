@@ -1,5 +1,9 @@
 ﻿/*
  * 2017年6月8日 08:55:23 郑少宝
+ * 
+ * 最温柔的月光
+ * 也敌不过
+ * 你转瞬的回眸
  */
 using System.Windows.Forms;
 
@@ -29,26 +33,57 @@ namespace ZrTBMCodeForTestItem.ccCells
 		public Control CreateZrControl(ZrControlExternalInfoFromFile  item)
 		{
 			Control c;
-			if (item.TypeLength.StartsWith("varchar") && item.ZrIsEnum)
+			if (item == null)
 			{
-				c = new ZrControl.ZrDynamicComboBox();				
+				c = new Label();
+				c.Name = $"lbl{System.Guid.NewGuid().ToString("N")}";
+				c.Text = "无字段信息";
+				c.ForeColor = System.Drawing.Color.Red;
+				return c;
 			}
-			else if (item.TypeLength.StartsWith("varchar") && !item.ZrIsEnum)
+			if (item.ZrIsEnum)
 			{
-				c = new ZrControl.ZrDynamicTextBox();
-			}
-			else if (item.TypeLength.StartsWith("datetime"))
-			{
-				c = new ZrControl.ZrDateTimePicker();
-			}
-			else if (item.TypeLength.StartsWith("bit"))
-			{
-				c = new ZrControl.ZrDynamicCheckBox();
+				c = new ZrControl.ZrDynamicComboBox();
+				c.Name = $"cmb{item.ZrField}";
 			}
 			else
-			{
-				return null;
-			}
+			{			
+				string columnType = item.TypeLength.ToLower();
+				if (columnType.StartsWith("varchar") 
+					|| columnType.StartsWith("nvarchar")
+					|| columnType.StartsWith("int")
+					|| columnType.StartsWith("decimal")
+					|| columnType.StartsWith("double")
+					|| columnType.StartsWith("float")
+					|| columnType.StartsWith("numeric")
+					)
+				{
+					c = new ZrControl.ZrDynamicTextBox();
+					c.Name = $"txb{item.ZrField}";
+					if (item.ZrIsNotNull)
+					{
+						(c as ZrControl.ZrDynamicTextBox).BorderColor = System.Drawing.Color.Red;
+					}
+				}
+				else if (columnType.StartsWith("datetime"))
+				{
+					c = new ZrControl.ZrDateTimePicker();
+					c.Name = $"dtp{item.ZrField}";
+				}
+				else if (columnType.StartsWith("bit"))
+				{
+					c = new ZrControl.ZrDynamicCheckBox();
+					c.Name = $"ckb{item.ZrField}";
+				}
+				else
+				{
+					c = new Label();
+					c.Name = $"lbl{System.Guid.NewGuid().ToString("N")}";
+					c.Text = "未知控件类型";
+					c.ForeColor = System.Drawing.Color.Red;
+					return c;
+				}
+			}			
 			(c as ZrControl.IZrControl).SetZrControlExternalInfo(item);
 			return c;
 		}

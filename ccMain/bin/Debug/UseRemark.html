@@ -12,7 +12,7 @@
         .title {
             height: 40px;
             line-height: 40px;
-            width: 1000px;
+            width: 1200px;
             margin: auto;
         }
         .header {
@@ -28,8 +28,11 @@
 		header .title{
 			text-align: center;
 		}
+		.full-width{
+			width: 100%;
+		}
 		.content{
-			width: 1000px;
+			width: 1200px;
 			margin: 10px auto;
 			border-bottom: 1px;
 		}
@@ -53,7 +56,7 @@
 			margin: 10px 0;
 		}
 		#update_log{
-			width: 1000px;
+			width: 1200px;
 			margin: 10px auto;
 		}
 		#update_log ul{
@@ -63,6 +66,18 @@
 		.tips{
 			padding-left: 30px;
 		}
+		.red-tips{
+			background-color: #ff0000;
+			display: inline-block;
+			height: 30px;
+			line-height: 30px;
+			margin: 0 6px;
+			padding: 0 10px; 
+			border-radius: 6px;
+			color: #fff;
+			font-weight: bold;"
+		}
+
 	</style>
 </head>
 <body>
@@ -70,69 +85,96 @@
 		<div class="title">中润检测项目开发说明</div>
 	</header>
 	<main>
-		<div class="content">
-			<ul>
-				<li class="item item1">
-					<div class="title">一、检测项目开发说明</div>
-					<ul>
-						<li>1. Helper 类继承接口 ICHK  </li>
-						<li class="tips">定义一个常量： private const string ZrCode = "A0054";</li>
-						<li class="tips">显式实现一个方法 ICHK.GetZrCode() return ZrCode </li>
-						<li>2. Trust （收样窗体）继承 Trust</li>
-						<li class="tips">覆写 Base 的 InitBaseCheckClassInfo 方法，并且调用 </li>
-						<li>3. Trial （试验窗体）继承 Trial</li>
-					</ul>
-				</li>
+		<div class="full-width">
+			<div class="content">
+				<ul>
+	                <li class="item">
+	                    <div class="title">一、窗体设计需求文档规范说明</div>
+	                    <ul>
+	                        <li>1. 第一页作为备用说明页，不做任何读取。收样设计放在第二页，试验设计放在第三四五...页。</li>
+	                        <li>2. 退出标志为 
+	                        	<span class="red-tips">红色（#FF0000）</span>
+	                        	填充的单元格（第一列某一行）（最多也就读取 1000 行），即某一行第一列为红色背景填充，那么就不再往下读取，往下的内容可供开发人员开发参考
+	                    	</li>
+	                        <li>3. 收样就一页，没有选项卡设计</li>
+	                        <li>4. 试验是选项卡，如果内嵌选项卡需要严格按照格式（暂时没有实现其他容器控件的内嵌，如 Panel 与 GroupBox,及其他容器控件）</li>
+	                        <li class="tips">4.1 标识为 tabcontrol 的下一行，只能填 tabpage 信息，且合并列（读取占用宽度）</li>
+	                        <li class="tips">4.2 上点所说的所占用(高度)行数必须一样，即所有的都取第一个的所占用行数</li>
+	                        <li>5. 需求文档内容说明：</li>
+	                        <li class="tips">5.1 正常在 Excel 工作簿里的某一行某一列输入数据。行列会被代码生成器读其坐标。</li>
+	                        <li class="tips">5.2 界面需要 Label, 那么就在单元格填入内容，注意：字体颜色<span class="red-tips">不能为黑色（#000）</span></li>
+	                        <li class="tips">5.3 界面需要其他输入控件（TextBox, ComboBox...）, 那么就在单元格填入所属的字段名称，注意：这里字体颜色用黑色（#000）</li>
+	                    </ul>
+	                </li>
+				</ul>				
+			</div>
 
-				<li class="item">
-					<div class="title">二、检测项目基类说明</div>
-					<ul>
-						<li>1. Base 类继承接口 IDragControl ，显式实现接口 IDragControl 的所有方法</li>
-						<li>2. Trust （收样窗体的父类）继承 Base, ICHK_Trust ，隐式实现接口 ICHK_Trust 的所有方法</li>
-						<li class="tips">覆写 Base 的 InitBaseCheckClassInfo 方法，并且调用 </li>
-						<li>3. Trial （试验窗体的父类）继承 Base, ICHK_Trial ，隐式实现接口 ICHK_Trial 的所有方法</li>
-					</ul>
-				</li>
+			<div class="full-width">
+                <div style="margin: auto; border-bottom: 1px solid skyblue;padding-bottom: 10px; text-align: center;">
+                	<img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/1R6ZfhVznpXI8t7B3kmz3IokrYMBX3Y4MnlKuqJtD58!/r/dGsBAAAAAAAA" title="窗体设计文件的信息" style="margin: 0 auto;">
+                </div>	
+            </div>
 
-				<li class="item item1">
-					<div class="title">三、调用说明</div>
-					<ul>
-						<li>1. App 装载 DLL 程序集，判断是否含有接口 ICHK ，否则 return </li>
-						<li>2. 调用接口方法 ICHK.GetZRCode() 判断 ZrCode 是否相同，否则 return</li>
-						<li>3. 根据业务调用具体接口 </li>
-							<ul style="margin: 0 40px;">
-								<li>收样调用接口 ICHK_Trust</li>
-								<li>试验调用接口 ICHK_Trial</li>
-								<li>拖拽调用接口 IDragControl</li>
-								<li>注意：接口调用不要用匿名委托</li>
-							</ul>
-						<li></li>
-					</ul>
-				</li>
+			<div class="content">
+				<ul>
+	                <li class="item item1">
+	                    <div class="title">二、数据库字段对照需求文档规范说明</div>
+	                    <ul>
+	                        <li>1. 第一页作为备用说明页，不做任何读取。字段内容放在第二三四...页。</li>
+	                        <li>2. 退出标志同窗体设计文档</li>
+	                        <li>3. 包含的信息如下图，红色字体列不能为空</li>
+	                    </ul>
+	                </li>
+				</ul>				
+			</div>
 
+			<div class="full-width">
+                <div style="margin: auto; border-bottom: 1px solid skyblue;padding-bottom: 10px; text-align: center;">
+                	<img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/B*dELmJ1nM5ZdbnuBpRxbp6ty6SB4Hhb.C1tnA0f5nA!/r/dGsBAAAAAAAA" title="数据库字段需要录入的信息" style="margin: 0 auto;">
+                </div>	
+            </div>
 
-                <li class="item">
-                    <div class="title">四、窗体设计需求文档规范说明</div>
-                    <ul>
-                        <li>1. 第一页作为备用说明页，不做任何读取。收样内容放在第二页，试验内容放在第三四五...页。</li>
-                        <li>2. 退出标志为 红色填充的单元格（第一列某一行）（最多也就读取 1000 行）</li>
-                        <li>3. 收样就一页</li>
-                        <li>4. 试验是选项卡，如果内嵌选项卡需要严格按照格式（暂时没有实现其他容器控件的内嵌，如 Panel 与 GroupBox,及其他容器控件）</li>
-                        <li class="tips">4.1 标识为 tabcontrol 的下一行，只能填 tabpage 信息，且合并列（读取占用宽度）</li>
-                        <li class="tips">4.2 上点所说的所占用行数必须一样，即所有的都取第一个的所占用行数</li>
-                    </ul>
-                </li>
+			<div class="content">
+				<ul>
+					<li class="item">
+						<div class="title">三、检测项目开发说明</div>
+						<ul>
+							<li>1. Helper 类继承接口 ICHK  </li>
+							<li class="tips">定义一个常量： private const string ZrCode = "A0054";</li>
+							<li class="tips">显式实现一个方法 ICHK.GetZrCode() return ZrCode </li>
+							<li>2. Trust （收样窗体）继承 Trust</li>
+							<li class="tips">覆写 Base 的 InitBaseCheckClassInfo 方法，并且调用 </li>
+							<li>3. Trial （试验窗体）继承 Trial</li>
+						</ul>
+					</li>
 
-                <li class="item item1">
-                    <div class="title">五、数据库字段对照需求文档规范说明</div>
-                    <ul>
-                        <li>1. 第一页作为备用说明页，不做任何读取。字段内容放在第二三四...页。</li>
-                        <li>2. 退出标志同窗体设计文档</li>
-                    </ul>
-                </li>
+					<li class="item item1">
+						<div class="title">四、检测项目基类说明</div>
+						<ul>
+							<li>1. Base 类继承接口 IDragControl ，显式实现接口 IDragControl 的所有方法</li>
+							<li>2. Trust （收样窗体的父类）继承 Base, ICHK_Trust ，隐式实现接口 ICHK_Trust 的所有方法</li>
+							<li class="tips">覆写 Base 的 InitBaseCheckClassInfo 方法，并且调用 </li>
+							<li>3. Trial （试验窗体的父类）继承 Base, ICHK_Trial ，隐式实现接口 ICHK_Trial 的所有方法</li>
+						</ul>
+					</li>
 
-
-			</ul>
+					<li class="item">
+						<div class="title">五、调用说明</div>
+						<ul>
+							<li>1. App 装载 DLL 程序集，判断是否含有接口 ICHK ，否则 return </li>
+							<li>2. 调用接口方法 ICHK.GetZRCode() 判断 ZrCode 是否相同，否则 return</li>
+							<li>3. 根据业务调用具体接口 </li>
+								<ul style="margin: 0 40px;">
+									<li>收样调用接口 ICHK_Trust</li>
+									<li>试验调用接口 ICHK_Trial</li>
+									<li>拖拽调用接口 IDragControl</li>
+									<li>注意：接口调用不要用匿名委托</li>
+								</ul>
+							<li></li>
+						</ul>
+					</li>
+				</ul>
+			</div>
 		</div>
 	</main>
 	<footer>

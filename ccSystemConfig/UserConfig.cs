@@ -1,5 +1,9 @@
 ﻿/*
  * 2017年6月4日 16:50:00 郑少宝 用户配置
+ * 
+ * 跟我走吧。
+ * 不愿意吗？
+ * 不愿意的话，那就让我跟你走吧。
  */
 using System.Collections.Generic;
 using System.Data;
@@ -72,6 +76,11 @@ namespace ZrTBMCodeForTestItem.ccSystemConfig
 			return this.GetConfig(key.ToString());
 		}
 
+		/// <summary>
+		/// 更新默认值
+		/// </summary>
+		/// <param name="dict">默认值字典数据</param>
+		/// <returns></returns>
 		public int UpdateConfig(Dictionary<string, string> dict)
 		{
 			List<string> list = new List<string>();

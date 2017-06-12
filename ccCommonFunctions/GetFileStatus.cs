@@ -1,4 +1,11 @@
-﻿using System;
+﻿/*
+ * 2017年6月12日 17:13:37 郑少宝 查看文件状态
+ * 
+ * 只要你肯转头
+ * 我一直为你静候
+ * 一生为期
+ */
+using System;
 using System.Runtime.InteropServices;
 
 namespace ZsbApps

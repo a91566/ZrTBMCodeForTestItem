@@ -33,8 +33,10 @@
 			this.toolStrip1 = new System.Windows.Forms.ToolStrip();
 			this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
 			this.tsbClose = new System.Windows.Forms.ToolStripButton();
+			this.tsbSaveDefault = new System.Windows.Forms.ToolStripButton();
 			this.tsbRequirementFile = new System.Windows.Forms.ToolStripButton();
 			this.tsbExportProject = new System.Windows.Forms.ToolStripButton();
+			this.tslOperateInfo = new System.Windows.Forms.ToolStripLabel();
 			this.panMain = new System.Windows.Forms.Panel();
 			this.tcMain = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -65,7 +67,6 @@
 			this.tabPage3 = new System.Windows.Forms.TabPage();
 			this.panTrial = new System.Windows.Forms.Panel();
 			this.panel4 = new System.Windows.Forms.Panel();
-			this.button3 = new System.Windows.Forms.Button();
 			this.btnTrialRefresh = new System.Windows.Forms.Button();
 			this.tabPage4 = new System.Windows.Forms.TabPage();
 			this.panData = new System.Windows.Forms.Panel();
@@ -76,6 +77,7 @@
 			this.btnDataRefresh = new System.Windows.Forms.Button();
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -113,8 +115,11 @@
 			this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripButton1,
             this.tsbClose,
+            this.tsbSaveDefault,
             this.tsbRequirementFile,
-            this.tsbExportProject});
+            this.tsbExportProject,
+            this.tslOperateInfo,
+            this.toolStripButton2});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(1300, 55);
@@ -140,6 +145,17 @@
 			this.tsbClose.Text = "关闭";
 			this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
 			// 
+			// tsbSaveDefault
+			// 
+			this.tsbSaveDefault.Font = new System.Drawing.Font("新宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+			this.tsbSaveDefault.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.tsbSaveDefault.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Save_48;
+			this.tsbSaveDefault.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbSaveDefault.Name = "tsbSaveDefault";
+			this.tsbSaveDefault.Size = new System.Drawing.Size(145, 52);
+			this.tsbSaveDefault.Text = "保存默认值";
+			this.tsbSaveDefault.Click += new System.EventHandler(this.tsbSaveDefault_Click);
+			// 
 			// tsbRequirementFile
 			// 
 			this.tsbRequirementFile.Font = new System.Drawing.Font("新宋体", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
@@ -162,6 +178,14 @@
 			this.tsbExportProject.Text = "导出项目类库";
 			this.tsbExportProject.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.tsbExportProject.Click += new System.EventHandler(this.tsbExportProject_Click);
+			// 
+			// tslOperateInfo
+			// 
+			this.tslOperateInfo.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tslOperateInfo.Enabled = false;
+			this.tslOperateInfo.Name = "tslOperateInfo";
+			this.tslOperateInfo.Size = new System.Drawing.Size(0, 52);
+			this.tslOperateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// panMain
 			// 
@@ -511,30 +535,12 @@
 			// 
 			// panel4
 			// 
-			this.panel4.Controls.Add(this.button3);
 			this.panel4.Controls.Add(this.btnTrialRefresh);
 			this.panel4.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel4.Location = new System.Drawing.Point(3, 3);
 			this.panel4.Name = "panel4";
 			this.panel4.Size = new System.Drawing.Size(1286, 72);
 			this.panel4.TabIndex = 3;
-			// 
-			// button3
-			// 
-			this.button3.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button3.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button3.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.button3.Image = ((System.Drawing.Image)(resources.GetObject("button3.Image")));
-			this.button3.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.button3.Location = new System.Drawing.Point(585, 11);
-			this.button3.Name = "button3";
-			this.button3.Size = new System.Drawing.Size(116, 50);
-			this.button3.TabIndex = 1;
-			this.button3.Text = "刷新";
-			this.button3.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.button3.UseVisualStyleBackColor = true;
-			this.button3.Click += new System.EventHandler(this.button3_Click);
 			// 
 			// btnTrialRefresh
 			// 
@@ -611,7 +617,6 @@
 			this.button2.Text = "...";
 			this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.button2.UseVisualStyleBackColor = true;
-			this.button2.Click += new System.EventHandler(this.button2_Click_1);
 			// 
 			// button1
 			// 
@@ -667,6 +672,16 @@
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.Size = new System.Drawing.Size(1286, 501);
 			this.webBrowser1.TabIndex = 0;
+			// 
+			// toolStripButton2
+			// 
+			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
+			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.toolStripButton2.Name = "toolStripButton2";
+			this.toolStripButton2.Size = new System.Drawing.Size(52, 52);
+			this.toolStripButton2.Text = "toolStripButton2";
+			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
 			// 
 			// FormMain
 			// 
@@ -750,7 +765,9 @@
 		private System.Windows.Forms.Button button2;
 		private System.Windows.Forms.TextBox txbExitColor;
 		private System.Windows.Forms.Label label8;
-		private System.Windows.Forms.Button button3;
+		private System.Windows.Forms.ToolStripButton tsbSaveDefault;
+		private System.Windows.Forms.ToolStripLabel tslOperateInfo;
+		private System.Windows.Forms.ToolStripButton toolStripButton2;
 	}
 }
 
