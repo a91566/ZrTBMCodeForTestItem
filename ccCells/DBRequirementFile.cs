@@ -97,7 +97,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 					}
 					catch (Exception ex)
 					{
-						ZrTBMCodeForTestItem.ccCommonFunctions.Function.MsgError($"发生异常，行号：{rowIndex},异常信息:{ex.Message}");
+						ccCommonFunctions.Function.MsgError($"发生异常，行号：{rowIndex},异常信息:{ex.Message}");
 						throw ex;
 					}
 					

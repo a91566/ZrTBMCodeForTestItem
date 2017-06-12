@@ -23,6 +23,10 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		/// </summary>
 		public const string NoRequirementFile = "没有需求文件，或者需求文件不符合";
 		/// <summary>
+		/// 中润编码或者解决方案名称不能为空
+		/// </summary>
+		public const string ZrCodeOrNameIsNull = "中润编码或者解决方案名称不能为空";
+		/// <summary>
 		/// 需求文件不符合
 		/// </summary>
 		public const string RequirementFileNotUse = "需求文件不符合";
@@ -30,6 +34,14 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		/// 导出文件，选择文件夹
 		/// </summary>
 		public const string OutFolder = "请选择导出的位置";
+		/// <summary>
+		/// 文件夹不存在
+		/// </summary>
+		public const string NoExistsFolder = "文件夹不存在";
+		/// <summary>
+		/// 导出文件夹不存在
+		/// </summary>
+		public const string NoExistsFolderForOut = "导出文件夹不存在";
 		/// <summary>
 		/// 导出文件，询问
 		/// </summary>
@@ -59,7 +71,6 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		public const string OutputInfo_CreateTrialResx = "正在导出试验资源文件...";
 		public const string OutputInfo_Done = "处理完成.";
 		#endregion
-
 
 		#region 按钮文字
 		/// <summary>

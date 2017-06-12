@@ -270,11 +270,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <param name="panModel">控件列表大小等属性</param>
 		public void Export_Trust(Control panModel)
 		{
-			List<int> listRight = new List<int>();
-			List<int> listTop = new List<int>();
-			getUCSize(panModel, ref listRight, ref listTop);
-			listRight.Sort();
-			Size ucSize = new Size(listRight[listRight.Count - 1] + 10, listTop[listTop.Count - 1] + 10);
+			Size ucSize = this.getUCSize(panModel);
 
 			outPut(Language.OutputInfo_CreateTrust);
 			this.export_Trust_CS();
@@ -285,6 +281,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			outPut(Language.OutputInfo_CreateTrustResx);
 			this.export_Trust_Resx();
 		}
+
 		/// <summary>
 		/// 导出收样的设计文件 后台代码
 		/// </summary>
@@ -303,6 +300,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			string targetPath = $@"{this.path}\{this.assemblyName}\UcSampleInfo.cs";
 			Function.WriteFile(words, targetPath, true);
 		}
+
 		/// <summary>
 		/// 导出收样的设计文件 窗体设计
 		/// </summary>
@@ -319,10 +317,12 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 				}
 				if (words[i].Contains("InitializeComponent"))
 				{
-					operateDesigner(words, i, panModel, ucSize);
+					operateDesigner_Trust(words, i, panModel, ucSize);
+					break;
 				}
 			}
 		}
+
 		/// <summary>
 		/// 导出收样的设计文件 资源文件
 		/// </summary>
@@ -339,7 +339,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <param name="words">原内容</param>
 		/// <param name="index">所处位置</param>
 		/// <param name="panModel">控件列表大小等属性</param>
-		private void operateDesigner(string[] words, int index, Control panModel, Size ucSize)
+		private void operateDesigner_Trust(string[] words, int index, Control panModel, Size ucSize)
 		{
 			string[] temp = new string[index + 3];
 			Array.Copy(words, temp, temp.Length);
@@ -353,8 +353,8 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			///控件定义的语句
 			var listDefine = new List<string>();
 
-			this.addControlPropertyDefineInfo(panModel, ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine);
-			this.operateControlPropertyDefineInfo(ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine, ucSize);
+			this.addControlPropertyDefineInfo_Trust(panModel, ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine);
+			this.operateControlPropertyDefineInfo_Trust(ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine, ucSize);
 			
 			list.AddRange(listNewControl);
 			list.AddRange(listProperty);
@@ -365,6 +365,68 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			string targetPath = $@"{this.path}\{this.assemblyName}\UcSampleInfo.Designer.cs";
 			Function.WriteFile(list, targetPath, true);
 		}
+
+		/// <summary>
+		/// 添加控件的定义及属性信息
+		/// 如：private System.Windows.Forms.TabControl tcTest;
+		/// </summary>
+		/// <param name="pan">控件容器</param>
+		/// <param name="listNewControl">new 语句</param>
+		/// <param name="listProperty">属性语句</param>
+		/// <param name="listDefine">定义语句</param>
+		private void addControlPropertyDefineInfo_Trust(Control pan, ref List<string> listNewControl, ref List<string> listProperty, ref List<string> listControlsAdd, ref List<string> listDefine)
+		{
+			foreach (Control item in pan.Controls)
+			{
+				listNewControl.Add(this.getControlNew(item));
+				listProperty.AddRange(this.getControlProperty(item));
+				listControlsAdd.Add(this.getControlAddToParent_Trust(item));
+				listDefine.Add(this.getControlDefine(item));
+				if (item.Controls.Count > 0)
+				{
+					addControlPropertyDefineInfo_Trust(item, ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine);
+				}
+			}
+		}	
+
+		/// <summary>
+		/// 获取创建控件的语句
+		/// </summary>
+		/// <param name="c">控件</param>
+		/// <param name="topParent">顶级控件</param>
+		/// <returns></returns>
+		private string getControlAddToParent_Trust(Control c)
+		{
+			return $"			this.Controls.Add(this.{c.Name});";
+		}
+
+		/// <summary>
+		/// 信息再处理
+		/// </summary>
+		/// <param name="listNewControl">new 语句</param>
+		/// <param name="listProperty">属性语句</param>
+		/// <param name="listDefine">定义语句</param>
+		private void operateControlPropertyDefineInfo_Trust(ref List<string> listNewControl, ref List<string> listProperty,
+			ref List<string> listControlsAdd, ref List<string> listDefine, Size ucSize)
+		{
+			//使用 Tab 制表符
+			listNewControl.Add("			this.SuspendLayout()");
+
+
+			listControlsAdd.Insert(0, $"			this.AutoScroll = true;");
+			listControlsAdd.Insert(0, $"			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;");
+			listControlsAdd.Insert(0, $"			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);");
+			listControlsAdd.Insert(0, "");
+			listControlsAdd.Add(@"			this.Name = ""UcSampleInfo"";");
+			listControlsAdd.Add($"			this.Size = new System.Drawing.Size({ucSize.Width}, {ucSize.Height});");
+			listControlsAdd.Add("			this.ResumeLayout(false);");
+			listControlsAdd.Add("			this.PerformLayout();");
+			listControlsAdd.Add("		}");
+			listControlsAdd.Add("");
+			listControlsAdd.Add("		#endregion");
+			listControlsAdd.Add("");
+		}
+
 		#endregion
 
 		#region 试验信息
@@ -374,11 +436,13 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <param name="panModel">控件列表大小等属性</param>
 		public void Export_Trial(Control panModel)
 		{
+			Size ucSize = this.getUCSize(panModel);
+
 			outPut(Language.OutputInfo_CreateTrial);
 			this.export_Trial_CS();
 
 			outPut(Language.OutputInfo_CreateTrial);
-			this.export_Trial_Designer(panModel);
+			this.export_Trial_Designer(panModel, ucSize);
 
 			outPut(Language.OutputInfo_CreateTrial);
 			this.export_Trial_Resx();
@@ -390,15 +454,40 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		private void export_Trial_CS()
 		{
-
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcProcessInfo.cs";
+			string[] words = Function.ReadFile(sourcePath);
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (words[i].Contains(sourceAssembly))
+				{
+					words[i] = words[i].Replace(sourceAssembly, this.assemblyName);
+					break;
+				}
+			}
+			string targetPath = $@"{this.path}\{this.assemblyName}\UcProcessInfo.cs";
+			Function.WriteFile(words, targetPath, true);
 		}
+
 		/// <summary>
 		/// 导出试验的设计文件 窗体设计
 		/// </summary>
 		/// <param name="panModel">控件列表大小等属性</param>
-		private void export_Trial_Designer(Control panModel)
+		private void export_Trial_Designer(Control panModel, Size ucSize)
 		{
-
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcProcessInfo.Designer.cs";
+			string[] words = Function.ReadFile(sourcePath);
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (words[i].Contains(sourceAssembly))
+				{
+					words[i] = words[i].Replace(sourceAssembly, this.assemblyName);
+				}
+				if (words[i].Contains("InitializeComponent"))
+				{
+					operateDesigner_Trial(words, i, panModel, ucSize);
+					break;
+				}
+			}
 		}
 		/// <summary>
 		/// 导出试验的设计文件 资源文件
@@ -409,9 +498,44 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			string targetPath = $@"{this.path}\{this.assemblyName}\UcProcessInfo.resx";
 			File.Copy(sourcePath, targetPath, true);
 		}
-		#endregion
 
-		
+		/// <summary>
+		/// 处理设计文件
+		/// </summary>
+		/// <param name="words">原内容</param>
+		/// <param name="index">所处位置</param>
+		/// <param name="panModel">控件列表大小等属性</param>
+		private void operateDesigner_Trial(string[] words, int index, Control panModel, Size ucSize)
+		{
+			string[] temp = new string[index + 3];
+			Array.Copy(words, temp, temp.Length);
+			List<string> list = temp.ToList();
+			//生成控件的语句
+			var listNewControl = new List<string>();
+			///控件属性的语句
+			var listProperty = new List<string>();
+			///控件属性的语句
+			var listControlsAdd = new List<string>();
+			///控件定义的语句
+			var listDefine = new List<string>();
+			///舒心控件语句， tabcontrol,tabpage 需要
+			var listSuspendLayout = new List<string>();
+
+			this.addControlPropertyDefineInfo_Trial(panModel.Name, panModel, ref listNewControl, ref listProperty, ref listControlsAdd, 
+				ref listDefine, ref listSuspendLayout);
+			this.operateControlPropertyDefineInfo_Trial(ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine, 
+				ref listSuspendLayout, ucSize);
+
+			list.AddRange(listNewControl);
+			list.AddRange(listSuspendLayout);
+			list.AddRange(listProperty);
+			list.AddRange(listControlsAdd);
+			list.AddRange(listDefine);
+			list.Add("	}");
+			list.Add("}");
+			string targetPath = $@"{this.path}\{this.assemblyName}\UcProcessInfo.Designer.cs";
+			Function.WriteFile(list, targetPath, true);
+		}
 
 		/// <summary>
 		/// 添加控件的定义及属性信息
@@ -421,37 +545,74 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <param name="listNewControl">new 语句</param>
 		/// <param name="listProperty">属性语句</param>
 		/// <param name="listDefine">定义语句</param>
-		private void addControlPropertyDefineInfo(Control pan, ref List<string> listNewControl, ref List<string> listProperty, ref List<string> listControlsAdd, ref List<string> listDefine)
+		private void addControlPropertyDefineInfo_Trial(string topParentName, Control pan, ref List<string> listNewControl, 
+			ref List<string> listProperty, ref List<string> listControlsAdd, ref List<string> listDefine,
+			ref List<string> listSuspendLayout)
 		{
 			foreach (Control item in pan.Controls)
 			{
 				listNewControl.Add(this.getControlNew(item));
 				listProperty.AddRange(this.getControlProperty(item));
-				listControlsAdd.Add(this.getControlAddToParent(item));
+				listControlsAdd.Add(this.getControlAddToParent_Trial(item, topParentName));
 				listDefine.Add(this.getControlDefine(item));
+				if (item is TabControl || item is TabPage)
+				{
+					listSuspendLayout.Add($"            this.{item.Name}.SuspendLayout();");
+				}
 				if (item.Controls.Count > 0)
 				{
-					addControlPropertyDefineInfo(item, ref listNewControl, ref listProperty, ref listControlsAdd, ref listDefine);
+					addControlPropertyDefineInfo_Trial(topParentName, item, ref listNewControl, ref listProperty, ref listControlsAdd, 
+						ref listDefine, ref listSuspendLayout);
 				}
 			}
 		}
+
 		/// <summary>
 		/// 获取创建控件的语句
 		/// </summary>
 		/// <param name="c">控件</param>
+		/// <param name="topParent">顶级控件</param>
 		/// <returns></returns>
-		private string getControlNew(Control c)
+		private string getControlAddToParent_Trial(Control c, string topParentName)
 		{
-			if (c is Label)
+			if (c.Parent.Name == topParentName)
 			{
-				return $"			this.{c.Name} = new System.Windows.Forms.Label();";
+				return $"			this.Controls.Add(this.{c.Name});";
 			}
 			else
 			{
-				return $"			this.{c.Name} = new {c.GetType().FullName}(this.components);";
+				return $"			this.{c.Parent.Name}.Controls.Add(this.{c.Name});";
 			}
 		}
 
+		/// <summary>
+		/// 信息再处理
+		/// </summary>
+		/// <param name="listNewControl">new 语句</param>
+		/// <param name="listProperty">属性语句</param>
+		/// <param name="listDefine">定义语句</param>
+		private void operateControlPropertyDefineInfo_Trial(ref List<string> listNewControl, ref List<string> listProperty,
+			ref List<string> listControlsAdd, ref List<string> listDefine, ref List<string> listSuspendLayout, Size ucSize)
+		{
+			//使用 Tab 制表符
+			listSuspendLayout.Add("			this.SuspendLayout();");
+
+
+			listControlsAdd.Insert(0, $"			this.AutoScroll = true;");
+			listControlsAdd.Insert(0, $"			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;");
+			listControlsAdd.Insert(0, $"			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);");
+			listControlsAdd.Insert(0, "");
+			listControlsAdd.Add(@"			this.Name = ""UcSampleInfo"";");
+			listControlsAdd.Add($"			this.Size = new System.Drawing.Size({ucSize.Width}, {ucSize.Height});");
+			listControlsAdd.Add("			this.ResumeLayout(false);");
+			listControlsAdd.Add("			this.PerformLayout();");
+			listControlsAdd.Add("		}");
+			listControlsAdd.Add("");
+			listControlsAdd.Add("		#endregion");
+			listControlsAdd.Add("");
+		}
+
+		#endregion
 
 		/// <summary>
 		/// 获取控件属性的语句
@@ -485,9 +646,16 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		/// <param name="c">控件</param>
 		/// <returns></returns>
-		private string getControlAddToParent(Control c)
+		private string getControlNew(Control c)
 		{
-			return $"			this.Controls.Add(this.{c.Name});";
+			if (c is Label || c is TabControl || c is TabPage)
+			{
+				return $"			this.{c.Name} = new {c.GetType().FullName}();";
+			}
+			else
+			{
+				return $"			this.{c.Name} = new {c.GetType().FullName}(this.components);";
+			}
 		}
 
 		/// <summary>
@@ -501,30 +669,17 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		}
 
 		/// <summary>
-		/// 信息再处理
+		/// 获取用户控件的宽度
 		/// </summary>
-		/// <param name="listNewControl">new 语句</param>
-		/// <param name="listProperty">属性语句</param>
-		/// <param name="listDefine">定义语句</param>
-		private void operateControlPropertyDefineInfo(ref List<string> listNewControl, ref List<string> listProperty, 
-			ref List<string> listControlsAdd, ref List<string> listDefine, Size ucSize)
+		/// <param name="pan">容器</param>
+		private Size getUCSize(Control pan)
 		{
-			//使用 Tab 制表符
-			listNewControl.Add("			this.SuspendLayout()");
-
-			
-			listControlsAdd.Insert(0, $"			this.AutoScroll = true;");
-			listControlsAdd.Insert(0, $"			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;");
-			listControlsAdd.Insert(0, $"			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);");
-			listControlsAdd.Insert(0, "");
-			listControlsAdd.Add(@"			this.Name = ""UcSampleInfo"";");
-			listControlsAdd.Add($"			this.Size = new System.Drawing.Size({ucSize.Width}, {ucSize.Height});");
-			listControlsAdd.Add("			this.ResumeLayout(false);");
-			listControlsAdd.Add("			this.PerformLayout();");
-			listControlsAdd.Add("		}");
-			listControlsAdd.Add("");
-			listControlsAdd.Add("		#endregion");
-			listControlsAdd.Add("");
+			List<int> listRight = new List<int>();
+			List<int> listTop = new List<int>();
+			getUCSize(pan, ref listRight, ref listTop);
+			listRight.Sort();
+			Size ucSize = new Size(listRight[listRight.Count - 1] + 10, listTop[listTop.Count - 1] + 10);
+			return ucSize;
 		}
 
 		/// <summary>
@@ -547,7 +702,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		}
 
 		/// <summary>
-		/// 通过反射获取属性的值（必要）
+		/// 通过反射获取必要属性的值
 		/// </summary>
 		/// <param name="c">控件</param>
 		/// <returns></returns>

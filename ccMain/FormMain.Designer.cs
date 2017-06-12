@@ -72,12 +72,12 @@
 			this.panData = new System.Windows.Forms.Panel();
 			this.listView1 = new System.Windows.Forms.ListView();
 			this.panel6 = new System.Windows.Forms.Panel();
-			this.button2 = new System.Windows.Forms.Button();
-			this.button1 = new System.Windows.Forms.Button();
+			this.btnExSQL = new System.Windows.Forms.Button();
+			this.btnExportSQL = new System.Windows.Forms.Button();
+			this.btnDBConfigSet = new System.Windows.Forms.Button();
 			this.btnDataRefresh = new System.Windows.Forms.Button();
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
-			this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -118,8 +118,7 @@
             this.tsbSaveDefault,
             this.tsbRequirementFile,
             this.tsbExportProject,
-            this.tslOperateInfo,
-            this.toolStripButton2});
+            this.tslOperateInfo});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(1300, 55);
@@ -593,8 +592,9 @@
 			// 
 			// panel6
 			// 
-			this.panel6.Controls.Add(this.button2);
-			this.panel6.Controls.Add(this.button1);
+			this.panel6.Controls.Add(this.btnExSQL);
+			this.panel6.Controls.Add(this.btnExportSQL);
+			this.panel6.Controls.Add(this.btnDBConfigSet);
 			this.panel6.Controls.Add(this.btnDataRefresh);
 			this.panel6.Dock = System.Windows.Forms.DockStyle.Top;
 			this.panel6.Location = new System.Drawing.Point(3, 3);
@@ -602,38 +602,55 @@
 			this.panel6.Size = new System.Drawing.Size(1286, 72);
 			this.panel6.TabIndex = 3;
 			// 
-			// button2
+			// btnExSQL
 			// 
-			this.button2.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button2.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button2.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.button2.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Database_48;
-			this.button2.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.button2.Location = new System.Drawing.Point(574, 11);
-			this.button2.Name = "button2";
-			this.button2.Size = new System.Drawing.Size(139, 50);
-			this.button2.TabIndex = 2;
-			this.button2.Text = "...";
-			this.button2.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.button2.UseVisualStyleBackColor = true;
+			this.btnExSQL.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
+			this.btnExSQL.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
+			this.btnExSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnExSQL.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.btnExSQL.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Writer48;
+			this.btnExSQL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnExSQL.Location = new System.Drawing.Point(332, 13);
+			this.btnExSQL.Name = "btnExSQL";
+			this.btnExSQL.Size = new System.Drawing.Size(153, 50);
+			this.btnExSQL.TabIndex = 3;
+			this.btnExSQL.Text = "执行脚本";
+			this.btnExSQL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExSQL.UseVisualStyleBackColor = true;
+			this.btnExSQL.Click += new System.EventHandler(this.btnExSQL_Click);
 			// 
-			// button1
+			// btnExportSQL
 			// 
-			this.button1.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button1.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
-			this.button1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.button1.ForeColor = System.Drawing.SystemColors.MenuHighlight;
-			this.button1.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Database_48;
-			this.button1.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-			this.button1.Location = new System.Drawing.Point(173, 13);
-			this.button1.Name = "button1";
-			this.button1.Size = new System.Drawing.Size(139, 50);
-			this.button1.TabIndex = 1;
-			this.button1.Text = "连接配置";
-			this.button1.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			this.button1.UseVisualStyleBackColor = true;
-			this.button1.Click += new System.EventHandler(this.button1_Click);
+			this.btnExportSQL.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
+			this.btnExportSQL.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
+			this.btnExportSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnExportSQL.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.btnExportSQL.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Script48;
+			this.btnExportSQL.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnExportSQL.Location = new System.Drawing.Point(505, 13);
+			this.btnExportSQL.Name = "btnExportSQL";
+			this.btnExportSQL.Size = new System.Drawing.Size(155, 50);
+			this.btnExportSQL.TabIndex = 2;
+			this.btnExportSQL.Text = "导出脚本";
+			this.btnExportSQL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnExportSQL.UseVisualStyleBackColor = true;
+			// 
+			// btnDBConfigSet
+			// 
+			this.btnDBConfigSet.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
+			this.btnDBConfigSet.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
+			this.btnDBConfigSet.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnDBConfigSet.ForeColor = System.Drawing.SystemColors.MenuHighlight;
+			this.btnDBConfigSet.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Database_48;
+			this.btnDBConfigSet.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
+			this.btnDBConfigSet.Location = new System.Drawing.Point(173, 13);
+			this.btnDBConfigSet.Name = "btnDBConfigSet";
+			this.btnDBConfigSet.Size = new System.Drawing.Size(139, 50);
+			this.btnDBConfigSet.TabIndex = 1;
+			this.btnDBConfigSet.Text = "连接配置";
+			this.btnDBConfigSet.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			this.btnDBConfigSet.UseVisualStyleBackColor = true;
+			this.btnDBConfigSet.Click += new System.EventHandler(this.btnDBConfigSet_Click);
 			// 
 			// btnDataRefresh
 			// 
@@ -672,16 +689,6 @@
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.Size = new System.Drawing.Size(1286, 501);
 			this.webBrowser1.TabIndex = 0;
-			// 
-			// toolStripButton2
-			// 
-			this.toolStripButton2.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
-			this.toolStripButton2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton2.Image")));
-			this.toolStripButton2.ImageTransparentColor = System.Drawing.Color.Magenta;
-			this.toolStripButton2.Name = "toolStripButton2";
-			this.toolStripButton2.Size = new System.Drawing.Size(52, 52);
-			this.toolStripButton2.Text = "toolStripButton2";
-			this.toolStripButton2.Click += new System.EventHandler(this.toolStripButton2_Click);
 			// 
 			// FormMain
 			// 
@@ -756,18 +763,18 @@
 		private System.Windows.Forms.Panel panData;
 		private System.Windows.Forms.Panel panel6;
 		private System.Windows.Forms.Button btnDataRefresh;
-		private System.Windows.Forms.Button button1;
+		private System.Windows.Forms.Button btnDBConfigSet;
 		private System.Windows.Forms.ListView listView1;
 		private System.Windows.Forms.TextBox txbDBFile;
 		private System.Windows.Forms.Label label7;
 		private System.Windows.Forms.TextBox txbExcelWithToPxScale;
 		private System.Windows.Forms.Label label9;
-		private System.Windows.Forms.Button button2;
+		private System.Windows.Forms.Button btnExportSQL;
 		private System.Windows.Forms.TextBox txbExitColor;
 		private System.Windows.Forms.Label label8;
 		private System.Windows.Forms.ToolStripButton tsbSaveDefault;
 		private System.Windows.Forms.ToolStripLabel tslOperateInfo;
-		private System.Windows.Forms.ToolStripButton toolStripButton2;
+		private System.Windows.Forms.Button btnExSQL;
 	}
 }
 

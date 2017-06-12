@@ -144,6 +144,8 @@
     <None Include="Resources\number_48px_1205829_easyicon.net.png" />
     <None Include="Resources\number_48px_1205830_easyicon.net.png" />
     <Content Include="bin\Debug\UseRemark.html" />
+    <None Include="Resources\writer_72.814216478191px_1206089_easyicon.net.png" />
+    <None Include="Resources\Browser_script_58.054862842893px_1192035_easyicon.net.png" />
     <Content Include="web_code_48px_1179075_easyicon.net.ico" />
   </ItemGroup>
   <ItemGroup>

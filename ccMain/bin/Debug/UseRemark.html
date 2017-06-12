@@ -8,12 +8,14 @@
 			margin: 0;
 			padding: 0;
 			list-style: none;
+			font-family:"宋体";
 		}
         .title {
             height: 40px;
             line-height: 40px;
             width: 1200px;
             margin: auto;
+            font-weight: bold;
         }
         .header {
             font-weight:bold;
@@ -30,6 +32,7 @@
 		}
 		.full-width{
 			width: 100%;
+            margin: 20px 0;
 		}
 		.content{
 			width: 1200px;
@@ -66,17 +69,31 @@
 		.tips{
 			padding-left: 30px;
 		}
-		.red-tips{
-			background-color: #ff0000;
+		.span-tips{
 			display: inline-block;
 			height: 30px;
 			line-height: 30px;
 			margin: 0 6px;
 			padding: 0 10px; 
 			border-radius: 6px;
-			color: #fff;
-			font-weight: bold;"
 		}
+		.red{
+			background-color: #ff0000;
+			color: #fff;
+		}
+		.blue{
+			background-color: #0094ff;
+			color: #fff;
+		}
+        .white {
+            background-color: #fff;
+            color: #000;
+        }
+        .image-tips {
+            font-weight: bold;
+            text-align: center;
+            line-height:30px;
+        }
 
 	</style>
 </head>
@@ -91,25 +108,36 @@
 	                <li class="item">
 	                    <div class="title">一、窗体设计需求文档规范说明</div>
 	                    <ul>
-	                        <li>1. 第一页作为备用说明页，不做任何读取。收样设计放在第二页，试验设计放在第三四五...页。</li>
-	                        <li>2. 退出标志为 
-	                        	<span class="red-tips">红色（#FF0000）</span>
-	                        	填充的单元格（第一列某一行）（最多也就读取 1000 行），即某一行第一列为红色背景填充，那么就不再往下读取，往下的内容可供开发人员开发参考
+	                        <li>1. 文件名后缀为 xlsx, 且文件名中需包含 收样/试验/窗体 三个词语中的一个即可，如：
+	                        	<span class="span-tips blue">水泥收样试验窗体设计.xlsx</span></li>
+	                        <li>2. 第一页作为备用说明页，不做任何读取。收样设计放在第二页，试验设计放在第三四五...页。</li>
+	                        <li>3 退出标志为 
+	                        	<span class="span-tips red">红色（#FF0000）</span>
+	                        	填充的单元格（第一列某一行）（最多也就读取 1000 行），即某一行第一列为红色背景填充，那么就不再往下读取，往下的内容可供开发人员开发参考。
 	                    	</li>
-	                        <li>3. 收样就一页，没有选项卡设计</li>
-	                        <li>4. 试验是选项卡，如果内嵌选项卡需要严格按照格式（暂时没有实现其他容器控件的内嵌，如 Panel 与 GroupBox,及其他容器控件）</li>
-	                        <li class="tips">4.1 标识为 tabcontrol 的下一行，只能填 tabpage 信息，且合并列（读取占用宽度）</li>
-	                        <li class="tips">4.2 上点所说的所占用(高度)行数必须一样，即所有的都取第一个的所占用行数</li>
-	                        <li>5. 需求文档内容说明：</li>
-	                        <li class="tips">5.1 正常在 Excel 工作簿里的某一行某一列输入数据。行列会被代码生成器读其坐标。</li>
-	                        <li class="tips">5.2 界面需要 Label, 那么就在单元格填入内容，注意：字体颜色<span class="red-tips">不能为黑色（#000）</span></li>
-	                        <li class="tips">5.3 界面需要其他输入控件（TextBox, ComboBox...）, 那么就在单元格填入所属的字段名称，注意：这里字体颜色用黑色（#000）</li>
+	                        <li>4. 收样就一页，没有选项卡设计。</li>
+	                        <li>5. 试验是选项卡，如果内嵌选项卡需要严格按照格式（暂时没有实现其他容器控件的内嵌，如 Panel 与 GroupBox,及其他容器控件）。</li>
+	                        <li class="tips">5.1 标识为 tabcontrol 的下一行，只能填 tabpage 信息，且合并列（读取占用宽度）。</li>
+	                        <li class="tips">5.2 上点所说的所占用(高度)行数必须一样，即所有的都取第一个的所占用行数。</li>
+	                        <li>6. 需求文档内容说明：</li>
+	                        <li class="tips">6.1 正常在 Excel 工作簿里的某一行某一列输入数据。行列会被代码生成器读其坐标。</li>
+	                        <li class="tips">6.2 界面需要 Label, 那么就在单元格填入内容，注意：字体颜色<span class="span-tips red">不能为黑色（#000）</span></li>
+	                        <li class="tips">6.3 界面需要其他输入控件（TextBox, ComboBox...）, 那么就在单元格填入所属的字段名称，注意：这里字体颜色
+                                <span class="span-tips blue">用黑色（#000）</span></li>
 	                    </ul>
 	                </li>
 				</ul>				
 			</div>
 
+            <div class="full-width">
+                <p class="image-tips">图1：选项卡示例说明</p>    
+                <div style="margin: auto; border-bottom: 1px solid skyblue;padding-bottom: 10px; text-align: center;">
+                    <img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/T06ooKEbKMMMqd3CaW5UNBwwPTWZL3VzgrJU9y4DQMg!/r/dGsBAAAAAAAA" title="窗体设计文件的信息" style="margin: 0 auto;">
+                </div>
+            </div>
+
 			<div class="full-width">
+                <p class="image-tips">图2：文档示例说明</p>   
                 <div style="margin: auto; border-bottom: 1px solid skyblue;padding-bottom: 10px; text-align: center;">
                 	<img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/1R6ZfhVznpXI8t7B3kmz3IokrYMBX3Y4MnlKuqJtD58!/r/dGsBAAAAAAAA" title="窗体设计文件的信息" style="margin: 0 auto;">
                 </div>	
@@ -120,15 +148,20 @@
 	                <li class="item item1">
 	                    <div class="title">二、数据库字段对照需求文档规范说明</div>
 	                    <ul>
-	                        <li>1. 第一页作为备用说明页，不做任何读取。字段内容放在第二三四...页。</li>
-	                        <li>2. 退出标志同窗体设计文档</li>
-	                        <li>3. 包含的信息如下图，红色字体列不能为空</li>
+                            <li>
+                                1. 文件名后缀为 xlsx, 且文件名中需包含数据库/字段 两个个词语中的一个即可，如：
+                                <span class="span-tips white">水泥字段对照.xlsx</span>
+                            </li>
+                            <li>2. 第一页作为备用说明页，不做任何读取。字段内容放在第二三四...页。</li>
+	                        <li>3. 退出标志同窗体设计文档。</li>
+	                        <li>4. 包含的信息如下图，红色字体列不能为空。</li>
 	                    </ul>
 	                </li>
 				</ul>				
 			</div>
 
 			<div class="full-width">
+                <p class="image-tips">图3：数据库字段示例说明</p>   
                 <div style="margin: auto; border-bottom: 1px solid skyblue;padding-bottom: 10px; text-align: center;">
                 	<img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/B*dELmJ1nM5ZdbnuBpRxbp6ty6SB4Hhb.C1tnA0f5nA!/r/dGsBAAAAAAAA" title="数据库字段需要录入的信息" style="margin: 0 auto;">
                 </div>	

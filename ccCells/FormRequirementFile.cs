@@ -134,6 +134,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 					tp.BackColor = Color.White;
 					tc.TabPages.Add(tp);
 					tp.Text = this.currentSheet.Name;
+					tp.Name = $"tp{tp.Text}";
 					this.getSheetColumnWidthInfo();
 					createControlsForCurrentSheet(tp);
 				}
@@ -175,7 +176,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 				{
 					string letter = asciiEncoding.GetString(new byte[] { (byte)(columnIndex + 65) });
 					currentCell = currentSheet.Cells[$"{letter}{rowIndex}"];
-					var cellValue = currentCell.Value.ObjToString();
+					var cellValue = currentCell.Value.ObjToString().Trim();
 					if (string.IsNullOrEmpty(cellValue)) continue;
 
 					
@@ -248,7 +249,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <summary>
 		/// 调整 TabControl 的高度
 		/// </summary>
-		/// <param name="tc"></param>
+		/// <param name="tc">TabControl 控件</param>
 		private void setTabControlHeight(TabControl tc)
 		{
 			List<int> listTop = new List<int>();
@@ -265,12 +266,11 @@ namespace ZrTBMCodeForTestItem.ccCells
 			}
 		}
 
-
 		/// <summary>
 		/// 获取当前单元格所在的 tabpage 序号
 		/// </summary>
-		/// <param name="tcInfo"></param>
-		/// <returns></returns>
+		/// <param name="tcInfo">信息</param>
+		/// <returns>序号</returns>
 		private int getCurrentCellTabPageIndex(TabControlInfo tcInfo)
 		{
 			int x = this.currentCell.Column;
@@ -330,9 +330,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 			tcInfo.IsOperateTabControl = true;
 			tcInfo.TabControl = tc;
 			return (tc : tc, tcInfo : tcInfo);
-		}
-
-		
+		}		
 
 		/// <summary>
 		/// 获取选项卡占几行，算出高度，并且设置
@@ -357,7 +355,6 @@ namespace ZrTBMCodeForTestItem.ccCells
 			return 1;
 		}
 
-
 		/// <summary>
 		/// 设置控件位置
 		/// </summary>
@@ -371,11 +368,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 			{
 				TabPage tp = c.Parent as TabPage;
 				TabControl tc = c.Parent.Parent as TabControl;
-				int tabpageIndex = tc.TabPages.IndexOf(tp) ;
-				if (c.Text == "J15")
-				{
-					int a = 0;
-				}
+				int tabpageIndex = tc.TabPages.IndexOf(tp);
 				int tabpageMarginLeft = getTabPageMarginLeft(tabpageIndex, tcInfo);
 				x = this.getCellWidth(0, this.currentCell.Column);
 				x -= tabpageMarginLeft;
@@ -391,8 +384,6 @@ namespace ZrTBMCodeForTestItem.ccCells
 			}
 			this.setControlLocation(c, isCanSetWidth, new Point(x, y));
 		}
-
-
 
 		/// <summary>
 		/// 设置控件位置
@@ -474,7 +465,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		}
 
 		/// <summary>
-		/// 获取单元格的其实位置与宽度，单位是像素
+		/// 获取单元格的起始位置与宽度与高度（所占行数），单位是像素
 		/// </summary>
 		/// <returns></returns>
 		private (int left, int width, int rowCount) getCurrentCellLeftWidth()
@@ -499,8 +490,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <summary>
 		/// 获取单元格列宽，包括合并的，单位是像素
 		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="end"></param>
+		/// <param name="cell">单元格</param>
 		/// <returns></returns>
 		private int getCellWidth(Cell cell)
 		{
@@ -515,8 +505,8 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <summary>
 		/// 获取单元格列宽，包括合并的，单位是像素 0 开始
 		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="end"></param>
+		/// <param name="start">起始列号</param>
+		/// <param name="end">结束列号</param>
 		/// <returns></returns>
 		private int getCellWidth(int start,int end)
 		{
@@ -526,18 +516,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 				cellWidth += this.currentSheetColumnWidth[i];
 			}
 			return this.banToPX(cellWidth);
-		}
-
-		/// <summary>
-		/// 获取单元格行高，包括合并的
-		/// </summary>
-		/// <param name="start"></param>
-		/// <param name="end"></param>
-		/// <returns></returns>
-		private int getCellHeight(int start, int end)
-		{
-			return 0;
-		}
+		}				
 
 		/// <summary>
 		/// 当前页的磅转像素

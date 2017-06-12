@@ -3,3 +3,8 @@ D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\bin\Debug\ccLanguage.pdb
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.csprojResolveAssemblyReference.cache
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.dll
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccLanguage\bin\Debug\ccLanguage.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccLanguage\bin\Debug\ccLanguage.pdb
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.csprojResolveAssemblyReference.cache
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.dll
+D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccLanguage\obj\Debug\ccLanguage.pdb

@@ -12,6 +12,7 @@ using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
 using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
+using System.Linq;
 
 namespace ZrTBMCodeForTestItem.ccMain
 {
@@ -120,6 +121,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <param name="filePath">文件绝对路径</param>
 		private void loadDBRequirementFile(string filePath)
 		{
+			if (string.IsNullOrEmpty(filePath) || System.IO.File.Exists(filePath) == false) Function.MsgError(Language.NoRequirementFile);
 			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
 			while (occupied)
 			{
@@ -132,32 +134,20 @@ namespace ZrTBMCodeForTestItem.ccMain
 					return;
 				}
 			}
-
+			
 			var load = new Loading(this.Handle);
-			System.Timers.Timer t = new System.Timers.Timer(100);
-			t.Elapsed += (s, e1) =>
+			System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(getDictZrControlInfo));
+			thread.Start();
+
+			void getDictZrControlInfo()
 			{
-				(s as System.Timers.Timer).Enabled = false;
-				Action done = () =>
-				{
-					load.HideLoading();
-				};
-				try
-				{
-					var rf = new DBRequirementFile(filePath);
-					this.dictZrControlInfo = rf.GetControlDBInfoForTrust();
-				}
-				catch (Exception ex)
-				{
-					Function.MsgError(ex.Message);
-				}
-				finally
-				{
-					this.Invoke(done);
-				}
-			};
-			t.Enabled = true;
+				var rf = new DBRequirementFile(filePath);
+				this.dictZrControlInfo = rf.GetControlDBInfoForTrust();
+				load.HideLoading();
+			}
 		}
+
+		
 
 		private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -172,9 +162,19 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void tsbExportProject_Click(object sender, EventArgs e)
 		{
+			if (!System.IO.Directory.Exists(this.txbFolder.Text))
+			{
+				Function.MsgError($"{this.txbFolder.Text} {Language.NoExistsFolderForOut}");
+				return;
+			}
 			if (string.IsNullOrEmpty(this.txbDBFile.Text) || string.IsNullOrEmpty(this.txbRequirementFile.Text))
 			{
 				Function.MsgError(Language.NoRequirementFile);
+				return;
+			}
+			if (string.IsNullOrEmpty(this.txbZrCode.Text) || string.IsNullOrEmpty(this.txbAssemblyName.Text))
+			{
+				Function.MsgError(Language.ZrCodeOrNameIsNull);
 				return;
 			}
 
@@ -188,8 +188,15 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError(Language.RequirementFileNotUse);
 				return;
 			}
-
-			if (!Function.MsgOK($"{Language.OutFolderAsk}{this.txbFolder.Text}")) return;
+			List<string> list = new List<string>()
+			{
+				$"中润编码:{ this.txbZrCode.Text}",
+				$"{Environment.NewLine}",
+				$"解决方案名称：{this.txbAssemblyName.Text}",
+				$"{Environment.NewLine}",
+				$"{Language.OutFolderAsk}{this.txbFolder.Text}"
+			};
+			if (!Function.MsgOK(string.Join(Environment.NewLine, list))) return;
 			var load = new Loading(this.Handle);
 			this.exportCode = new ExportCodeFile(this.txbZrCode.Text, this.txbAssemblyName.Text, this.txbRootNamespace.Text, this.txbFolder.Text);
 			this.exportCode.ShowOperateInfoEvent += (text) => this.tslOperateInfo.Text = text;
@@ -198,12 +205,13 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.exportCode.Export_CheckClassControl();
 			this.exportCode.Export_AssemblyInfo();
 			this.exportCode.Export_Trust(this.panTrust);
-			this.exportCode.Export_Trial(this.panTrust);
+			this.exportCode.Export_Trial(this.panTrial);
 			load.HideLoading();
 			if (Function.MsgOK(Language.ExportDone))
 			{
 				System.Diagnostics.Process open = new System.Diagnostics.Process();
 				open.StartInfo.FileName = "explorer";
+				open.StartInfo.Arguments = @"/select," + $@"{ this.txbFolder.Text }\{this.txbAssemblyName.Text}\{this.txbAssemblyName.Text}.csproj";
 				open.Start();
 			}
 		}
@@ -212,8 +220,12 @@ namespace ZrTBMCodeForTestItem.ccMain
 		{
 			if (this.dictZrControlInfo == null)
 			{
-				Function.MsgError(Language.NoRequirementFile);
-				return;
+				this.loadDBRequirementFile(this.txbDBFile.Text);
+				if (this.dictZrControlInfo == null)
+				{
+					Function.MsgError(Language.NoRequirementFile);
+					return;
+				}
 			}
 			var loading = new Loading(this.Handle);
 			this.initListView();
@@ -226,7 +238,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.Close();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		private void btnDBConfigSet_Click(object sender, EventArgs e)
 		{
 			FormDataBaseConfig f = new FormDataBaseConfig();
 			f.ShowDialog();
@@ -379,9 +391,40 @@ namespace ZrTBMCodeForTestItem.ccMain
 			return dict;
 		}
 
-		private void toolStripButton2_Click(object sender, EventArgs e)
+		private void btnExSQL_Click(object sender, EventArgs e)
 		{
+			var list = getTableName();
+			foreach (var item in list)
+			{
+				Function.MsgInfo(item);
+			}
+		}
+
+		private List<string> getTableName()
+		{
+			if (this.dictZrControlInfo == null || this.dictZrControlInfo.Count == 0) return null;
+			List<ZrControlExternalInfoFromFile> list = new List<ZrControlExternalInfoFromFile>();
+			var result = new List<string>();
+			string tableName = null;
+			foreach (var item in this.dictZrControlInfo)
+			{
+				list.AddRange(item.Value);
+				if(string.IsNullOrEmpty(tableName))
+					tableName = item.Value[0].ZrTable;
+			}
+			result.Add(tableName);
+			// 这里用 Distinct 去重不可用
+			var temp = list.Where(i => i.ZrTable != tableName);
+			if (temp.Count() > 0)
+			{
+				foreach (var item in temp)
+				{
+					if(!result.Contains(item.ZrTable))
+						result.Add(item.ZrTable);
+				}
+			}
 			
+			return result;
 		}
 	}
 

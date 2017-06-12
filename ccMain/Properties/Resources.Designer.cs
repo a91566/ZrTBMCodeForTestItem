@@ -243,9 +243,29 @@ namespace ZrTBMCodeForTestItem.ccMain.Properties {
         /// <summary>
         ///   查找 System.Drawing.Bitmap 类型的本地化资源。
         /// </summary>
+        public static System.Drawing.Bitmap Script48 {
+            get {
+                object obj = ResourceManager.GetObject("Script48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
         public static System.Drawing.Bitmap Text_48 {
             get {
                 object obj = ResourceManager.GetObject("Text_48", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Drawing.Bitmap 类型的本地化资源。
+        /// </summary>
+        public static System.Drawing.Bitmap Writer48 {
+            get {
+                object obj = ResourceManager.GetObject("Writer48", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
