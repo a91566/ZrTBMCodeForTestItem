@@ -15,18 +15,61 @@ namespace ZrTBMCodeForTestItem.ccCells
 	/// <summary>
 	/// 数据库字段对照处理
 	/// </summary>
-	public class DBRequirementFile
+	public class DBRequirementFile : IDisposable
 	{
+		#region IDisposable
+		/// <summary>
+		/// 释放标志
+		/// </summary>
+		bool _disposed;
+		/// <summary>
+		/// 释放
+		/// </summary>
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+		/// <summary>
+		/// 析构
+		/// </summary>
+		~DBRequirementFile()
+		{
+			Dispose(false);
+		}
+		/// <summary>
+		/// 提供子类覆写
+		/// </summary>
+		/// <param name="disposing"></param>
+		protected virtual void Dispose(bool disposing)
+		{
+			if (_disposed) return; 
+			if (disposing)
+			{
+				if (this.config != null) this.config = null;
+				if (this.workbook != null) this.workbook = null;
+				if (this.fstream != null)
+				{
+					this.fstream.Dispose();
+					this.fstream = null;
+				}
+			}
+			_disposed = true;
+		}
+		#endregion
 
 		/// <summary>
 		/// 用户配置
 		/// </summary>
-		protected UserConfig config { get; set; }
-
+		protected UserConfig config;
+		/// <summary>
+		/// 文件流
+		/// </summary>
+		protected FileStream fstream;
 		/// <summary>
 		/// 工作簿
 		/// </summary>
-		protected Workbook workbook { get; set; }
+		protected Workbook workbook;
 
 		/// <summary>
 		/// 退出颜色
@@ -56,7 +99,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <param name="filePath">文件路径</param>
 		public virtual void InitFile(string filePath)
 		{
-			FileStream fstream = new FileStream(filePath, FileMode.Open);			
+			this.fstream = new FileStream(filePath, FileMode.Open);			
 			this.workbook = new Workbook(fstream);
 		}
 

@@ -17,8 +17,55 @@ namespace ZrTBMCodeForTestItem.ccCells
 	/// <summary>
 	/// 需求文件
 	/// </summary>
-	public class FormRequirementFile : DBRequirementFile
+	public class FormRequirementFile : DBRequirementFile, IDisposable
 	{
+		#region IDisposable
+		/// <summary>
+		/// 释放标志
+		/// </summary>
+		bool _disposed;
+		/// <summary>
+		/// 析构
+		/// </summary>
+		~FormRequirementFile()
+		{
+			Dispose(false);
+		}
+		/// <summary>
+		/// 提供子类覆写
+		/// </summary>
+		/// <param name="disposing"></param>
+		protected override void Dispose(bool disposing)
+		{
+			if (_disposed) return;
+			if (disposing)
+			{
+				if (this.config != null) this.config = null;
+				if (this.workbook != null) this.workbook = null;
+				if (this.fstream != null)
+				{
+					this.fstream.Dispose();
+					//this.fstream = null;
+				}
+				if (this.asciiEncoding != null) this.asciiEncoding = null;
+				if (this.currentSheet != null) this.currentSheet = null;
+				if (this.currentCell != null) this.currentCell = null;
+				if (this.createControl != null) this.createControl = null;
+				if (this.dictZrControlInfo != null)
+				{
+					this.dictZrControlInfo.Clear();
+					this.dictZrControlInfo = null;
+				}
+				if (this.listLabelName != null)
+				{
+					this.listLabelName.Clear();
+					this.listLabelName = null;
+				}
+			}
+			_disposed = true;
+		}
+		#endregion
+
 		/// <summary>
 		/// Excel 列宽 与 像素的比例转换
 		/// </summary>
@@ -110,6 +157,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <param name="isTrust">是否收样（收样就读一页）</param>
 		public void ccControl(Panel pan, Dictionary<string, List<ZrControlExternalInfoFromFile>> dictZrControlInfo, bool isTrust)
 		{
+			pan.Controls.Clear();
 			this.dictZrControlInfo = dictZrControlInfo;
 			if (this.createControl == null)
 			{

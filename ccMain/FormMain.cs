@@ -13,6 +13,7 @@ using ZrTBMCodeForTestItem.ccCommonFunctions;
 using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace ZrTBMCodeForTestItem.ccMain
 {
@@ -22,10 +23,6 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 导出代码类
 		/// </summary>
 		private ExportCodeFile exportCode;
-		/// <summary>
-		/// 需求文件读取类
-		/// </summary>
-		private FormRequirementFile requirementFile;
 		/// <summary>
 		/// 字段对照
 		/// </summary>
@@ -49,6 +46,14 @@ namespace ZrTBMCodeForTestItem.ccMain
 		{
 			this.initEvent();
 			this.initTextBox();
+			this.initTabControl();
+		}
+
+		private void initTabControl()
+		{
+			this.tsbClose.Visible = false;
+			this.toolStripButton1.Visible = false;
+			this.Shown += (s, e) => this.tcMain.ItemSize = new Size((this.tcMain.Width - 20) / 5, 40);			
 		}
 
 		private void initEvent()
@@ -67,6 +72,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.setTextBoxReadOnly(this.txbRootNamespace, true); 
 			this.setTextBoxReadOnly(this.txbRequirementFile, true);
 			this.setTextBoxReadOnly(this.txbDBFile, true);
+			this.setTextBoxReadOnly(this.txbTargetFrameworkVersion, true);
 		}
 
 		private void toolStripButton1_Click(object sender, EventArgs e)
@@ -95,7 +101,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		private void tsbRequirementFile_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
-			openFileDialog.Title = "请多选";
+			openFileDialog.Title = "请多选文件, 设计文件以及数据库字段对照文件";
 			openFileDialog.Multiselect = true;
 			openFileDialog.Filter = Language.RequirementFileFilter;
 
@@ -117,8 +123,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError("文件选择错误.");
 				return;
 			}
-			this.loadDBRequirementFile(this.txbDBFile.Text);
-			this.initRequirementFile(this.txbRequirementFile.Text, true);
+			this.initDictZrControlInfo(this.txbDBFile.Text);
 			this.btnDataRefresh.Enabled = true;
 			this.btnTrustRefresh.Enabled = true;
 			this.btnTrialRefresh.Enabled = true;
@@ -145,22 +150,32 @@ namespace ZrTBMCodeForTestItem.ccMain
 					return;
 				}
 			}
-			
+			this.initDictZrControlInfo(filePath);
+		}
+
+		/// <summary>
+		/// 初始化数据库字段对照(线程出来)
+		/// </summary>
+		/// <param name="filePath">文件路径</param>
+		private void initDictZrControlInfo(string filePath)
+		{
 			var load = new Loading(this.Handle);
 			System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(getDictZrControlInfo));
 			thread.Start();
 
 			void getDictZrControlInfo()
 			{
-				var rf = new DBRequirementFile(filePath);
-				var result = rf.GetControlDBInfoForTrust(); ;
-				this.dictZrControlInfo = result.dict;
-				this.listZrControlInfo = result.list;
-				load.HideLoading();
+				using (var rf = new DBRequirementFile(filePath))
+				{
+					var result = rf.GetControlDBInfoForTrust();
+					this.dictZrControlInfo = result.dict;
+					this.listZrControlInfo = result.list;
+					load.HideLoading();
+				}
 			}
 		}
 
-		
+
 
 		private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
 		{
@@ -275,15 +290,15 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void btnDataRefresh_Click(object sender, EventArgs e)
 		{
-			if (this.dictZrControlInfo == null)
-			{
-				this.loadDBRequirementFile(this.txbDBFile.Text);
-				if (this.dictZrControlInfo == null)
-				{
-					Function.MsgError(Language.NoRequirementFile);
-					return;
-				}
-			}
+			//if (this.dictZrControlInfo == null)
+			//{
+			//	this.initDictZrControlInfo(this.txbDBFile.Text);
+			//	if (this.dictZrControlInfo == null)
+			//	{
+			//		Function.MsgError(Language.NoRequirementFile);
+			//		return;
+			//	}
+			//}
 			var loading = new Loading(this.Handle);
 			this.initListView();
 			addColumnsInfo(this.dictZrControlInfo, true);
@@ -368,9 +383,8 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 初始化需求文件处理类
 		/// </summary>
 		/// <param name="filePath">文件绝对路径</param>
-		private void initRequirementFile(string filePath, bool mustInit)
+		private bool fileIsOccupied(string filePath)
 		{
-			if (!mustInit && this.requirementFile != null) return;
 			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
 			while (occupied)
 			{
@@ -380,10 +394,10 @@ namespace ZrTBMCodeForTestItem.ccMain
 				}
 				else
 				{
-					return;
+					return true;
 				}
-			}
-			this.requirementFile = new FormRequirementFile(filePath);
+			};
+			return false;
 		}
 
 		/// <summary>
@@ -393,28 +407,34 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <param name="e"></param>
 		private void btnTrustRefresh_Click(object sender, EventArgs e)
 		{
-			this.initRequirementFile(this.txbRequirementFile.Text, false);
+			if (this.fileIsOccupied(this.txbRequirementFile.Text)) return;
 			showTrust(this.txbRequirementFile.Text);			
 		}
 
 		private void showTrust(string filePath)
 		{
 			var load = new Loading(this.Handle);
-			this.requirementFile.ccControl(this.panTrust, this.dictZrControlInfo, true);
+			using (var rf = new FormRequirementFile(filePath))
+			{
+				rf.ccControl(this.panTrust, this.dictZrControlInfo, true);
+			};
 			load.HideLoading();
 		}
 
 
 		private void btnTrialRefresh_Click(object sender, EventArgs e)
 		{
-			this.initRequirementFile(this.txbRequirementFile.Text,false);
+			if (this.fileIsOccupied(this.txbRequirementFile.Text)) return;
 			showTrial(this.txbRequirementFile.Text);
 		}
 
 		private void showTrial(string filePath)
 		{			
 			var load = new Loading(this.Handle);
-			this.requirementFile.ccControl(this.panTrial, this.dictZrControlInfo, false);
+			using (var rf = new FormRequirementFile(filePath))
+			{
+				rf.ccControl(this.panTrial, this.dictZrControlInfo, false);
+			};
 			load.HideLoading();
 		}
 
@@ -447,29 +467,46 @@ namespace ZrTBMCodeForTestItem.ccMain
 			dict.Add(ConfigKey.ExitColor.ToString(), this.txbExitColor.Text);
 			return dict;
 		}
-
-		private void btnExSQL_Click(object sender, EventArgs e)
-		{
+				
+		/// <summary>
+		/// 异步执行脚本
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private async void btnExSQL_Click(object sender, EventArgs e)
+		{			
+			var load = new Loading(this.Handle);
+			string btnCaption = (sender as Button).Text;
+			this.btnExSQL.Enabled = false;
+			this.btnExSQL.Text = Language.Doing;
 			try
 			{
-				ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
-				ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
-				var result = ctispig.ExSQL(this.dbLinkString);
-				if (!result.result)
+				await Task.Run(() =>
 				{
-					Function.MsgError(result.errorInfo);
-					return;
-				}
-				Function.MsgInfo("ok");
+					ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
+					ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
+					var result = ctispig.ExSQL(this.dbLinkString);
+					if (!result.result)
+					{
+						Function.MsgError(result.errorInfo);
+						return;
+					}
+					Function.MsgInfo("ok");
+				});
 			}
 			catch (Exception ex)
 			{
 				Function.MsgError(ex.Message);
 			}
+			finally
+			{
+				load.HideLoading();
+				this.btnExSQL.Text = btnCaption;
+				this.btnExSQL.Enabled = true;
+			}
 		}
 
-		
-		
+
 		private void btnExportSQL_Click(object sender, EventArgs e)
 		{
 			if (!this.existsOutFolder()) return;
@@ -493,6 +530,8 @@ namespace ZrTBMCodeForTestItem.ccMain
 				this.openExplorerAndSelect(fileName);
 			}
 		}
+
+		
 	}
 
 	

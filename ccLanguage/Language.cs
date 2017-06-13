@@ -85,7 +85,7 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		/// <summary>
 		/// 连接测试
 		/// </summary>
-		public const string BtnTestLinkDoing = "处理中...";
+		public const string Doing = "处理中...";
 		/// <summary>
 		/// 选择需求文件
 		/// </summary>

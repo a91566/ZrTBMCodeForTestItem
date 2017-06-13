@@ -74,7 +74,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		{
 			#region 读取数据库配置并测试连接
 			tsbTestLink.Enabled = false;
-			tsbTestLink.Text = Language.BtnTestLinkDoing;
+			tsbTestLink.Text = Language.Doing;
 			string linkstr = this.getLinkStr();
 			System.Timers.Timer t = new System.Timers.Timer(30);
 			t.Enabled = true;
@@ -85,7 +85,6 @@ namespace ZrTBMCodeForTestItem.ccMain
 				{
 					tsbTestLink.Enabled = true;
 					tsbTestLink.Text = Language.BtnTestLink;
-					Function.MsgInfo("ok");
 				};
 				try
 				{
@@ -95,6 +94,10 @@ namespace ZrTBMCodeForTestItem.ccMain
 						if (conn.State != System.Data.ConnectionState.Open)
 						{
 							Function.MsgError(Language.DBLinkFalseTips);
+						}
+						else
+						{
+							Function.MsgInfo("ok");
 						}
 					}
 				}
