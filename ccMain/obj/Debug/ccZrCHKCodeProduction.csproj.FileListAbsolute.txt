@@ -54,3 +54,5 @@ D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccLanguage.dll
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccLanguage.pdb
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccLanguage.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccLanguage.pdb
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccDataBaseProcess.dll
+D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccMain\bin\Debug\ccDataBaseProcess.pdb

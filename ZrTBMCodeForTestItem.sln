@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccExternal", "ccExternal\cc
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccLanguage", "ccLanguage\ccLanguage.csproj", "{C542B2BE-FEF9-4CD7-9127-9697E24630DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccDataBaseProcess", "ccDataBaseProcess\ccDataBaseProcess.csproj", "{DA33DC1E-4423-438C-B98D-6F351AE2D5B4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C542B2BE-FEF9-4CD7-9127-9697E24630DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DA33DC1E-4423-438C-B98D-6F351AE2D5B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DA33DC1E-4423-438C-B98D-6F351AE2D5B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DA33DC1E-4423-438C-B98D-6F351AE2D5B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DA33DC1E-4423-438C-B98D-6F351AE2D5B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

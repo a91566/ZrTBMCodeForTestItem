@@ -52,7 +52,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			using (FileStream fs = new FileStream(filepath, FileMode.Create))
 			{
-				using (StreamWriter sw = new StreamWriter(fs))
+				using (StreamWriter sw = new StreamWriter(fs, Encoding.UTF8))
 				{
 					foreach (string item in list)
 					{
@@ -72,7 +72,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			using (FileStream fs = new FileStream(filepath, FileMode.Create))
 			{
-				using (StreamWriter sw = new StreamWriter(fs))
+				using (StreamWriter sw = new StreamWriter(fs, Encoding.UTF8))
 				{
 					foreach (string item in words)
 					{

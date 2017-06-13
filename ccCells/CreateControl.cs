@@ -83,11 +83,13 @@ namespace ZrTBMCodeForTestItem.ccCells
 					c.ForeColor = System.Drawing.Color.Red;
 					return c;
 				}
-			}			
-			(c as ZrControl.IZrControl).SetZrControlExternalInfo(item);
+			}
+						
+			if (c is ZrControl.IZrControl)
+			{
+				(c as ZrControl.IZrControl).SetZrControlExternalInfo(item);
+			}
 			return c;
-		}
-
-		
+		}		
 	}
 }

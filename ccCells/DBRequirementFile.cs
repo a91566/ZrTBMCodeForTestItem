@@ -64,9 +64,11 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// 获取控件信息（两个文件是分开的）
 		/// </summary>
 		/// <returns></returns>
-		public Dictionary<string, List<ZrControlExternalInfoFromFile>> GetControlDBInfoForTrust()
+		public (Dictionary<string, List<ZrControlExternalInfoFromFile>> dict,
+			List<ZrControlExternalInfoFromFile> list) GetControlDBInfoForTrust()
 		{
 			var result = new Dictionary<string, List<ZrControlExternalInfoFromFile>>();
+			var result2 = new List<ZrControlExternalInfoFromFile>();
 			for (int sheetIndex = 1; sheetIndex < workbook.Worksheets.Count; sheetIndex++)
 			{
 				Worksheet sheet = this.workbook.Worksheets[sheetIndex];
@@ -103,8 +105,9 @@ namespace ZrTBMCodeForTestItem.ccCells
 					
 				}
 				result.Add(sheet.Name, list);
+				result2.AddRange(list);
 			}
-			return result;
+			return (dict: result, list:result2);
 		}
 	}
 }

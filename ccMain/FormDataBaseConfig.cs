@@ -5,12 +5,6 @@
  */
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
 using ZrTBMCodeForTestItem.ccLanguage;
@@ -73,7 +67,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError(Language.OperateFail);
 				return;
 			}
-			this.Close();
+			Function.MsgInfo("ok");
 		}
 
 		private void tsbTestLink_Click(object sender, EventArgs e)
@@ -91,6 +85,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				{
 					tsbTestLink.Enabled = true;
 					tsbTestLink.Text = Language.BtnTestLink;
+					Function.MsgInfo("ok");
 				};
 				try
 				{

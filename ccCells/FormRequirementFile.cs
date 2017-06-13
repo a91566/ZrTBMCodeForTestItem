@@ -55,7 +55,10 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// 字段对照
 		/// </summary>
 		private Dictionary<string, List<ZrControlExternalInfoFromFile>> dictZrControlInfo;
-
+		/// <summary>
+		/// Label 控件集合，用于重复的处理
+		/// </summary>
+		private List<string> listLabelName;
 		/// <summary>
 		/// 需求文件处理类
 		/// </summary>
@@ -114,6 +117,8 @@ namespace ZrTBMCodeForTestItem.ccCells
 			}
 			if (isTrust)
 			{
+				//label 名称集合初始化
+				listLabelName = new List<string>();
 				this.currentSheet = this.workbook.Worksheets[1];
 				this.getSheetColumnWidthInfo();
 				this.createControlsForCurrentSheet(pan);
@@ -128,6 +133,8 @@ namespace ZrTBMCodeForTestItem.ccCells
 				ToolTip toolTip = new ToolTip();
 				for (int sheetIndex = 2; sheetIndex < workbook.Worksheets.Count; sheetIndex++)
 				{
+					//label 名称集合初始化
+					listLabelName = new List<string>();
 					this.currentSheet = this.workbook.Worksheets[sheetIndex];
 					TabPage tp = new TabPage();
 					tp.AutoScroll = true;
@@ -141,6 +148,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 			}
 			
 		}
+
 
 		/// <summary>
 		/// 读取当前页生成控件
@@ -181,10 +189,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 
 					
 
-					if (tttttt.Contains($"{letter}{rowIndex}"))
-					{
-						int a = 1;
-					}
+					
 
 					//如果是分页控件的话，那么在这个分页控件创建完成之前，都不改变 currentCell，
 					if (cellValue.ToLower() == "tabcontrol")
@@ -226,24 +231,41 @@ namespace ZrTBMCodeForTestItem.ccCells
 						//c.Text = $"{letter}{rowIndex}";
 						c.Parent = realParent == null ? parent : realParent; 
 						new ToolTip().SetToolTip(c, $"{letter}{rowIndex}:{cellValue}");
-						setControlLocation(c, true, tcInfo);
+						setControlLocation(c, true, tcInfo);						
 					}
 					else
 					{
-						Label lbl = new Label();
-						lbl.Name = $"lbl{cellValue}";
-						lbl.Parent = realParent == null ? parent : realParent; 
-						lbl.Text = cellValue;
-						lbl.Font = new System.Drawing.Font(currentCell.GetStyle().Font.Name, currentCell.GetStyle().Font.Size);
-						//lbl.Text = $"{letter}{rowIndex}";
-						lbl.AutoSize = true;
-						lbl.TabIndex = tabIndex;
+						Label c = new Label();
+						this.setLabelName(c, cellValue);
+						c.Parent = realParent == null ? parent : realParent; 
+						c.Text = cellValue;
+						c.Font = new System.Drawing.Font(currentCell.GetStyle().Font.Name, currentCell.GetStyle().Font.Size);
+						//c.Text = $"{letter}{rowIndex}";
+						c.AutoSize = true;
+						c.TabIndex = tabIndex;
 						tabIndex++;
-						setControlLocation(lbl, false, tcInfo);
+						setControlLocation(c, false, tcInfo);						
 					}
 				}
 			}
 
+		}
+
+		/// <summary>
+		/// 设置 Label 的名称，因为会有可能重复的情况
+		/// </summary>
+		/// <param name="lbl">文本控件</param>
+		/// <param name="cellvalue">文本</param>
+		private void setLabelName(Label lbl, string cellvalue)
+		{
+			string name = $"lbl{cellvalue.RemoveSpecialChar()}";
+			if (listLabelName.Contains(name))
+			{
+				var d = this.listLabelName.Where( i => i.StartsWith(name));
+				name += $"_{d.Count()+1}";
+			}
+			listLabelName.Add(name);
+			lbl.Name = name;
 		}
 
 		/// <summary>

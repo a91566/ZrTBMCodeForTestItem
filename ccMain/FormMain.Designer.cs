@@ -78,6 +78,7 @@
 			this.btnDataRefresh = new System.Windows.Forms.Button();
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -116,6 +117,7 @@
             this.toolStripButton1,
             this.tsbClose,
             this.tsbSaveDefault,
+            this.toolStripSeparator1,
             this.tsbRequirementFile,
             this.tsbExportProject,
             this.tslOperateInfo});
@@ -131,6 +133,7 @@
 			this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
 			this.toolStripButton1.Name = "toolStripButton1";
 			this.toolStripButton1.Size = new System.Drawing.Size(52, 52);
+			this.toolStripButton1.Visible = false;
 			this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
 			// 
 			// tsbClose
@@ -142,6 +145,7 @@
 			this.tsbClose.Name = "tsbClose";
 			this.tsbClose.Size = new System.Drawing.Size(52, 52);
 			this.tsbClose.Text = "关闭";
+			this.tsbClose.Visible = false;
 			this.tsbClose.Click += new System.EventHandler(this.tsbClose_Click);
 			// 
 			// tsbSaveDefault
@@ -219,7 +223,7 @@
 			this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
 			this.tabPage1.Size = new System.Drawing.Size(1292, 507);
 			this.tabPage1.TabIndex = 0;
-			this.tabPage1.Text = "山里面有没有住着神仙";
+			this.tabPage1.Text = "文件配置管理";
 			this.tabPage1.UseVisualStyleBackColor = true;
 			// 
 			// tableLayoutPanel1
@@ -604,6 +608,7 @@
 			// 
 			// btnExSQL
 			// 
+			this.btnExSQL.Enabled = false;
 			this.btnExSQL.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnExSQL.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnExSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -621,6 +626,7 @@
 			// 
 			// btnExportSQL
 			// 
+			this.btnExportSQL.Enabled = false;
 			this.btnExportSQL.FlatAppearance.MouseDownBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnExportSQL.FlatAppearance.MouseOverBackColor = System.Drawing.Color.AntiqueWhite;
 			this.btnExportSQL.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
@@ -634,6 +640,8 @@
 			this.btnExportSQL.Text = "导出脚本";
 			this.btnExportSQL.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			this.btnExportSQL.UseVisualStyleBackColor = true;
+			this.btnExportSQL.Visible = false;
+			this.btnExportSQL.Click += new System.EventHandler(this.btnExportSQL_Click);
 			// 
 			// btnDBConfigSet
 			// 
@@ -689,6 +697,11 @@
 			this.webBrowser1.Name = "webBrowser1";
 			this.webBrowser1.Size = new System.Drawing.Size(1286, 501);
 			this.webBrowser1.TabIndex = 0;
+			// 
+			// toolStripSeparator1
+			// 
+			this.toolStripSeparator1.Name = "toolStripSeparator1";
+			this.toolStripSeparator1.Size = new System.Drawing.Size(6, 55);
 			// 
 			// FormMain
 			// 
@@ -775,6 +788,7 @@
 		private System.Windows.Forms.ToolStripButton tsbSaveDefault;
 		private System.Windows.Forms.ToolStripLabel tslOperateInfo;
 		private System.Windows.Forms.Button btnExSQL;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 	}
 }
 

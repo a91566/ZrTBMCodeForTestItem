@@ -63,6 +63,7 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		public const string OutputInfo_CreateCsproj = "正在导出工程文件...";
 		public const string OutputInfo_CreateControlClass = "正在导出控制类文件...";
 		public const string OutputInfo_CreateAssembly = "正在导出程序集信息文件...";
+		public const string OutputInfo_CreateVSS = "正在源码管理信息文件...";
 		public const string OutputInfo_CreateTrust = "正在导出收样后台代码文件...";
 		public const string OutputInfo_CreateTrustDesigner = "正在导出收样设计文件...";
 		public const string OutputInfo_CreateTrustResx = "正在导出收样资源文件...";

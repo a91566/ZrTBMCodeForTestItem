@@ -90,5 +90,16 @@ namespace ZrTBMCodeForTestItem.ccSystemConfig
 			}
 			return this.dbhelper.ExecuteSql(list);
 		}
+
+		/// <summary>
+		/// 获取数据库连接
+		/// </summary>
+		/// <returns></returns>
+		public string GetDBLinkString()
+		{
+			ccCommonFunctions.DES des = new ccCommonFunctions.DES();
+			return $"server={des.Decrypt(GetConfig(ConfigKey.DB_Host))};database={des.Decrypt(GetConfig(ConfigKey.DB_Name))};" +
+				$"uid={des.Decrypt(GetConfig(ConfigKey.DB_User))};pwd={des.Decrypt(GetConfig(ConfigKey.DB_PWD))}";
+		}
 	}
 }

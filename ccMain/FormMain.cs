@@ -30,6 +30,14 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 字段对照
 		/// </summary>
 		private Dictionary<string, List<ZrControlExternalInfoFromFile>>  dictZrControlInfo;
+		/// <summary>
+		/// 字段对照
+		/// </summary>
+		private List<ZrControlExternalInfoFromFile> listZrControlInfo;
+		/// <summary>
+		/// 数据库连接信息
+		/// </summary>
+		private string dbLinkString;
 
 		public FormMain()
 		{
@@ -55,6 +63,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.txbFolder.Text = config.GetConfig(ConfigKey.Folder.ToString());
 			this.txbExcelWithToPxScale.Text = config.GetConfig(ConfigKey.ExcelWithToPxScale.ToString());
 			this.txbExitColor.Text = config.GetConfig(ConfigKey.ExitColor.ToString());
+			this.dbLinkString = config.GetDBLinkString();
 			this.setTextBoxReadOnly(this.txbRootNamespace, true); 
 			this.setTextBoxReadOnly(this.txbRequirementFile, true);
 			this.setTextBoxReadOnly(this.txbDBFile, true);
@@ -109,10 +118,12 @@ namespace ZrTBMCodeForTestItem.ccMain
 				return;
 			}
 			this.loadDBRequirementFile(this.txbDBFile.Text);
-			this.initRequirementFile(this.txbRequirementFile.Text);
+			this.initRequirementFile(this.txbRequirementFile.Text, true);
 			this.btnDataRefresh.Enabled = true;
 			this.btnTrustRefresh.Enabled = true;
 			this.btnTrialRefresh.Enabled = true;
+			this.btnExSQL.Enabled = true;
+			this.btnExportSQL.Enabled = true;
 		}
 
 		/// <summary>
@@ -142,7 +153,9 @@ namespace ZrTBMCodeForTestItem.ccMain
 			void getDictZrControlInfo()
 			{
 				var rf = new DBRequirementFile(filePath);
-				this.dictZrControlInfo = rf.GetControlDBInfoForTrust();
+				var result = rf.GetControlDBInfoForTrust(); ;
+				this.dictZrControlInfo = result.dict;
+				this.listZrControlInfo = result.list;
 				load.HideLoading();
 			}
 		}
@@ -160,18 +173,45 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		}
 
-		private void tsbExportProject_Click(object sender, EventArgs e)
+		/// <summary>
+		/// 验证导出文件夹是否存在
+		/// </summary>
+		/// <returns></returns>
+		private bool existsOutFolder()
 		{
 			if (!System.IO.Directory.Exists(this.txbFolder.Text))
 			{
 				Function.MsgError($"{this.txbFolder.Text} {Language.NoExistsFolderForOut}");
-				return;
+				return false;
 			}
-			if (string.IsNullOrEmpty(this.txbDBFile.Text) || string.IsNullOrEmpty(this.txbRequirementFile.Text))
+			string caFilePath = $@"{this.txbFolder.Text}\{this.txbAssemblyName.Text}";
+			if (System.IO.Directory.Exists(caFilePath))
 			{
-				Function.MsgError(Language.NoRequirementFile);
-				return;
+				if (Function.MsgOK("目标文件夹已存在，是否删除？"))
+				{
+					try
+					{
+						System.IO.Directory.Delete(caFilePath, true);
+					}
+					catch (Exception ex)
+					{
+						Function.MsgError(ex.Message);
+					}
+				}
 			}
+			return true;
+		}
+
+
+
+		/// <summary>
+		/// 导出项目类库
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
+		private void tsbExportProject_Click(object sender, EventArgs e)
+		{
+			if (!this.existsOutFolder()) return;
 			if (string.IsNullOrEmpty(this.txbZrCode.Text) || string.IsNullOrEmpty(this.txbAssemblyName.Text))
 			{
 				Function.MsgError(Language.ZrCodeOrNameIsNull);
@@ -188,6 +228,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError(Language.RequirementFileNotUse);
 				return;
 			}
+			string scriptFile = $@"{this.txbFolder.Text}\{this.txbAssemblyName.Text}\Script\Script.sql";
 			List<string> list = new List<string>()
 			{
 				$"中润编码:{ this.txbZrCode.Text}",
@@ -204,16 +245,32 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.exportCode.Export_csproj();
 			this.exportCode.Export_CheckClassControl();
 			this.exportCode.Export_AssemblyInfo();
+			this.exportCode.Export_VSS();
 			this.exportCode.Export_Trust(this.panTrust);
 			this.exportCode.Export_Trial(this.panTrial);
+			var ctispig = new ccDataBaseProcess.CreateTable();
+			ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
+			var scriptResult = ctispig.Export(scriptFile);
+			if (!scriptResult.result)
+			{
+				Function.MsgError(scriptResult.errorInfo);
+			}
 			load.HideLoading();
 			if (Function.MsgOK(Language.ExportDone))
 			{
-				System.Diagnostics.Process open = new System.Diagnostics.Process();
-				open.StartInfo.FileName = "explorer";
-				open.StartInfo.Arguments = @"/select," + $@"{ this.txbFolder.Text }\{this.txbAssemblyName.Text}\{this.txbAssemblyName.Text}.csproj";
-				open.Start();
+				this.openExplorerAndSelect($@"{ this.txbFolder.Text }\{this.txbAssemblyName.Text}\{this.txbAssemblyName.Text}.csproj");
 			}
+		}
+
+		/// <summary>
+		/// 打开资源管理器并且选中
+		/// </summary>
+		private void openExplorerAndSelect(string filePath)
+		{
+			System.Diagnostics.Process open = new System.Diagnostics.Process();
+			open.StartInfo.FileName = "explorer";
+			open.StartInfo.Arguments = @"/select," + filePath;
+			open.Start();
 		}
 
 		private void btnDataRefresh_Click(object sender, EventArgs e)
@@ -311,9 +368,9 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 初始化需求文件处理类
 		/// </summary>
 		/// <param name="filePath">文件绝对路径</param>
-		private void initRequirementFile(string filePath)
-		{			
-			if (this.requirementFile != null) return;
+		private void initRequirementFile(string filePath, bool mustInit)
+		{
+			if (!mustInit && this.requirementFile != null) return;
 			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
 			while (occupied)
 			{
@@ -336,7 +393,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <param name="e"></param>
 		private void btnTrustRefresh_Click(object sender, EventArgs e)
 		{
-			this.initRequirementFile(this.txbRequirementFile.Text);
+			this.initRequirementFile(this.txbRequirementFile.Text, false);
 			showTrust(this.txbRequirementFile.Text);			
 		}
 
@@ -350,7 +407,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void btnTrialRefresh_Click(object sender, EventArgs e)
 		{
-			this.initRequirementFile(this.txbRequirementFile.Text);
+			this.initRequirementFile(this.txbRequirementFile.Text,false);
 			showTrial(this.txbRequirementFile.Text);
 		}
 
@@ -393,38 +450,48 @@ namespace ZrTBMCodeForTestItem.ccMain
 
 		private void btnExSQL_Click(object sender, EventArgs e)
 		{
-			var list = getTableName();
-			foreach (var item in list)
+			try
 			{
-				Function.MsgInfo(item);
+				ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
+				ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
+				var result = ctispig.ExSQL(this.dbLinkString);
+				if (!result.result)
+				{
+					Function.MsgError(result.errorInfo);
+					return;
+				}
+				Function.MsgInfo("ok");
+			}
+			catch (Exception ex)
+			{
+				Function.MsgError(ex.Message);
 			}
 		}
 
-		private List<string> getTableName()
+		
+		
+		private void btnExportSQL_Click(object sender, EventArgs e)
 		{
-			if (this.dictZrControlInfo == null || this.dictZrControlInfo.Count == 0) return null;
-			List<ZrControlExternalInfoFromFile> list = new List<ZrControlExternalInfoFromFile>();
-			var result = new List<string>();
-			string tableName = null;
-			foreach (var item in this.dictZrControlInfo)
+			if (!this.existsOutFolder()) return;
+			string directory = $@"{this.txbFolder.Text}\{this.txbAssemblyName.Text}\Script";
+			if (!System.IO.Directory.Exists(directory))
 			{
-				list.AddRange(item.Value);
-				if(string.IsNullOrEmpty(tableName))
-					tableName = item.Value[0].ZrTable;
+				System.IO.Directory.CreateDirectory(directory);
 			}
-			result.Add(tableName);
-			// 这里用 Distinct 去重不可用
-			var temp = list.Where(i => i.ZrTable != tableName);
-			if (temp.Count() > 0)
+			string fileName = $@"{directory}\Script.sql";
+
+			ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
+			ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
+			var result = ctispig.Export(fileName);
+			if (!result.result)
 			{
-				foreach (var item in temp)
-				{
-					if(!result.Contains(item.ZrTable))
-						result.Add(item.ZrTable);
-				}
+				Function.MsgError(result.errorInfo);
+				return;
 			}
-			
-			return result;
+			if (Function.MsgOK(Language.ExportDone))
+			{
+				this.openExplorerAndSelect(fileName);
+			}
 		}
 	}
 

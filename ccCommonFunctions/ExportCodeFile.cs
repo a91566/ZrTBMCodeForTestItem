@@ -99,6 +99,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 					$@"{caFilePath}\bin\Debug",
 					$@"{caFilePath}\obj\Debug\TempPE",
 					$@"{caFilePath}\Properties",
+					$@"{caFilePath}\Script"
 				};
 				foreach (var item in list)
 				{
@@ -166,7 +167,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 				}
 			}
 			string targetPath = $@"{this.path}\{this.assemblyName}\CheckClassControl.cs";
-			Function.WriteFile(words, targetPath);
+			Function.WriteFile(words, targetPath, true);
 		}
 
 		/// <summary>
@@ -232,6 +233,27 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			string targetPath = $@"{this.path}\{this.assemblyName}\Properties\AssemblyInfo.cs";
 			Function.WriteFile(words, targetPath,true);
 		}
+
+		/// <summary>
+		/// 导出源码管理器的内容
+		/// </summary>
+		public void Export_VSS()
+		{
+			outPut(Language.OutputInfo_CreateVSS);
+			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\mssccprj.scc";
+			string[] words = Function.ReadFile(sourcePath);
+			for (int i = 0; i < words.Length; i++)
+			{
+				if (words[i].Contains(sourceAssembly))
+				{
+					words[i] = words[i].Replace(sourceAssembly, this.assemblyName);
+				}
+			}
+			string targetPath = $@"{this.path}\{this.assemblyName}\mssccprj.scc";
+			Function.WriteFile(words, targetPath, true);
+		}
+
+		
 
 		/// <summary>
 		/// 替换新的 Guid
@@ -625,7 +647,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			result.Add($"			//");
 			result.Add($"			// {c.Name}");
 			result.Add($"			//");
-			result.Add($@"			this.{c.Name}.Name = ""{c.Name}""");
+			result.Add($@"			this.{c.Name}.Name = ""{c.Name}"";");
 			result.Add($@"			this.{c.Name}.Location = new System.Drawing.Point({c.Location.X}, {c.Location.Y});");
 			result.Add($@"			this.{c.Name}.Size = new System.Drawing.Size({c.Size.Width}, {c.Size.Height});");
 			result.AddRange(this.getControlPropertySpecial(c));
@@ -674,11 +696,19 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// <param name="pan">容器</param>
 		private Size getUCSize(Control pan)
 		{
+			int width = 800;
+			int height = 600;
 			List<int> listRight = new List<int>();
 			List<int> listTop = new List<int>();
 			getUCSize(pan, ref listRight, ref listTop);
-			listRight.Sort();
-			Size ucSize = new Size(listRight[listRight.Count - 1] + 10, listTop[listTop.Count - 1] + 10);
+			if (listRight.Count > 0)
+			{
+				listRight.Sort();
+				listTop.Sort();
+				width = listRight[listRight.Count - 1] + 10;
+				height = listTop[listTop.Count - 1] + 10;
+			}
+			Size ucSize = new Size(width, height);
 			return ucSize;
 		}
 
@@ -692,11 +722,14 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			foreach (Control item in pan.Controls)
 			{
-				listRight.Add(item.Left + item.Width);
-				listTop.Add(item.Top + item.Height);
-				if (item.Controls.Count > 0)
+				if (item is Label || item is ZrControl.IZrControl)
 				{
-					getUCSize(item, ref listRight, ref listTop);
+					listRight.Add(item.Left + item.Width);
+					listTop.Add(item.Top + item.Height);
+					if (item.Controls.Count > 0)
+					{
+						getUCSize(item, ref listRight, ref listTop);
+					}
 				}
 			}
 		}
@@ -709,7 +742,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		private List<string> getControlPropertySpecial(Control c)
 		{
 			List<string> list = new List<string>();
-			List<string> listStringPropertyInfo = new List<string>() { "ZrDescription", "ZrField", "ZrFormat", "ZrTable", "ZrVerify" };
+			List<string> listStringPropertyInfo = new List<string>() { "ZrDescription", "ZrField", "ZrFormat", "ZrTable", "ZrVerify", "Text" };
 			List<string> listIntPropertyInfo = new List<string>() { "TabIndex", "ZrFieldLength" };
 
 			Type type = c.GetType();
@@ -759,6 +792,20 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 				list.Add(string.Format("			this.{0}.BorderColor = System.Drawing.Color.{1};", c.Name, ((Color)obj).Name));
 			}
 			return list;
+		}
+
+		/// <summary>
+		/// 固定处理一些控件的属性
+		/// </summary>
+		/// <param name="c"></param>
+		/// <returns></returns>
+		private void getControlPropertySpecial(Control c, List<string> list)
+		{
+			if (c is TabPage)
+			{
+				list.Add(string.Format("			this.{0}.BorderColor = System.Drawing.Color.White;", c.Name));
+			}
+
 		}
 	}
 }
