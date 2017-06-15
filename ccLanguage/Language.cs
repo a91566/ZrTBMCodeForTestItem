@@ -39,6 +39,14 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		/// </summary>
 		public const string NoExistsFolder = "文件夹不存在";
 		/// <summary>
+		/// 没有获取到数据库字段对照信息
+		/// </summary>
+		public const string NoDBColumnsInfo = "没有获取到数据库字段对照信息";
+		/// <summary>
+		/// 模板文件夹
+		/// </summary>
+		public const string NoExistsMasterplate = "模板文件夹（masterplate）不存在或者命名不规范。";
+		/// <summary>
 		/// 导出文件夹不存在
 		/// </summary>
 		public const string NoExistsFolderForOut = "导出文件夹不存在";
@@ -58,6 +66,14 @@ namespace ZrTBMCodeForTestItem.ccLanguage
 		/// 导出完成
 		/// </summary>
 		public const string ExportDone = "导出完成，是否打开所在文件夹?";
+		/// <summary>
+		/// 导出完成
+		/// </summary>
+		public const string RepetitionColumn = "数据库字段有重复的内容，请转到 [日志] 查看。";
+		/// <summary>
+		/// 导出完成
+		/// </summary>
+		public const string AskExSql = "确认执行脚本文件吗？如果数据库对象存在会被删除，请确认操作。";
 
 		public const string OutputInfo_CreateFolder = "正在创建文件夹...";
 		public const string OutputInfo_CreateCsproj = "正在导出工程文件...";

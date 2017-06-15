@@ -10,3 +10,9 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.csprojResolveAssemblyReference.cache
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\ccExternal.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\ccExternal.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\System.ValueTuple.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.csprojResolveAssemblyReference.cache
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExternal.pdb

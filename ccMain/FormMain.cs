@@ -7,13 +7,14 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Linq;
+using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
+using ZrTBMCodeForTestItem.ccEcternal;
 using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace ZrTBMCodeForTestItem.ccMain
 {
@@ -23,10 +24,6 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 导出代码类
 		/// </summary>
 		private ExportCodeFile exportCode;
-		/// <summary>
-		/// 字段对照
-		/// </summary>
-		private Dictionary<string, List<ZrControlExternalInfoFromFile>>  dictZrControlInfo;
 		/// <summary>
 		/// 字段对照
 		/// </summary>
@@ -42,37 +39,96 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.init();
 		}
 
+		/// <summary>
+		/// 初始化
+		/// </summary>
 		private void init()
 		{
 			this.initEvent();
 			this.initTextBox();
 			this.initTabControl();
+			this.initOtherControlData();
 		}
 
-		private void initTabControl()
-		{
-			this.tsbClose.Visible = false;
-			this.toolStripButton1.Visible = false;
-			this.Shown += (s, e) => this.tcMain.ItemSize = new Size((this.tcMain.Width - 20) / 5, 40);			
-		}
-
+		/// <summary>
+		/// 初始化事件
+		/// </summary>
 		private void initEvent()
 		{
-			this.txbAssemblyName.TextChanged += (s, e) => this.txbRootNamespace.Text = this.txbAssemblyName.Text;
+			this.txbAssemblyName.TextChanged += (s, e) => this.txbRootNamespace.Text = this.txbAssemblyName.Text;			
+			this.txbExitColor.Click += (s, e) =>
+			{
+				if (this.colorDialog1.ShowDialog() != DialogResult.OK) return;
+				this.lblExitColor.BackColor = this.colorDialog1.Color;
+				this.txbExitColor.Text = this.toHexColor(this.colorDialog1.Color);
+			};
 		}
 
+		/// <summary>
+		/// 初始化文本框控件
+		/// </summary>
 		private void initTextBox()
 		{
-			UserConfig config = new UserConfig(false);
-			this.txbTargetFrameworkVersion.Text = config.GetConfig(ConfigKey.TargetFrameworkVersion.ToString());
-			this.txbFolder.Text = config.GetConfig(ConfigKey.Folder.ToString());
-			this.txbExcelWithToPxScale.Text = config.GetConfig(ConfigKey.ExcelWithToPxScale.ToString());
-			this.txbExitColor.Text = config.GetConfig(ConfigKey.ExitColor.ToString());
-			this.dbLinkString = config.GetDBLinkString();
-			this.setTextBoxReadOnly(this.txbRootNamespace, true); 
+			this.setTextBoxReadOnly(this.txbRootNamespace, true);
 			this.setTextBoxReadOnly(this.txbRequirementFile, true);
 			this.setTextBoxReadOnly(this.txbDBFile, true);
 			this.setTextBoxReadOnly(this.txbTargetFrameworkVersion, true);
+			this.setTextBoxReadOnly(this.txbScript, true);
+			this.setTextBoxReadOnly(this.txbOutput, true);
+			this.setTextBoxReadOnly(this.txbExitColor, true);
+			this.txbColumnWidth.SetTextBoxInt();
+			this.txbRowHeight.SetTextBoxInt();
+			this.txbTargetFrameworkVersion.SetTextBoxFloat();
+			this.txbExcelWithToPxScale.SetTextBoxFloat();
+			try
+			{
+				UserConfig config = new UserConfig(false);
+				this.txbTargetFrameworkVersion.Text = config.GetConfig(ConfigKey.TargetFrameworkVersion);
+				this.txbFolder.Text = config.GetConfig(ConfigKey.Folder.ToString());
+				this.txbExcelWithToPxScale.Text = config.GetConfig(ConfigKey.ExcelWithToPxScale);
+				this.txbExitColor.Text = config.GetConfig(ConfigKey.ExitColor);
+				this.txbColumnWidth.Text = config.GetConfig(ConfigKey.ColumnWidth);
+				this.txbRowHeight.Text = config.GetConfig(ConfigKey.RowHeight);
+				this.dbLinkString = config.GetDBLinkString();
+				this.columnWidthModal(config.GetConfig(ConfigKey.IsFixedColumnWidth).ToBool());
+				this.lblExitColor.BackColor = ColorTranslator.FromHtml("#"+this.txbExitColor.Text);
+			}
+			catch (Exception ex)
+			{
+				Function.MsgError(ex.Message);
+			}
+		}
+
+		/// <summary>
+		/// 初始化 TabControl 控件
+		/// </summary>
+		private void initTabControl()
+		{
+			this.Shown += (s, e) => this.tcMain.ItemSize = new Size((this.tcMain.Width - 20) / 6, 40);
+		}
+
+		/// <summary>
+		/// 初始化其他内容
+		/// </summary>
+		private void initOtherControlData()
+		{
+			this.tsbClose.Visible = false;
+			this.toolStripButton1.Visible = false;
+			this.txbOutput.Text = $"主程序版本:{Application.ProductVersion.ToString()}{Environment.NewLine}";
+		}
+
+		/// <summary>
+		/// 列宽模式，处理相应的控件显示状态
+		/// </summary>
+		/// <param name="isFixedColumnWidth">列宽模式</param>
+		private void columnWidthModal(bool isFixedColumnWidth)
+		{
+			this.txbRowHeight.Visible = isFixedColumnWidth;
+			this.txbColumnWidth.Visible = isFixedColumnWidth;
+			this.lblColumnWidth.Visible = isFixedColumnWidth;
+			this.lblRowHeight.Visible = isFixedColumnWidth;
+			this.lblExcelWithToPxScale.Visible = !isFixedColumnWidth;
+			this.txbExcelWithToPxScale.Visible = !isFixedColumnWidth;
 		}
 
 		private void toolStripButton1_Click(object sender, EventArgs e)
@@ -80,6 +136,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 			
 		}
 
+		/// <summary>
+		/// 选择导出文件夹
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void btnFolder_Click(object sender, EventArgs e)
 		{
 			FolderBrowserDialog dialog = new FolderBrowserDialog();
@@ -90,6 +151,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 			}
 		}
 
+		/// <summary>
+		/// 设置控件的只读
+		/// </summary>
+		/// <param name="txb"></param>
+		/// <param name="only"></param>
 		private void setTextBoxReadOnly(TextBox txb, bool only)
 		{
 			txb.ReadOnly = only;
@@ -97,7 +163,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 		}
 
 	
-
+		/// <summary>
+		/// 选择需求文件
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void tsbRequirementFile_Click(object sender, EventArgs e)
 		{
 			OpenFileDialog openFileDialog = new OpenFileDialog();
@@ -123,19 +193,46 @@ namespace ZrTBMCodeForTestItem.ccMain
 				Function.MsgError("文件选择错误.");
 				return;
 			}
-			this.initDictZrControlInfo(this.txbDBFile.Text);
+			this.loadDBRequirementFile(this.txbDBFile.Text, true);
 			this.btnDataRefresh.Enabled = true;
 			this.btnTrustRefresh.Enabled = true;
 			this.btnTrialRefresh.Enabled = true;
 			this.btnExSQL.Enabled = true;
 			this.btnExportSQL.Enabled = true;
+			this.tsbExportProject.Enabled = true;
+		}
+
+		/// <summary>
+		/// 验证字段是否存在重复
+		/// </summary>
+		/// <returns></returns>
+		private string isDBColoumRepetition()
+		{
+			if (this.listZrControlInfo == null || this.listZrControlInfo.Count == 0) return null;
+			var data = this.listZrControlInfo.Distinct(new ZrControlExternalInfoFromFile()).ToList();
+			if (data.Count == this.listZrControlInfo.Count) return null;
+
+			List<ZrControlExternalInfoFromFile> result = this.listZrControlInfo.Except(data).ToList<ZrControlExternalInfoFromFile>();
+			List<string> list = new List<string>();
+			foreach (var item in result)
+			{
+				list.Add($"工作簿：{item.SheetName}，行号：{item.RowIndex}，表名：{ item.ZrTable }，字段名：{item.ZrField }，存在重复，其描述为：{item.ZrDescription}。");
+				//2017年6月14日 16:49:20 郑少宝 只要字段重复就是重复
+				var temp = this.listZrControlInfo.Where(i => i.ZrField == item.ZrField && !string.IsNullOrEmpty(i.ZrField) && i.RowIndex != item.RowIndex);
+				foreach (var item2 in temp)
+				{
+					list.Add($"工作簿：{item2.SheetName}，行号：{item2.RowIndex}，表名：{ item2.ZrTable }，字段名：{item2.ZrField }，存在重复，其描述为：{item2.ZrDescription}。");
+				}
+				list.Add("");
+			}
+			return string.Join(Environment.NewLine, list);
 		}
 
 		/// <summary>
 		/// 载入数据库字段对照内容到内存
 		/// </summary>
 		/// <param name="filePath">文件绝对路径</param>
-		private void loadDBRequirementFile(string filePath)
+		private void loadDBRequirementFile(string filePath, bool must)
 		{
 			if (string.IsNullOrEmpty(filePath) || System.IO.File.Exists(filePath) == false) Function.MsgError(Language.NoRequirementFile);
 			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
@@ -150,33 +247,60 @@ namespace ZrTBMCodeForTestItem.ccMain
 					return;
 				}
 			}
-			this.initDictZrControlInfo(filePath);
+			this.initDictZrControlInfo(filePath, must);
 		}
 
 		/// <summary>
 		/// 初始化数据库字段对照(线程出来)
 		/// </summary>
 		/// <param name="filePath">文件路径</param>
-		private void initDictZrControlInfo(string filePath)
+		private async void initDictZrControlInfo(string filePath, bool must)
 		{
-			var load = new Loading(this.Handle);
-			System.Threading.Thread thread = new System.Threading.Thread(new System.Threading.ThreadStart(getDictZrControlInfo));
-			thread.Start();
-
-			void getDictZrControlInfo()
+			if (must || this.listZrControlInfo == null || this.listZrControlInfo.Count == 0)
 			{
-				using (var rf = new DBRequirementFile(filePath))
+				var load = new Loading(this.Handle);
+				string repResult = null;
+				await Task.Run(() =>
 				{
-					var result = rf.GetControlDBInfoForTrust();
-					this.dictZrControlInfo = result.dict;
-					this.listZrControlInfo = result.list;
-					load.HideLoading();
-				}
-			}
+					using (var rf = new DBRequirementFile(filePath))
+					{
+						var data = new List<ZrControlExternalInfoFromFile>();
+						this.listZrControlInfo = new List<ZrControlExternalInfoFromFile>();
+						rf.GetControlDBInfoFromFile(ref data);
+						this.listZrControlInfo = data.Clone() as List<ZrControlExternalInfoFromFile>;
+						repResult = this.isDBColoumRepetition();
+						if (!string.IsNullOrEmpty(repResult))
+						{
+							Function.MsgError(Language.RepetitionColumn);
+							output(repResult);
+						}
+						load.HideLoading();
+					}
+				});
+			}			
 		}
 
+		/// <summary>
+		/// 日志输出
+		/// </summary>
+		/// <param name="text"></param>
+		private void output(string text)
+		{
+			if (string.IsNullOrEmpty(text)) return;
+			//防止线程里调用
+			Action a = () =>
+			{
+				this.txbOutput.Text += Environment.NewLine + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+				this.txbOutput.Text += Environment.NewLine + text;
+			};
+			this.Invoke(a);
+		}
 
-
+		/// <summary>
+		/// 选项卡切换
+		/// </summary>
+		/// <param name="sender"></param>
+		/// <param name="e"></param>
 		private void tcMain_SelectedIndexChanged(object sender, EventArgs e)
 		{
 			if (this.tcMain.SelectedTab.Name == "tpUseRemark" && this.webBrowser1.Tag == null)
@@ -194,6 +318,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <returns></returns>
 		private bool existsOutFolder()
 		{
+			if (!System.IO.Directory.Exists($@"{Application.StartupPath}\masterplate"))
+			{
+				Function.MsgError($"{Language.NoExistsMasterplate}");
+				return false;
+			}
 			if (!System.IO.Directory.Exists(this.txbFolder.Text))
 			{
 				Function.MsgError($"{this.txbFolder.Text} {Language.NoExistsFolderForOut}");
@@ -289,19 +418,14 @@ namespace ZrTBMCodeForTestItem.ccMain
 		}
 
 		private void btnDataRefresh_Click(object sender, EventArgs e)
-		{
-			//if (this.dictZrControlInfo == null)
-			//{
-			//	this.initDictZrControlInfo(this.txbDBFile.Text);
-			//	if (this.dictZrControlInfo == null)
-			//	{
-			//		Function.MsgError(Language.NoRequirementFile);
-			//		return;
-			//	}
-			//}
+		{			
 			var loading = new Loading(this.Handle);
 			this.initListView();
-			addColumnsInfo(this.dictZrControlInfo, true);
+			addColumnsInfo(true);
+			this.listView1.Visible = true;
+			this.listView1.Dock = DockStyle.Fill;
+			this.txbScript.Visible = false;
+			this.txbScript.Dock = DockStyle.None;
 			loading.HideLoading();
 		}
 
@@ -341,9 +465,8 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <summary>
 		/// 添加数据到 ListView
 		/// </summary>
-		/// <param name="dict">字段信息列表</param>
 		/// <param name="clear">是否清空原来的数据</param>
-		private void addColumnsInfo(Dictionary<string, List<ZrControlExternalInfoFromFile>> dict, bool clear)
+		private void addColumnsInfo(bool clear)
 		{
 			if (clear)
 			{
@@ -356,25 +479,47 @@ namespace ZrTBMCodeForTestItem.ccMain
 				this.listView1.Columns.Add(null, "字段类型长度", 160, HorizontalAlignment.Center, 4);
 				this.listView1.Columns.Add(null, "默认值", 120, HorizontalAlignment.Left, 5);
 				this.listView1.Columns.Add(null, "不为空", 100, HorizontalAlignment.Center, 6);
+				this.listView1.Columns.Add(null, "正则验证", 120, HorizontalAlignment.Center, 7);
 			}
-			foreach (var item in dict)
+			List<ListViewGroup> listGroup = new List<ListViewGroup>();
+			foreach (var item in this.listZrControlInfo)
 			{
-				ListViewGroup group = new ListViewGroup();
-				group.Header = item.Key;
-				group.HeaderAlignment = HorizontalAlignment.Left;   //设置组标题文本的对齐方式。（默认为Left）  
-				for (int i = 0; i < item.Value.Count; i++)
+				bool exists = false;
+				foreach (var g in listGroup)
+				{
+					if (g.Header == item.SheetName)
+					{
+						exists = true;
+						break;
+					}
+				}
+				if (!exists)
+				{
+					ListViewGroup group = new ListViewGroup();
+					group.Header = item.SheetName;
+					group.HeaderAlignment = HorizontalAlignment.Left;
+					listGroup.Add(group);
+				}
+			}
+			int index = 0;
+			foreach (var group in listGroup)
+			{
+				var data = this.listZrControlInfo.Where(i => i.SheetName == group.Header);
+				foreach (var item in data)
 				{
 					ListViewItem lvi = new ListViewItem();
-					lvi.Text = $"{i + 1}";
-					lvi.SubItems.Add(item.Value[i].ZrTable);
-					lvi.SubItems.Add(item.Value[i].ZrDescription);
-					lvi.SubItems.Add(item.Value[i].ZrField);
-					lvi.SubItems.Add(item.Value[i].TypeLength);
-					lvi.SubItems.Add(item.Value[i].Default.ToString());
-					lvi.SubItems.Add(item.Value[i].ZrIsNotNull.ToString());
+					lvi.Text = $"{index + 1}";
+					lvi.SubItems.Add(item.ZrTable);
+					lvi.SubItems.Add(item.ZrDescription);
+					lvi.SubItems.Add(item.ZrField);
+					lvi.SubItems.Add(item.TypeLength);
+					lvi.SubItems.Add(item.Default.ToString());
+					lvi.SubItems.Add(item.ZrIsNotNull.ToString());
+					lvi.SubItems.Add(item.ZrVerify.ToString());
 					group.Items.Add(lvi);
 					this.listView1.Items.Add(lvi);
-				}
+					index++;
+				}				
 				this.listView1.Groups.Add(group);
 			}		
 		}
@@ -408,6 +553,12 @@ namespace ZrTBMCodeForTestItem.ccMain
 		private void btnTrustRefresh_Click(object sender, EventArgs e)
 		{
 			if (this.fileIsOccupied(this.txbRequirementFile.Text)) return;
+			this.initDictZrControlInfo(this.txbRequirementFile.Text, false);
+			if (this.listZrControlInfo == null || this.listZrControlInfo.Count == 0)
+			{
+				Function.MsgError(Language.NoDBColumnsInfo);
+				return;
+			}
 			showTrust(this.txbRequirementFile.Text);			
 		}
 
@@ -416,7 +567,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			var load = new Loading(this.Handle);
 			using (var rf = new FormRequirementFile(filePath))
 			{
-				rf.ccControl(this.panTrust, this.dictZrControlInfo, true);
+				rf.ccControl(this.panTrust, this.listZrControlInfo.Clone() as List<ZrControlExternalInfoFromFile>, true);
 			};
 			load.HideLoading();
 		}
@@ -425,23 +576,47 @@ namespace ZrTBMCodeForTestItem.ccMain
 		private void btnTrialRefresh_Click(object sender, EventArgs e)
 		{
 			if (this.fileIsOccupied(this.txbRequirementFile.Text)) return;
+			this.initDictZrControlInfo(this.txbRequirementFile.Text, false);
+			if (this.listZrControlInfo == null || this.listZrControlInfo.Count == 0)
+			{
+				Function.MsgError(Language.NoDBColumnsInfo);
+				return;
+			}
 			showTrial(this.txbRequirementFile.Text);
 		}
 
 		private void showTrial(string filePath)
-		{			
+		{
 			var load = new Loading(this.Handle);
 			using (var rf = new FormRequirementFile(filePath))
 			{
-				rf.ccControl(this.panTrial, this.dictZrControlInfo, false);
+				rf.ccControl(this.panTrial, this.listZrControlInfo.Clone() as List<ZrControlExternalInfoFromFile>, false);
 			};
 			load.HideLoading();
 		}
 
-	
+		/// <summary>
+		/// 检查默认值
+		/// </summary>
+		/// <returns></returns>
+		private bool checkDefaultValue()
+		{
+			if (this.txbColumnWidth.Text.ToInt() < 10 || this.txbColumnWidth.Text.ToInt() > 1000)
+			{
+				Function.MsgError("列宽值设置无效，限定 10 ~ 1000。");
+				return false;
+			}
+			if (this.txbRowHeight.Text.ToInt() < 20 || this.txbRowHeight.Text.ToInt() > 100)
+			{
+				Function.MsgError("行高值设置无效，限定 20 ~ 100。");
+				return false;
+			}
+			return true;
+		}
 
 		private void tsbSaveDefault_Click(object sender, EventArgs e)
 		{
+			if (!checkDefaultValue()) return;
 			UserConfig uc = new UserConfig(true);
 			int result = uc.UpdateConfig(this.getDefault());
 			if (result > 0)
@@ -464,17 +639,33 @@ namespace ZrTBMCodeForTestItem.ccMain
 			dict.Add(ConfigKey.TargetFrameworkVersion.ToString(), this.txbTargetFrameworkVersion.Text);
 			dict.Add(ConfigKey.Folder.ToString(), this.txbFolder.Text);
 			dict.Add(ConfigKey.ExcelWithToPxScale.ToString(), this.txbExcelWithToPxScale.Text);
+			dict.Add(ConfigKey.RowHeight.ToString(), this.txbRowHeight.Text);
+			dict.Add(ConfigKey.ColumnWidth.ToString(), this.txbColumnWidth.Text);
 			dict.Add(ConfigKey.ExitColor.ToString(), this.txbExitColor.Text);
 			return dict;
 		}
-				
+
+		/// <summary>
+		/// 验证转换，Excel 可以识别的颜色名称
+		/// </summary>
+		/// <param name="color"></param>
+		/// <returns></returns>
+		private string toHexColor(Color color)
+		{
+			return string.Format("{0}{1}{2}",
+				Convert.ToString(color.R, 16).PadLeft(2, '0'),
+				Convert.ToString(color.G, 16).PadLeft(2, '0'),
+				Convert.ToString(color.B, 16).PadLeft(2, '0'));
+		}
+
 		/// <summary>
 		/// 异步执行脚本
 		/// </summary>
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		private async void btnExSQL_Click(object sender, EventArgs e)
-		{			
+		{
+			if (!Function.MsgOK(Language.AskExSql)) return;
 			var load = new Loading(this.Handle);
 			string btnCaption = (sender as Button).Text;
 			this.btnExSQL.Enabled = false;
@@ -507,31 +698,43 @@ namespace ZrTBMCodeForTestItem.ccMain
 		}
 
 
-		private void btnExportSQL_Click(object sender, EventArgs e)
+		private async void btnExportSQL_Click(object sender, EventArgs e)
 		{
-			if (!this.existsOutFolder()) return;
-			string directory = $@"{this.txbFolder.Text}\{this.txbAssemblyName.Text}\Script";
-			if (!System.IO.Directory.Exists(directory))
+			var load = new Loading(this.Handle);
+			string btnCaption = (sender as Button).Text;
+			this.btnExportSQL.Enabled = false;
+			this.btnExportSQL.Text = Language.Doing;
+			try
 			{
-				System.IO.Directory.CreateDirectory(directory);
+				(bool result, string errorInfo, List<string> scripts) result = (result:false, errorInfo:null, scripts:null); 
+				await Task.Run(() =>
+				{
+					ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
+					ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
+					result = ctispig.Export();
+					if (!result.result)
+					{
+						Function.MsgError(result.errorInfo);
+						return;
+					}
+				});
+				this.txbScript.Text = string.Join(Environment.NewLine, result.scripts);
 			}
-			string fileName = $@"{directory}\Script.sql";
-
-			ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
-			ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
-			var result = ctispig.Export(fileName);
-			if (!result.result)
+			catch (Exception ex)
 			{
-				Function.MsgError(result.errorInfo);
-				return;
+				Function.MsgError(ex.Message);
 			}
-			if (Function.MsgOK(Language.ExportDone))
+			finally
 			{
-				this.openExplorerAndSelect(fileName);
+				load.HideLoading();
+				this.txbScript.Visible = true;
+				this.txbScript.Dock = DockStyle.Fill;
+				this.listView1.Visible = false;
+				this.listView1.Dock = DockStyle.None;
+				this.btnExportSQL.Text = btnCaption;
+				this.btnExportSQL.Enabled = true;
 			}
-		}
-
-		
+		}		
 	}
 
 	

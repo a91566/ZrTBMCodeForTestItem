@@ -1,14 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Windows.Forms;
-using System.Data.SqlClient;
-using ZrCHKFormBase;
-using ZrCHKCommonFrom;
+﻿using ZrCHKFormBase;
 
 namespace CHK_Accelerator
 {
@@ -24,6 +14,9 @@ namespace CHK_Accelerator
              
         }
 
+		/// <summary>
+        /// 初始化后执行的函数
+        /// </summary>
         public override void DataInitialAddtionAfter()
         {
             base.DataInitialAddtionAfter();

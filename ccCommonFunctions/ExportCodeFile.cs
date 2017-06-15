@@ -452,6 +452,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		#endregion
 
 		#region 试验信息
+
 		/// <summary>
 		/// 导出试验的设计文件
 		/// </summary>
@@ -461,7 +462,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			Size ucSize = this.getUCSize(panModel);
 
 			outPut(Language.OutputInfo_CreateTrial);
-			this.export_Trial_CS();
+			this.export_Trial_CS(panModel);
 
 			outPut(Language.OutputInfo_CreateTrial);
 			this.export_Trial_Designer(panModel, ucSize);
@@ -471,24 +472,110 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 
 			outPut(Language.OutputInfo_Done);
 		}
+
 		/// <summary>
 		/// 导出试验的设计文件 后台代码
 		/// </summary>
-		private void export_Trial_CS()
+		private void export_Trial_CS(Control panModel)
 		{
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcProcessInfo.cs";
-			string[] words = Function.ReadFile(sourcePath);
-			for (int i = 0; i < words.Length; i++)
+			List<string> words = Function.ReadFile(sourcePath).ToList();
+			for (int i = 0; i < words.Count; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
 				{
 					words[i] = words[i].Replace(sourceAssembly, this.assemblyName);
+				}
+				if (words[i].Contains("base.DataInitialAddtionAfter"))
+				{
+					List<string> temp = this.getCheckItemResultChange(panModel);
+					words.Insert(i + 1, string.Join(Environment.NewLine, temp));
 					break;
 				}
 			}
 			string targetPath = $@"{this.path}\{this.assemblyName}\UcProcessInfo.cs";
 			Function.WriteFile(words, targetPath, true);
 		}
+
+		/// <summary>
+		/// 添加结论判定的操作
+		/// </summary>
+		/// <param name="panModel"></param>
+		/// <param name="list"></param>
+		private List<string> getCheckItemResultChange(Control panModel)
+		{
+			List<ComboBox> listComboBox = new List<ComboBox>();
+			List<TextBox> listTextBox = new List<TextBox>();
+			this.getResultControl(panModel, ref listComboBox, ref listTextBox);
+			var dict = getResultControl(listComboBox, listTextBox);
+			return getCheckItemResultChange(dict);
+		}
+
+		/// <summary>
+		/// 生产结果
+		/// </summary>
+		/// <param name="dict">分组的情况</param>
+		/// <param name="list">写入的结果</param>
+		/// <returns></returns>
+		private List<string> getCheckItemResultChange(Dictionary<ComboBox, TextBox> dict)
+		{
+			var result = new List<string>();
+			foreach (var item in dict)
+			{
+				result.Add($"			base.CheckItemResultChange({item.Key.Name}, {item.Value.Name}, {item.Key.Parent.Name}, false);");
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// 分组出控件的结果
+		/// </summary>
+		/// <param name="listComboBox">检测结论控件集合</param>
+		/// <param name="listTextBox">判定结果控件集合</param>
+		/// <returns></returns>
+		private Dictionary<ComboBox, TextBox> getResultControl(List<ComboBox> listComboBox, List<TextBox> listTextBox)
+		{
+			Dictionary<ComboBox, TextBox> result = new Dictionary<ComboBox, TextBox>();
+			foreach (ComboBox item in listComboBox)
+			{
+				if (item != null)
+				{
+					string tempName = item.Name.Replace("cmb", "").Replace("检测结论", "");
+					TextBox txb = listTextBox.FirstOrDefault(i => i.Name == $"txb{tempName}判定结果");
+					if (txb == null) continue;
+					result.Add(item as ComboBox, txb);
+				}
+			}
+			return result;
+		}
+
+		/// <summary>
+		/// 获取出所有的检测控件
+		/// </summary>
+		/// <param name="cc">容器</param>
+		/// <param name="listComboBox">查找的结果存放的列</param>
+		/// <param name="listTextBox">查找的结果存放的列</param>
+		private void getResultControl(Control cc, ref List<ComboBox> listComboBox, ref List<TextBox> listTextBox)
+		{
+			foreach (Control item in cc.Controls)
+			{
+				if (item.Name.EndsWith("检测结论") && item is ComboBox)
+				{
+					item.Tag = item.Parent;
+					listComboBox.Add(item as ComboBox);
+				}
+				if (item.Name.EndsWith("判定结果") && item is TextBox)
+				{
+					listTextBox.Add(item as TextBox);
+				}
+				if (item.Controls.Count > 0)
+				{
+					getResultControl(item, ref listComboBox, ref listTextBox);
+				}
+			}
+		}
+
+
 
 		/// <summary>
 		/// 导出试验的设计文件 窗体设计
@@ -511,6 +598,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 				}
 			}
 		}
+
 		/// <summary>
 		/// 导出试验的设计文件 资源文件
 		/// </summary>

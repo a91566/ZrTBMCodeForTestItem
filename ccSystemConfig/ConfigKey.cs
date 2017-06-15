@@ -57,6 +57,14 @@ namespace ZrTBMCodeForTestItem.ccSystemConfig
 		/// <summary>
 		/// Excel 列宽 与 像素的比例转换
 		/// </summary>
-		ExcelWithToPxScale
-	}
+		ExcelWithToPxScale,
+		/// <summary>
+		/// Excel 每一列的固定宽度，人为规定，不读取 Excel 的列宽
+		/// </summary>
+		ColumnWidth,
+		/// <summary>
+		/// 是否采取固定列宽
+		/// </summary>
+		IsFixedColumnWidth
+}
 }

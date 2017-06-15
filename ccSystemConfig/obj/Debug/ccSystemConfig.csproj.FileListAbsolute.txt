@@ -28,3 +28,18 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\De
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.ValueTuple.dll
 D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ZrControl.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ZrControl.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccSystemConfig.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccSystemConfig.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccCommonFunctions.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\DBHelper.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.Data.SQLite.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.ValueTuple.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ZrControl.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\MySql.Data.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\ccCommonFunctions.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.Data.SQLite.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\System.Data.SQLite.dll.config
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\bin\Debug\MySql.Data.xml
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.csprojResolveAssemblyReference.cache
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccSystemConfig\obj\Debug\ccSystemConfig.pdb

@@ -16,3 +16,12 @@ D:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ZrContro
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLanguage.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ZrControl.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLanguage.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommonFunctions.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommonFunctions.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLanguage.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\System.ValueTuple.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ZrControl.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLanguage.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.csprojResolveAssemblyReference.cache
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.pdb

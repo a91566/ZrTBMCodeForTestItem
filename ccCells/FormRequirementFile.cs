@@ -1,7 +1,8 @@
 ﻿/*
  * 2017年6月4日 11:13:44 郑少宝 项目需求文件的读取
  * 
- * 我不知道为什么喜欢你，但是你就是我不喜欢别人的理由
+ * 我不知道为什么喜欢你
+ * 但是你就是我不喜欢别人的理由
  */
 using Aspose.Cells;
 using System;
@@ -51,10 +52,10 @@ namespace ZrTBMCodeForTestItem.ccCells
 				if (this.currentSheet != null) this.currentSheet = null;
 				if (this.currentCell != null) this.currentCell = null;
 				if (this.createControl != null) this.createControl = null;
-				if (this.dictZrControlInfo != null)
+				if (this.listZrControlInfo != null)
 				{
-					this.dictZrControlInfo.Clear();
-					this.dictZrControlInfo = null;
+					this.listZrControlInfo.Clear();
+					this.listZrControlInfo = null;
 				}
 				if (this.listLabelName != null)
 				{
@@ -70,6 +71,14 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// Excel 列宽 与 像素的比例转换
 		/// </summary>
 		private readonly double excelWithToPxScale;
+		/// <summary>
+		/// 列宽（每一列固定的宽度，不读取 Excel 的列宽计算）
+		/// </summary>
+		private readonly int columnWidth;
+		/// <summary>
+		/// 是否固定列宽
+		/// </summary>
+		private readonly bool isFixedColumnWidth;
 		/// <summary>
 		/// 行高
 		/// </summary>
@@ -101,7 +110,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <summary>
 		/// 字段对照
 		/// </summary>
-		private Dictionary<string, List<ZrControlExternalInfoFromFile>> dictZrControlInfo;
+		private List<ZrControlExternalInfoFromFile> listZrControlInfo;
 		/// <summary>
 		/// Label 控件集合，用于重复的处理
 		/// </summary>
@@ -114,6 +123,8 @@ namespace ZrTBMCodeForTestItem.ccCells
 			this.asciiEncoding = new System.Text.ASCIIEncoding();
 			this.excelWithToPxScale = Convert.ToDouble(base.config.GetConfig(ConfigKey.ExcelWithToPxScale));
 			this.rowHeight = base.config.GetConfig(ConfigKey.RowHeight).ToInt();
+			this.columnWidth = base.config.GetConfig(ConfigKey.ColumnWidth).ToInt();
+			this.isFixedColumnWidth = base.config.GetConfig(ConfigKey.IsFixedColumnWidth).ToBool();
 		}
 
 		/// <summary>
@@ -135,13 +146,10 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <returns></returns>
 		private ZrControlExternalInfoFromFile getZrControlExternalInfo(string columnName)
 		{
-			if (this.dictZrControlInfo == null || this.dictZrControlInfo.Count == 0) return null;
-			foreach (var item in this.dictZrControlInfo)
-			{
-				var a = item.Value.FirstOrDefault(i => i.ZrField == columnName);
-				if (a != null)
+			if (this.listZrControlInfo == null || this.listZrControlInfo.Count == 0) return null;
+			var a = this.listZrControlInfo.FirstOrDefault(i => i.ZrField == columnName);
+			if (a != null)
 				return a;
-			}
 			return null;
 		}
 
@@ -153,12 +161,12 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// 生成控件，并处理容器的逻辑关系
 		/// </summary>
 		/// <param name="pan">父容器</param>
-		/// <param name="dictZrControlInfo">字段对照</param>
+		/// <param name="listZrControlInfo">字段对照</param>
 		/// <param name="isTrust">是否收样（收样就读一页）</param>
-		public void ccControl(Panel pan, Dictionary<string, List<ZrControlExternalInfoFromFile>> dictZrControlInfo, bool isTrust)
+		public void ccControl(Panel pan,List<ZrControlExternalInfoFromFile> listZrControlInfo, bool isTrust)
 		{
 			pan.Controls.Clear();
-			this.dictZrControlInfo = dictZrControlInfo;
+			this.listZrControlInfo = listZrControlInfo;
 			if (this.createControl == null)
 			{
 				this.createControl = new CreateControl();
@@ -167,14 +175,14 @@ namespace ZrTBMCodeForTestItem.ccCells
 			{
 				//label 名称集合初始化
 				listLabelName = new List<string>();
-				this.currentSheet = this.workbook.Worksheets[1];
+				this.currentSheet = this.workbook.Worksheets[1];				
 				this.getSheetColumnWidthInfo();
 				this.createControlsForCurrentSheet(pan);
 			}
 			else
 			{
 				TabControl tc = new TabControl();
-				tc.Name = "tcMain";
+				tc.Name = "tcTest";
 				tc.Parent = pan;
 				tc.Dock = DockStyle.Fill;
 
@@ -234,11 +242,6 @@ namespace ZrTBMCodeForTestItem.ccCells
 					currentCell = currentSheet.Cells[$"{letter}{rowIndex}"];
 					var cellValue = currentCell.Value.ObjToString().Trim();
 					if (string.IsNullOrEmpty(cellValue)) continue;
-
-					
-
-					
-
 					//如果是分页控件的话，那么在这个分页控件创建完成之前，都不改变 currentCell，
 					if (cellValue.ToLower() == "tabcontrol")
 					{
@@ -279,7 +282,13 @@ namespace ZrTBMCodeForTestItem.ccCells
 						//c.Text = $"{letter}{rowIndex}";
 						c.Parent = realParent == null ? parent : realParent; 
 						new ToolTip().SetToolTip(c, $"{letter}{rowIndex}:{cellValue}");
-						setControlLocation(c, true, tcInfo);						
+						//第二个参数设置为 false 及不可调整大小
+						setControlLocation(c, !this.isFixedColumnWidth, tcInfo);
+
+						if (this.isFixedColumnWidth)
+						{
+							c.Size = new Size(100, 21);
+						}
 					}
 					else
 					{
@@ -434,6 +443,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		{
 			int x = 0;
 			int y = 0;
+			//如果是内嵌页的控件
 			if (tcInfo != null && tcInfo.IsOperateTabControl)
 			{
 				TabPage tp = c.Parent as TabPage;
@@ -462,7 +472,6 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <param name="isCanSetWidth">是否可以调整宽度</param>
 		private void setControlLocation(Control c, bool isCanSetWidth, Point location)
 		{
-
 			var leftWidthRowcount = this.getCurrentCellLeftWidth();
 			//进行宽度换算成像素
 			int columnWidth = leftWidthRowcount.width;
@@ -540,20 +549,28 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <returns></returns>
 		private (int left, int width, int rowCount) getCurrentCellLeftWidth()
 		{
-			int left = this.getCellWidth(0, this.currentCell.Column);
-			int width = 0;
 			int rowCount = 1;
+			int columnCount = 1;
+			//起始列号
+			int start = this.currentCell.Column;
 			if (this.currentCell.IsMerged)
 			{
-				int start = this.currentCell.Column;
-				width = this.getCellWidth(start, start + this.currentCell.GetMergedRange().ColumnCount);
+				//合并的列数
+				columnCount = this.currentCell.GetMergedRange().ColumnCount;
 				rowCount = this.currentCell.GetMergedRange().RowCount;
 			}
-			else
-			{
-				width = this.banToPX(this.currentSheetColumnWidth[this.currentCell.Column]);
-			}
 
+			return this.getCurrentCellLeftWidth(start, columnCount, rowCount);
+		}
+
+		/// <summary>
+		/// 获取单元格的起始位置与宽度与高度（所占行数），单位是像素
+		/// </summary>
+		/// <returns></returns>
+		private (int left, int width, int rowCount) getCurrentCellLeftWidth(int start, int columnCount, int rowCount)
+		{
+			int left = this.getCellWidth(0, this.currentCell.Column);
+			int width = this.getCellWidth(start, start + columnCount);
 			return (left: left, width: width, rowCount: rowCount);
 		}
 
@@ -580,12 +597,19 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <returns></returns>
 		private int getCellWidth(int start,int end)
 		{
-			double cellWidth = 0;
-			for (int i = start; i < end; i++)
+			if (this.isFixedColumnWidth)
 			{
-				cellWidth += this.currentSheetColumnWidth[i];
+				return (end - start) * this.columnWidth;
 			}
-			return this.banToPX(cellWidth);
+			else
+			{
+				double cellWidth = 0;
+				for (int i = start; i < end; i++)
+				{
+					cellWidth += this.currentSheetColumnWidth[i];
+				}
+				return this.banToPX(cellWidth);
+			}			
 		}				
 
 		/// <summary>
@@ -604,6 +628,8 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// </summary>
 		private void getSheetColumnWidthInfo()
 		{
+			//如果是固定列宽就不需要读取了
+			if (this.isFixedColumnWidth) return;
 			this.currentSheetColumnWidth = new List<double>();
 			this.currentSheetWidth = 0;
 			for (int i = 0; i <= this.currentSheet.Cells.MaxColumn; i++)

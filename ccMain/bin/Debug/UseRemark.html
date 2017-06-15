@@ -124,6 +124,8 @@
 	                        <li class="tips">6.2 界面需要 Label, 那么就在单元格填入内容，注意：字体颜色<span class="span-tips red">不能为黑色（#000）</span></li>
 	                        <li class="tips">6.3 界面需要其他输入控件（TextBox, ComboBox...）, 那么就在单元格填入所属的字段名称，注意：这里字体颜色
                                 <span class="span-tips blue">用黑色（#000）</span></li>
+							<li>7. 对于控件的宽度目前有两种方案：1）根据比例自动调整控件宽度。2）固定宽度。</li>
+							<li class="tips">7.1 目前采取的是第二种，固定宽度（2017年6月15日）。</li>
 	                    </ul>
 	                </li>
 				</ul>				
@@ -154,8 +156,20 @@
                             </li>
                             <li>2. 第一页作为备用说明页，不做任何读取。字段内容放在第二三四...页。</li>
 	                        <li>3. 退出标志同窗体设计文档。</li>
-	                        <li>4. 导出的脚本文件位于工程文件的目录的 Script 目录下</li>
-	                        <li>5. 包含的信息如下图，红色字体列不能为空。</li>
+	                        <li>4. 导出的脚本文件位于工程文件的目录的 Script 目录下。</li>
+	                        <li>5. 包含的信息如下图</li>
+							<li class="tips">
+								<span class="span-tips white">表名, 描述, 字段名称, 字段类型长度, 默认值, 修约, 下拉框, 不为空, 只读, 正则验证</span>
+									</li>							
+							<li class="tips">5.1 红色字体列不能为空。</li>
+							<li class="tips">5.2 修约, 下拉框, 不为空，这三列没有录入即为否。</li>
+							<li class="tips">5.2 下拉框列默认为否，即为其他控件（TextBox,DateTimePicker...），如果为是，那么即为 ComboBox 控件。
+								如果为 枚举，那么就是带 F11 功能的 ComboBox 控件。
+							</li>
+							<li class="tips">5.4 正则验证支持枚举（整数，小数）与自定义</li>
+							<li class="tips">5.5 对于小数类型尽量用 varchar 然后处理修约用控件的属性。</li>
+							<li class="tips">5.6 对于必定不含有汉字或特殊字符的请用 varchar 字段类型，对于极有可能或必定含有的请用 nvarchar 字段类型。</li>
+							<li class="tips">5.7 字段名都相同会被认定为重复字段，一个文档里请不要包含重复字段。</li>
 	                    </ul>
 	                </li>
 				</ul>				
@@ -164,7 +178,7 @@
 			<div class="full-width">
                 <p class="image-tips">图3：数据库字段示例说明</p>   
                 <div style="margin: auto; border-bottom: 1px solid skyblue;padding-bottom: 10px; text-align: center;">
-                	<img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/B*dELmJ1nM5ZdbnuBpRxbp6ty6SB4Hhb.C1tnA0f5nA!/r/dGsBAAAAAAAA" title="数据库字段需要录入的信息" style="margin: 0 auto;">
+                	<img src="http://r.photo.store.qq.com/psb?/V14e9cuD2AKMxs/th9X9VOVA25zrT.N*ooN7VquUjfCGKUrJWUJHfZxG2E!/r/dGsBAAAAAAAA" title="数据库字段需要录入的信息" style="margin: 0 auto;">
                 </div>	
             </div>
 
@@ -214,7 +228,7 @@
 	<footer>
 		<div id="update_log">
 			<ul>
-				<li>2017年6月1日 00:00:00 郑少宝</li>
+				<li>2017年6月15日 09:14:00 郑少宝</li>
 			</ul>
 		</div>		
 	</footer>

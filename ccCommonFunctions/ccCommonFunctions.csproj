@@ -56,7 +56,6 @@
     <Compile Include="ListToFile.cs" />
     <Compile Include="Loading.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UnlockerFile.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

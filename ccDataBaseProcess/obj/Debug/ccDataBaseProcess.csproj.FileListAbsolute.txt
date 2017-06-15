@@ -46,3 +46,27 @@ D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.csprojResolveAssemblyReference.cache
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.dll
 D:\文档\Visual Studio 2017\Projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccDataBaseProcess.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccDataBaseProcess.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCells.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCommonFunctions.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccExternal.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccLanguage.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccSystemConfig.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\DBHelper.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\System.ValueTuple.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ZrControl.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\Aspose.Cells.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\MySql.Data.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\System.Data.SQLite.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCells.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCommonFunctions.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccExternal.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccLanguage.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccSystemConfig.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\MySql.Data.xml
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\System.Data.SQLite.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\System.Data.SQLite.dll.config
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.csprojResolveAssemblyReference.cache
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.pdb

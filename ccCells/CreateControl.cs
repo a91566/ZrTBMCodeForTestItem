@@ -41,7 +41,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 				c.ForeColor = System.Drawing.Color.Red;
 				return c;
 			}
-			if (item.ZrIsEnum)
+			if (item.ZrIsEnum || item.IsComboBox)
 			{
 				c = new ZrControl.ZrDynamicComboBox();
 				c.Name = $"cmb{item.ZrField}";

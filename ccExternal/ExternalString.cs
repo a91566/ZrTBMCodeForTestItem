@@ -6,19 +6,14 @@
  * 于是从来不偷东西的我
  * 便学会了偷看
  */
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
 
 namespace ZrTBMCodeForTestItem.ccEcternal
 {
-    public static class ExternalString
+	public static class ExternalString
     {
 		/// <summary>
-		/// 将文本转为转为 bool 类型
+		/// 将文本转为转为 bool 类型, (1、是、true,返回 true，其余返回 false)
 		/// </summary>
 		/// <param name="s">待处理的字符串</param>
 		/// <returns>bool 值</returns>
@@ -90,6 +85,17 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 		}
 
 		/// <summary>
+		/// 将 object 转为 bool，(1、是、true,返回 true，其余返回 false)
+		/// </summary>
+		/// <param name="obj">待处理的对象</param>
+		/// <returns></returns>
+		public static bool ObjToBool(this object obj)
+		{
+			return obj == null ? false : obj.ToString().ToBool();
+		}
+
+
+		/// <summary>
 		/// 移除特殊字符
 		/// </summary>
 		/// <param name="obj">待处理的对象</param>
@@ -112,5 +118,6 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 				.Replace("）", "");
 		}
 
+		
 	}
 }
