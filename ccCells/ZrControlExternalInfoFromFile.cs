@@ -11,7 +11,6 @@ using System.Collections.Generic;
 
 namespace ZrTBMCodeForTestItem.ccCells
 {
-
 	/// <summary>
 	/// 控件信息
 	/// </summary>
@@ -39,6 +38,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// </summary>
 		public bool IsComboBox { get; set; }
 
+		#region IEqualityComparer 接口
 		public bool Equals(ZrControlExternalInfoFromFile x, ZrControlExternalInfoFromFile y)
 		{			
 			if (Object.ReferenceEquals(x, y)) return true;			
@@ -63,8 +63,6 @@ namespace ZrTBMCodeForTestItem.ccCells
 			int field = x.ZrField.GetHashCode();			
 			return field;
 		}
-
-
-		
+		#endregion
 	}
 }
