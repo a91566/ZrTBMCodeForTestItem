@@ -128,7 +128,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			string localVersion = Application.ProductVersion.ToString();
 			try
 			{
-				await Task<string>.Run(() =>
+				bool isNew = await Task<bool>.Run(() =>
 				{
 					var ver = new CodeProductionVersion(this.dbLinkString);
 					var serverVersion = ver.GetVersion();
@@ -147,13 +147,46 @@ namespace ZrTBMCodeForTestItem.ccMain
 						if (local < server)
 						{
 							output($"有新版本：{serverVersion.ToString()}");
+							return true;
 						}
 						else
 						{
 							ver.Update(localVersion, false);
 						}
 					}
+					return false;
 				});
+				this.tsbNewVersion.Visible = isNew;
+
+				//bool isNew = false;
+				//await Task<bool>.Run(() =>
+				//{
+				//	var ver = new CodeProductionVersion(this.dbLinkString);
+				//	var serverVersion = ver.GetVersion();
+				//	if (serverVersion == null)
+				//	{
+				//		ver.Update(localVersion, true);
+				//	}
+				//	else
+				//	{
+				//		serverVersion = ver.GetVersion().ToString();
+				//	}
+				//	if (serverVersion != null && localVersion != serverVersion.ToString())
+				//	{
+				//		Version server = new Version(serverVersion.ToString());
+				//		Version local = new Version(localVersion);
+				//		if (local < server)
+				//		{
+				//			output($"有新版本：{serverVersion.ToString()}");
+				//			isNew = true;
+				//		}
+				//		else
+				//		{
+				//			ver.Update(localVersion, false);
+				//		}
+				//	}
+				//});
+				//this.tsbNewVersion.Visible = isNew;
 			}
 			catch (Exception ex)
 			{

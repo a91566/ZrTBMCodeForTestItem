@@ -91,7 +91,7 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 		/// <returns></returns>
 		public static bool ObjToBool(this object obj)
 		{
-			return obj == null ? false : obj.ToString().ToBool();
+			return obj == null ? false : obj.ToString().Trim().ToBool();
 		}
 
 

@@ -38,6 +38,7 @@
 			this.tsbRequirementFile = new System.Windows.Forms.ToolStripButton();
 			this.tsbExportProject = new System.Windows.Forms.ToolStripButton();
 			this.tslOperateInfo = new System.Windows.Forms.ToolStripLabel();
+			this.tsbNewVersion = new System.Windows.Forms.ToolStripButton();
 			this.panMain = new System.Windows.Forms.Panel();
 			this.tcMain = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
@@ -46,7 +47,6 @@
 			this.lblRowHeight = new System.Windows.Forms.Label();
 			this.txbColumnWidth = new System.Windows.Forms.TextBox();
 			this.lblColumnWidth = new System.Windows.Forms.Label();
-			this.txbExitColor = new System.Windows.Forms.TextBox();
 			this.label8 = new System.Windows.Forms.Label();
 			this.txbExcelWithToPxScale = new System.Windows.Forms.TextBox();
 			this.lblExcelWithToPxScale = new System.Windows.Forms.Label();
@@ -65,6 +65,9 @@
 			this.txbAssemblyName = new System.Windows.Forms.TextBox();
 			this.txbFolder = new System.Windows.Forms.TextBox();
 			this.btnFolder = new System.Windows.Forms.Button();
+			this.panel2 = new System.Windows.Forms.Panel();
+			this.txbExitColor = new System.Windows.Forms.TextBox();
+			this.lblExitColor = new System.Windows.Forms.Label();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.panTrust = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -86,8 +89,6 @@
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
 			this.txbOutput = new System.Windows.Forms.TextBox();
-			this.lblExitColor = new System.Windows.Forms.Label();
-			this.panel2 = new System.Windows.Forms.Panel();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
@@ -95,6 +96,7 @@
 			this.tcMain.SuspendLayout();
 			this.tabPage1.SuspendLayout();
 			this.tableLayoutPanel1.SuspendLayout();
+			this.panel2.SuspendLayout();
 			this.tabPage2.SuspendLayout();
 			this.panel1.SuspendLayout();
 			this.tabPage3.SuspendLayout();
@@ -104,7 +106,6 @@
 			this.panel6.SuspendLayout();
 			this.tpUseRemark.SuspendLayout();
 			this.tabPage5.SuspendLayout();
-			this.panel2.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// panTools
@@ -132,7 +133,8 @@
             this.toolStripSeparator1,
             this.tsbRequirementFile,
             this.tsbExportProject,
-            this.tslOperateInfo});
+            this.tslOperateInfo,
+            this.tsbNewVersion});
 			this.toolStrip1.Location = new System.Drawing.Point(0, 0);
 			this.toolStrip1.Name = "toolStrip1";
 			this.toolStrip1.Size = new System.Drawing.Size(1300, 55);
@@ -205,6 +207,17 @@
 			this.tslOperateInfo.Name = "tslOperateInfo";
 			this.tslOperateInfo.Size = new System.Drawing.Size(0, 52);
 			this.tslOperateInfo.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// tsbNewVersion
+			// 
+			this.tsbNewVersion.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
+			this.tsbNewVersion.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Image;
+			this.tsbNewVersion.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Smile48;
+			this.tsbNewVersion.ImageTransparentColor = System.Drawing.Color.Magenta;
+			this.tsbNewVersion.Name = "tsbNewVersion";
+			this.tsbNewVersion.Size = new System.Drawing.Size(52, 52);
+			this.tsbNewVersion.Text = "有新版本";
+			this.tsbNewVersion.Visible = false;
 			// 
 			// panMain
 			// 
@@ -333,16 +346,6 @@
 			this.lblColumnWidth.TabIndex = 21;
 			this.lblColumnWidth.Text = "固定列宽";
 			this.lblColumnWidth.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-			// 
-			// txbExitColor
-			// 
-			this.txbExitColor.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbExitColor.BackColor = System.Drawing.Color.White;
-			this.txbExitColor.Location = new System.Drawing.Point(0, 4);
-			this.txbExitColor.MaxLength = 7;
-			this.txbExitColor.Name = "txbExitColor";
-			this.txbExitColor.Size = new System.Drawing.Size(259, 26);
-			this.txbExitColor.TabIndex = 20;
 			// 
 			// label8
 			// 
@@ -531,6 +534,33 @@
 			this.btnFolder.TabIndex = 6;
 			this.btnFolder.UseVisualStyleBackColor = true;
 			this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
+			// 
+			// panel2
+			// 
+			this.panel2.Controls.Add(this.txbExitColor);
+			this.panel2.Controls.Add(this.lblExitColor);
+			this.panel2.Location = new System.Drawing.Point(753, 123);
+			this.panel2.Name = "panel2";
+			this.panel2.Size = new System.Drawing.Size(394, 34);
+			this.panel2.TabIndex = 26;
+			// 
+			// txbExitColor
+			// 
+			this.txbExitColor.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.txbExitColor.BackColor = System.Drawing.Color.White;
+			this.txbExitColor.Location = new System.Drawing.Point(0, 4);
+			this.txbExitColor.MaxLength = 7;
+			this.txbExitColor.Name = "txbExitColor";
+			this.txbExitColor.Size = new System.Drawing.Size(259, 26);
+			this.txbExitColor.TabIndex = 20;
+			// 
+			// lblExitColor
+			// 
+			this.lblExitColor.BackColor = System.Drawing.Color.Black;
+			this.lblExitColor.Location = new System.Drawing.Point(276, 4);
+			this.lblExitColor.Name = "lblExitColor";
+			this.lblExitColor.Size = new System.Drawing.Size(56, 26);
+			this.lblExitColor.TabIndex = 25;
 			// 
 			// tabPage2
 			// 
@@ -795,23 +825,6 @@
 			this.txbOutput.Size = new System.Drawing.Size(1286, 501);
 			this.txbOutput.TabIndex = 2;
 			// 
-			// lblExitColor
-			// 
-			this.lblExitColor.BackColor = System.Drawing.Color.Black;
-			this.lblExitColor.Location = new System.Drawing.Point(276, 4);
-			this.lblExitColor.Name = "lblExitColor";
-			this.lblExitColor.Size = new System.Drawing.Size(56, 26);
-			this.lblExitColor.TabIndex = 25;
-			// 
-			// panel2
-			// 
-			this.panel2.Controls.Add(this.txbExitColor);
-			this.panel2.Controls.Add(this.lblExitColor);
-			this.panel2.Location = new System.Drawing.Point(753, 123);
-			this.panel2.Name = "panel2";
-			this.panel2.Size = new System.Drawing.Size(394, 34);
-			this.panel2.TabIndex = 26;
-			// 
 			// FormMain
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -834,6 +847,8 @@
 			this.tabPage1.ResumeLayout(false);
 			this.tableLayoutPanel1.ResumeLayout(false);
 			this.tableLayoutPanel1.PerformLayout();
+			this.panel2.ResumeLayout(false);
+			this.panel2.PerformLayout();
 			this.tabPage2.ResumeLayout(false);
 			this.panel1.ResumeLayout(false);
 			this.tabPage3.ResumeLayout(false);
@@ -845,8 +860,6 @@
 			this.tpUseRemark.ResumeLayout(false);
 			this.tabPage5.ResumeLayout(false);
 			this.tabPage5.PerformLayout();
-			this.panel2.ResumeLayout(false);
-			this.panel2.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -913,6 +926,7 @@
 		private System.Windows.Forms.Panel panel2;
 		private System.Windows.Forms.Label lblExitColor;
 		private System.Windows.Forms.ColorDialog colorDialog1;
+		private System.Windows.Forms.ToolStripButton tsbNewVersion;
 	}
 }
 

@@ -33,6 +33,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		public Control CreateZrControl(ZrControlExternalInfoFromFile  item)
 		{
 			Control c;
+			
 			if (item == null)
 			{
 				c = new Label();
@@ -45,6 +46,10 @@ namespace ZrTBMCodeForTestItem.ccCells
 			{
 				c = new ZrControl.ZrDynamicComboBox();
 				c.Name = $"cmb{item.ZrField}";
+				if (item.ZrIsEnum)
+				{
+					setComboBoxF11(c);
+				}
 			}
 			else
 			{			
@@ -90,6 +95,24 @@ namespace ZrTBMCodeForTestItem.ccCells
 				(c as ZrControl.IZrControl).SetZrControlExternalInfo(item);
 			}
 			return c;
-		}		
+		}
+
+		/// <summary>
+		/// 设置 F11 效果
+		/// </summary>
+		/// <param name="c"></param>
+		private void setComboBoxF11(Control c)
+		{
+			if (c is ComboBox)
+			{
+				c.KeyDown += (s, e) =>
+				{
+					if (e.KeyCode == Keys.F11)
+					{
+						ccCommonFunctions.Function.MsgInfo("F11");
+					}
+				};
+			}
+		}
 	}
 }

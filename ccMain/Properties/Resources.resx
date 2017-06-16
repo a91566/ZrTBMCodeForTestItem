@@ -181,4 +181,7 @@
   <data name="Writer48" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\writer_72.814216478191px_1206089_easyicon.net.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
+  <data name="Smile48" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\smile_47.921951219512px_1187048_easyicon.net.png;System.Drawing.Bitmap, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
+  </data>
 </root>
