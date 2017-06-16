@@ -88,8 +88,8 @@
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.txbOutput = new System.Windows.Forms.TextBox();
 			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+			this.rtbOutput = new System.Windows.Forms.RichTextBox();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -806,7 +806,7 @@
 			// 
 			// tabPage5
 			// 
-			this.tabPage5.Controls.Add(this.txbOutput);
+			this.tabPage5.Controls.Add(this.rtbOutput);
 			this.tabPage5.Location = new System.Drawing.Point(4, 44);
 			this.tabPage5.Name = "tabPage5";
 			this.tabPage5.Padding = new System.Windows.Forms.Padding(3);
@@ -815,15 +815,18 @@
 			this.tabPage5.Text = "日志输出";
 			this.tabPage5.UseVisualStyleBackColor = true;
 			// 
-			// txbOutput
+			// rtbOutput
 			// 
-			this.txbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.txbOutput.Location = new System.Drawing.Point(3, 3);
-			this.txbOutput.Multiline = true;
-			this.txbOutput.Name = "txbOutput";
-			this.txbOutput.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.txbOutput.Size = new System.Drawing.Size(1286, 501);
-			this.txbOutput.TabIndex = 2;
+			this.rtbOutput.BackColor = System.Drawing.Color.White;
+			this.rtbOutput.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+			this.rtbOutput.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.rtbOutput.Location = new System.Drawing.Point(3, 3);
+			this.rtbOutput.Margin = new System.Windows.Forms.Padding(0);
+			this.rtbOutput.Name = "rtbOutput";
+			this.rtbOutput.ReadOnly = true;
+			this.rtbOutput.Size = new System.Drawing.Size(1286, 501);
+			this.rtbOutput.TabIndex = 3;
+			this.rtbOutput.Text = "";
 			// 
 			// FormMain
 			// 
@@ -859,7 +862,6 @@
 			this.panel6.ResumeLayout(false);
 			this.tpUseRemark.ResumeLayout(false);
 			this.tabPage5.ResumeLayout(false);
-			this.tabPage5.PerformLayout();
 			this.ResumeLayout(false);
 
 		}
@@ -918,7 +920,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
 		private System.Windows.Forms.TextBox txbScript;
 		private System.Windows.Forms.TabPage tabPage5;
-		private System.Windows.Forms.TextBox txbOutput;
 		private System.Windows.Forms.TextBox txbRowHeight;
 		private System.Windows.Forms.Label lblRowHeight;
 		private System.Windows.Forms.TextBox txbColumnWidth;
@@ -927,6 +928,7 @@
 		private System.Windows.Forms.Label lblExitColor;
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.ToolStripButton tsbNewVersion;
+		private System.Windows.Forms.RichTextBox rtbOutput;
 	}
 }
 

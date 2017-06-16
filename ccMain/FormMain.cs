@@ -34,6 +34,10 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 数据库连接信息
 		/// </summary>
 		private string dbLinkString;
+		/// <summary>
+		/// 日志输出
+		/// </summary>
+		private RichTextBoxLog rtbLog;
 
 		public FormMain()
 		{
@@ -49,8 +53,12 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.initEvent();
 			this.initTextBox();
 			this.initTabControl();
-			this.initOtherControlData();
-			this.updateVer();
+			this.rtbLog = new RichTextBoxLog(this.rtbOutput);
+			this.Shown += (s, e) =>
+			{
+				this.initOtherControlData();
+				//this.updateVer();
+			};
 		}
 
 		/// <summary>
@@ -77,7 +85,6 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.setTextBoxReadOnly(this.txbDBFile, true);
 			this.setTextBoxReadOnly(this.txbTargetFrameworkVersion, true);
 			this.setTextBoxReadOnly(this.txbScript, true);
-			this.setTextBoxReadOnly(this.txbOutput, true);
 			this.setTextBoxReadOnly(this.txbExitColor, true);
 			this.txbColumnWidth.SetTextBoxInt();
 			this.txbRowHeight.SetTextBoxInt();
@@ -117,7 +124,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		{
 			this.tsbClose.Visible = false;
 			this.toolStripButton1.Visible = false;
-			this.txbOutput.Text = $"主程序版本:{Application.ProductVersion.ToString()}{Environment.NewLine}";
+			this.rtbLog.LogAppend($"主程序版本:{Application.ProductVersion.ToString()}", LogLevel.Info);
 		}
 
 		/// <summary>
@@ -146,7 +153,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 						Version local = new Version(localVersion);
 						if (local < server)
 						{
-							output($"有新版本：{serverVersion.ToString()}");
+							this.rtbLog.LogAppend($"有新版本：{serverVersion.ToString()}");
 							return true;
 						}
 						else
@@ -156,41 +163,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 					}
 					return false;
 				});
-				this.tsbNewVersion.Visible = isNew;
-
-				//bool isNew = false;
-				//await Task<bool>.Run(() =>
-				//{
-				//	var ver = new CodeProductionVersion(this.dbLinkString);
-				//	var serverVersion = ver.GetVersion();
-				//	if (serverVersion == null)
-				//	{
-				//		ver.Update(localVersion, true);
-				//	}
-				//	else
-				//	{
-				//		serverVersion = ver.GetVersion().ToString();
-				//	}
-				//	if (serverVersion != null && localVersion != serverVersion.ToString())
-				//	{
-				//		Version server = new Version(serverVersion.ToString());
-				//		Version local = new Version(localVersion);
-				//		if (local < server)
-				//		{
-				//			output($"有新版本：{serverVersion.ToString()}");
-				//			isNew = true;
-				//		}
-				//		else
-				//		{
-				//			ver.Update(localVersion, false);
-				//		}
-				//	}
-				//});
-				//this.tsbNewVersion.Visible = isNew;
+				this.tsbNewVersion.Visible = isNew;				
 			}
 			catch (Exception ex)
 			{
-				output($"异常：{ex.Message}");
+				this.rtbLog.LogAppend($"异常：{ex.Message}", LogLevel.Error);
 			}
 		}
 			
@@ -284,7 +261,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// 验证字段是否存在重复
 		/// </summary>
 		/// <returns></returns>
-		private string isDBColoumRepetition()
+		private List<string> isDBColoumRepetition()
 		{
 			if (this.listZrControlInfo == null || this.listZrControlInfo.Count == 0) return null;
 			var data = this.listZrControlInfo.Distinct(new ZrControlExternalInfoFromFile()).ToList();
@@ -303,7 +280,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				}
 				list.Add("");
 			}
-			return string.Join(Environment.NewLine, list);
+			return list;
 		}
 
 		/// <summary>
@@ -337,8 +314,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			if (must || this.listZrControlInfo == null || this.listZrControlInfo.Count == 0)
 			{
 				var load = new Loading(this.Handle);
-				string repResult = null;
-				await Task.Run(() =>
+				var isRep = await Task<bool>.Run(() =>
 				{
 					using (var rf = new DBRequirementFile(filePath))
 					{
@@ -346,33 +322,22 @@ namespace ZrTBMCodeForTestItem.ccMain
 						this.listZrControlInfo = new List<ZrControlExternalInfoFromFile>();
 						rf.GetControlDBInfoFromFile(ref data);
 						this.listZrControlInfo = data.Clone() as List<ZrControlExternalInfoFromFile>;
-						repResult = this.isDBColoumRepetition();
-						if (!string.IsNullOrEmpty(repResult))
+						List<string> repResult = this.isDBColoumRepetition();
+						if (repResult != null && repResult.Count > 0)
 						{
 							Function.MsgError(Language.RepetitionColumn);
-							output(repResult);
+							this.rtbLog.LogAppend(repResult, LogLevel.Error);
+							return true;
 						}
-						load.HideLoading();
+						return false;
 					}
 				});
+				if (isRep) this.tcMain.SelectedIndex = tcMain.TabCount - 1;
+				load.HideLoading();
 			}			
 		}
 
-		/// <summary>
-		/// 日志输出
-		/// </summary>
-		/// <param name="text"></param>
-		private void output(string text)
-		{
-			if (string.IsNullOrEmpty(text)) return;
-			//防止线程里调用
-			Action a = () =>
-			{
-				this.txbOutput.Text += Environment.NewLine + System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-				this.txbOutput.Text += Environment.NewLine + text;
-			};
-			this.Invoke(a);
-		}
+		
 
 		/// <summary>
 		/// 选项卡切换
