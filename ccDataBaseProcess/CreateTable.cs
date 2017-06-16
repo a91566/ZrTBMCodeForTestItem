@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ZrTBMCodeForTestItem.ccCells;
 
-namespace ccDataBaseProcess
+namespace ccZrCHKCodeProduction.ccDataBaseProcess
 {
 	public class CreateTable
 	{

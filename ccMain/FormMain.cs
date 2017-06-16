@@ -1,8 +1,9 @@
 ﻿/*
  * 2017年6月2日 09:59:02 郑少宝 导出文件
  * 
- * 也曾想过不顾一切陪你去远方，后来发现你只是说说，我只是想想。
- * 
+ * 也曾想过不顾一切陪你去远方
+ * 后来发现你只是说说
+ * 我只是想想 
  */
 using System;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ using ZrTBMCodeForTestItem.ccCommonFunctions;
 using ZrTBMCodeForTestItem.ccEcternal;
 using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
+using ccZrCHKCodeProduction.ccDataBaseProcess;
 
 namespace ZrTBMCodeForTestItem.ccMain
 {
@@ -48,6 +50,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.initTextBox();
 			this.initTabControl();
 			this.initOtherControlData();
+			this.updateVer();
 		}
 
 		/// <summary>
@@ -116,6 +119,48 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.toolStripButton1.Visible = false;
 			this.txbOutput.Text = $"主程序版本:{Application.ProductVersion.ToString()}{Environment.NewLine}";
 		}
+
+		/// <summary>
+		/// 检测新版本
+		/// </summary>
+		private async void updateVer()
+		{
+			string localVersion = Application.ProductVersion.ToString();
+			try
+			{
+				await Task<string>.Run(() =>
+				{
+					var ver = new CodeProductionVersion(this.dbLinkString);
+					var serverVersion = ver.GetVersion();
+					if (serverVersion == null)
+					{
+						ver.Update(localVersion, true);
+					}
+					else
+					{
+						serverVersion = ver.GetVersion().ToString();
+					}
+					if (serverVersion != null && localVersion != serverVersion.ToString())
+					{
+						Version server = new Version(serverVersion.ToString());
+						Version local = new Version(localVersion);
+						if (local < server)
+						{
+							output($"有新版本：{serverVersion.ToString()}");
+						}
+						else
+						{
+							ver.Update(localVersion, false);
+						}
+					}
+				});
+			}
+			catch (Exception ex)
+			{
+				output($"异常：{ex.Message}");
+			}
+		}
+			
 
 		/// <summary>
 		/// 列宽模式，处理相应的控件显示状态
@@ -392,7 +437,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.exportCode.Export_VSS();
 			this.exportCode.Export_Trust(this.panTrust);
 			this.exportCode.Export_Trial(this.panTrial);
-			var ctispig = new ccDataBaseProcess.CreateTable();
+			var ctispig = new CreateTable();
 			ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
 			var scriptResult = ctispig.Export(scriptFile);
 			if (!scriptResult.result)
@@ -674,7 +719,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			{
 				await Task.Run(() =>
 				{
-					ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
+					CreateTable ctispig = new CreateTable();
 					ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
 					var result = ctispig.ExSQL(this.dbLinkString);
 					if (!result.result)
@@ -709,7 +754,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 				(bool result, string errorInfo, List<string> scripts) result = (result:false, errorInfo:null, scripts:null); 
 				await Task.Run(() =>
 				{
-					ccDataBaseProcess.CreateTable ctispig = new ccDataBaseProcess.CreateTable();
+					CreateTable ctispig = new CreateTable();
 					ctispig.ListZrControlExternalInfoFromFile = this.listZrControlInfo;
 					result = ctispig.Export();
 					if (!result.result)
