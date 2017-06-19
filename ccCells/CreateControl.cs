@@ -19,11 +19,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		{
 			
 		}
-
-		
-
-		
-		
+				
 
 		/// <summary>
 		/// 创建 ZrControl （只负责创建出控件，不处理大小位置 容器）
@@ -54,7 +50,9 @@ namespace ZrTBMCodeForTestItem.ccCells
 			else
 			{			
 				string columnType = item.TypeLength.ToLower();
-				if (columnType.StartsWith("varchar") 
+				if (columnType.StartsWith("varchar")
+					|| columnType.StartsWith("char")
+					|| columnType.StartsWith("nchar")
 					|| columnType.StartsWith("nvarchar")
 					|| columnType.StartsWith("int")
 					|| columnType.StartsWith("decimal")

@@ -178,10 +178,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// <param name="isFixedColumnWidth">列宽模式</param>
 		private void columnWidthModal(bool isFixedColumnWidth)
 		{
-			this.txbRowHeight.Visible = isFixedColumnWidth;
+			this.cmbIsFixedColumnWidth.SelectedIndex = isFixedColumnWidth ? 1 : 0;
+			//this.txbRowHeight.Visible = isFixedColumnWidth;
+			//this.lblRowHeight.Visible = isFixedColumnWidth;
 			this.txbColumnWidth.Visible = isFixedColumnWidth;
 			this.lblColumnWidth.Visible = isFixedColumnWidth;
-			this.lblRowHeight.Visible = isFixedColumnWidth;
 			this.lblExcelWithToPxScale.Visible = !isFixedColumnWidth;
 			this.txbExcelWithToPxScale.Visible = !isFixedColumnWidth;
 		}
@@ -665,6 +666,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			if (result > 0)
 			{
 				Function.MsgInfo("ok");
+				this.columnWidthModal(this.cmbIsFixedColumnWidth.SelectedIndex == 1);
 			}
 			else
 			{
@@ -685,6 +687,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			dict.Add(ConfigKey.RowHeight.ToString(), this.txbRowHeight.Text);
 			dict.Add(ConfigKey.ColumnWidth.ToString(), this.txbColumnWidth.Text);
 			dict.Add(ConfigKey.ExitColor.ToString(), this.txbExitColor.Text);
+			dict.Add(ConfigKey.IsFixedColumnWidth.ToString(), this.cmbIsFixedColumnWidth.SelectedIndex == 1 ? "是" : "否");
 			return dict;
 		}
 

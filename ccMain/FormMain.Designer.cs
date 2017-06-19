@@ -43,6 +43,8 @@
 			this.tcMain = new System.Windows.Forms.TabControl();
 			this.tabPage1 = new System.Windows.Forms.TabPage();
 			this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
+			this.label9 = new System.Windows.Forms.Label();
+			this.cmbIsFixedColumnWidth = new System.Windows.Forms.ComboBox();
 			this.txbRowHeight = new System.Windows.Forms.TextBox();
 			this.lblRowHeight = new System.Windows.Forms.Label();
 			this.txbColumnWidth = new System.Windows.Forms.TextBox();
@@ -88,8 +90,8 @@
 			this.tpUseRemark = new System.Windows.Forms.TabPage();
 			this.webBrowser1 = new System.Windows.Forms.WebBrowser();
 			this.tabPage5 = new System.Windows.Forms.TabPage();
-			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.rtbOutput = new System.Windows.Forms.RichTextBox();
+			this.colorDialog1 = new System.Windows.Forms.ColorDialog();
 			this.panTools.SuspendLayout();
 			this.toolStrip1.SuspendLayout();
 			this.panMain.SuspendLayout();
@@ -266,33 +268,36 @@
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 400F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 101F));
 			this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 114F));
-			this.tableLayoutPanel1.Controls.Add(this.txbRowHeight, 3, 2);
-			this.tableLayoutPanel1.Controls.Add(this.lblRowHeight, 2, 2);
-			this.tableLayoutPanel1.Controls.Add(this.txbColumnWidth, 1, 2);
-			this.tableLayoutPanel1.Controls.Add(this.lblColumnWidth, 0, 2);
-			this.tableLayoutPanel1.Controls.Add(this.label8, 2, 3);
-			this.tableLayoutPanel1.Controls.Add(this.txbExcelWithToPxScale, 1, 3);
-			this.tableLayoutPanel1.Controls.Add(this.lblExcelWithToPxScale, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.label9, 0, 2);
+			this.tableLayoutPanel1.Controls.Add(this.cmbIsFixedColumnWidth, 1, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txbRowHeight, 3, 3);
+			this.tableLayoutPanel1.Controls.Add(this.lblRowHeight, 2, 3);
+			this.tableLayoutPanel1.Controls.Add(this.txbColumnWidth, 1, 3);
+			this.tableLayoutPanel1.Controls.Add(this.lblColumnWidth, 0, 3);
+			this.tableLayoutPanel1.Controls.Add(this.label8, 2, 2);
+			this.tableLayoutPanel1.Controls.Add(this.txbExcelWithToPxScale, 1, 4);
+			this.tableLayoutPanel1.Controls.Add(this.lblExcelWithToPxScale, 0, 4);
 			this.tableLayoutPanel1.Controls.Add(this.txbDBFile, 1, 1);
 			this.tableLayoutPanel1.Controls.Add(this.label7, 0, 1);
-			this.tableLayoutPanel1.Controls.Add(this.txbZrCode, 1, 4);
-			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 4);
+			this.tableLayoutPanel1.Controls.Add(this.txbZrCode, 1, 5);
+			this.tableLayoutPanel1.Controls.Add(this.label6, 0, 5);
 			this.tableLayoutPanel1.Controls.Add(this.txbRequirementFile, 1, 0);
 			this.tableLayoutPanel1.Controls.Add(this.label5, 0, 0);
-			this.tableLayoutPanel1.Controls.Add(this.txbTargetFrameworkVersion, 3, 4);
-			this.tableLayoutPanel1.Controls.Add(this.label4, 2, 4);
-			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 6);
-			this.tableLayoutPanel1.Controls.Add(this.txbRootNamespace, 3, 5);
-			this.tableLayoutPanel1.Controls.Add(this.label2, 2, 5);
-			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 5);
-			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 5);
-			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 6);
-			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 6);
-			this.tableLayoutPanel1.Controls.Add(this.panel2, 3, 3);
+			this.tableLayoutPanel1.Controls.Add(this.txbTargetFrameworkVersion, 3, 5);
+			this.tableLayoutPanel1.Controls.Add(this.label4, 2, 5);
+			this.tableLayoutPanel1.Controls.Add(this.label3, 0, 7);
+			this.tableLayoutPanel1.Controls.Add(this.txbRootNamespace, 3, 6);
+			this.tableLayoutPanel1.Controls.Add(this.label2, 2, 6);
+			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 6);
+			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 6);
+			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 7);
+			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 7);
+			this.tableLayoutPanel1.Controls.Add(this.panel2, 3, 2);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-			this.tableLayoutPanel1.RowCount = 11;
+			this.tableLayoutPanel1.RowCount = 12;
+			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
 			this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 40F));
@@ -307,11 +312,35 @@
 			this.tableLayoutPanel1.Size = new System.Drawing.Size(1286, 501);
 			this.tableLayoutPanel1.TabIndex = 2;
 			// 
+			// label9
+			// 
+			this.label9.AutoSize = true;
+			this.label9.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.label9.Location = new System.Drawing.Point(3, 80);
+			this.label9.Name = "label9";
+			this.label9.Size = new System.Drawing.Size(194, 40);
+			this.label9.TabIndex = 27;
+			this.label9.Text = "宽度计算模式";
+			this.label9.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+			// 
+			// cmbIsFixedColumnWidth
+			// 
+			this.cmbIsFixedColumnWidth.Anchor = System.Windows.Forms.AnchorStyles.None;
+			this.cmbIsFixedColumnWidth.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+			this.cmbIsFixedColumnWidth.FormattingEnabled = true;
+			this.cmbIsFixedColumnWidth.Items.AddRange(new object[] {
+            "按比例计算列宽",
+            "固定列宽"});
+			this.cmbIsFixedColumnWidth.Location = new System.Drawing.Point(203, 90);
+			this.cmbIsFixedColumnWidth.Name = "cmbIsFixedColumnWidth";
+			this.cmbIsFixedColumnWidth.Size = new System.Drawing.Size(394, 24);
+			this.cmbIsFixedColumnWidth.TabIndex = 28;
+			// 
 			// txbRowHeight
 			// 
 			this.txbRowHeight.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.txbRowHeight.BackColor = System.Drawing.Color.White;
-			this.txbRowHeight.Location = new System.Drawing.Point(753, 87);
+			this.txbRowHeight.Location = new System.Drawing.Point(753, 127);
 			this.txbRowHeight.Name = "txbRowHeight";
 			this.txbRowHeight.Size = new System.Drawing.Size(394, 26);
 			this.txbRowHeight.TabIndex = 24;
@@ -320,7 +349,7 @@
 			// 
 			this.lblRowHeight.AutoSize = true;
 			this.lblRowHeight.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblRowHeight.Location = new System.Drawing.Point(603, 80);
+			this.lblRowHeight.Location = new System.Drawing.Point(603, 120);
 			this.lblRowHeight.Name = "lblRowHeight";
 			this.lblRowHeight.Size = new System.Drawing.Size(144, 40);
 			this.lblRowHeight.TabIndex = 23;
@@ -331,7 +360,7 @@
 			// 
 			this.txbColumnWidth.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.txbColumnWidth.BackColor = System.Drawing.Color.White;
-			this.txbColumnWidth.Location = new System.Drawing.Point(203, 87);
+			this.txbColumnWidth.Location = new System.Drawing.Point(203, 127);
 			this.txbColumnWidth.Name = "txbColumnWidth";
 			this.txbColumnWidth.Size = new System.Drawing.Size(394, 26);
 			this.txbColumnWidth.TabIndex = 22;
@@ -340,18 +369,18 @@
 			// 
 			this.lblColumnWidth.AutoSize = true;
 			this.lblColumnWidth.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblColumnWidth.Location = new System.Drawing.Point(3, 80);
+			this.lblColumnWidth.Location = new System.Drawing.Point(3, 120);
 			this.lblColumnWidth.Name = "lblColumnWidth";
 			this.lblColumnWidth.Size = new System.Drawing.Size(194, 40);
 			this.lblColumnWidth.TabIndex = 21;
-			this.lblColumnWidth.Text = "固定列宽";
+			this.lblColumnWidth.Text = "固定列宽宽度";
 			this.lblColumnWidth.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
 			// 
 			// label8
 			// 
 			this.label8.AutoSize = true;
 			this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label8.Location = new System.Drawing.Point(603, 120);
+			this.label8.Location = new System.Drawing.Point(603, 160);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(144, 40);
 			this.label8.TabIndex = 19;
@@ -362,7 +391,7 @@
 			// 
 			this.txbExcelWithToPxScale.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.txbExcelWithToPxScale.BackColor = System.Drawing.Color.White;
-			this.txbExcelWithToPxScale.Location = new System.Drawing.Point(203, 127);
+			this.txbExcelWithToPxScale.Location = new System.Drawing.Point(203, 167);
 			this.txbExcelWithToPxScale.Name = "txbExcelWithToPxScale";
 			this.txbExcelWithToPxScale.Size = new System.Drawing.Size(394, 26);
 			this.txbExcelWithToPxScale.TabIndex = 18;
@@ -371,7 +400,7 @@
 			// 
 			this.lblExcelWithToPxScale.AutoSize = true;
 			this.lblExcelWithToPxScale.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.lblExcelWithToPxScale.Location = new System.Drawing.Point(3, 120);
+			this.lblExcelWithToPxScale.Location = new System.Drawing.Point(3, 160);
 			this.lblExcelWithToPxScale.Name = "lblExcelWithToPxScale";
 			this.lblExcelWithToPxScale.Size = new System.Drawing.Size(194, 40);
 			this.lblExcelWithToPxScale.TabIndex = 17;
@@ -403,7 +432,7 @@
 			// txbZrCode
 			// 
 			this.txbZrCode.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbZrCode.Location = new System.Drawing.Point(203, 167);
+			this.txbZrCode.Location = new System.Drawing.Point(203, 207);
 			this.txbZrCode.MaxLength = 10;
 			this.txbZrCode.Name = "txbZrCode";
 			this.txbZrCode.Size = new System.Drawing.Size(394, 26);
@@ -414,7 +443,7 @@
 			// 
 			this.label6.AutoSize = true;
 			this.label6.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label6.Location = new System.Drawing.Point(3, 160);
+			this.label6.Location = new System.Drawing.Point(3, 200);
 			this.label6.Name = "label6";
 			this.label6.Size = new System.Drawing.Size(194, 40);
 			this.label6.TabIndex = 11;
@@ -445,7 +474,7 @@
 			// 
 			this.txbTargetFrameworkVersion.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.txbTargetFrameworkVersion.BackColor = System.Drawing.Color.White;
-			this.txbTargetFrameworkVersion.Location = new System.Drawing.Point(753, 167);
+			this.txbTargetFrameworkVersion.Location = new System.Drawing.Point(753, 207);
 			this.txbTargetFrameworkVersion.Name = "txbTargetFrameworkVersion";
 			this.txbTargetFrameworkVersion.ReadOnly = true;
 			this.txbTargetFrameworkVersion.Size = new System.Drawing.Size(394, 26);
@@ -455,7 +484,7 @@
 			// 
 			this.label4.AutoSize = true;
 			this.label4.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label4.Location = new System.Drawing.Point(603, 160);
+			this.label4.Location = new System.Drawing.Point(603, 200);
 			this.label4.Name = "label4";
 			this.label4.Size = new System.Drawing.Size(144, 40);
 			this.label4.TabIndex = 7;
@@ -466,7 +495,7 @@
 			// 
 			this.label3.AutoSize = true;
 			this.label3.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label3.Location = new System.Drawing.Point(3, 240);
+			this.label3.Location = new System.Drawing.Point(3, 280);
 			this.label3.Name = "label3";
 			this.label3.Size = new System.Drawing.Size(194, 40);
 			this.label3.TabIndex = 4;
@@ -476,7 +505,7 @@
 			// txbRootNamespace
 			// 
 			this.txbRootNamespace.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbRootNamespace.Location = new System.Drawing.Point(753, 207);
+			this.txbRootNamespace.Location = new System.Drawing.Point(753, 247);
 			this.txbRootNamespace.Name = "txbRootNamespace";
 			this.txbRootNamespace.Size = new System.Drawing.Size(394, 26);
 			this.txbRootNamespace.TabIndex = 3;
@@ -486,7 +515,7 @@
 			// 
 			this.label2.AutoSize = true;
 			this.label2.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label2.Location = new System.Drawing.Point(603, 200);
+			this.label2.Location = new System.Drawing.Point(603, 240);
 			this.label2.Name = "label2";
 			this.label2.Size = new System.Drawing.Size(144, 40);
 			this.label2.TabIndex = 2;
@@ -497,7 +526,7 @@
 			// 
 			this.label1.AutoSize = true;
 			this.label1.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label1.Location = new System.Drawing.Point(3, 200);
+			this.label1.Location = new System.Drawing.Point(3, 240);
 			this.label1.Name = "label1";
 			this.label1.Size = new System.Drawing.Size(194, 40);
 			this.label1.TabIndex = 1;
@@ -507,7 +536,7 @@
 			// txbAssemblyName
 			// 
 			this.txbAssemblyName.Anchor = System.Windows.Forms.AnchorStyles.None;
-			this.txbAssemblyName.Location = new System.Drawing.Point(203, 207);
+			this.txbAssemblyName.Location = new System.Drawing.Point(203, 247);
 			this.txbAssemblyName.MaxLength = 50;
 			this.txbAssemblyName.Name = "txbAssemblyName";
 			this.txbAssemblyName.Size = new System.Drawing.Size(394, 26);
@@ -518,7 +547,7 @@
 			// 
 			this.txbFolder.Anchor = System.Windows.Forms.AnchorStyles.None;
 			this.tableLayoutPanel1.SetColumnSpan(this.txbFolder, 3);
-			this.txbFolder.Location = new System.Drawing.Point(203, 247);
+			this.txbFolder.Location = new System.Drawing.Point(203, 287);
 			this.txbFolder.Name = "txbFolder";
 			this.txbFolder.Size = new System.Drawing.Size(944, 26);
 			this.txbFolder.TabIndex = 5;
@@ -528,7 +557,7 @@
 			this.btnFolder.FlatAppearance.BorderColor = System.Drawing.Color.White;
 			this.btnFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnFolder.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Folder_24;
-			this.btnFolder.Location = new System.Drawing.Point(1153, 243);
+			this.btnFolder.Location = new System.Drawing.Point(1153, 283);
 			this.btnFolder.Name = "btnFolder";
 			this.btnFolder.Size = new System.Drawing.Size(52, 34);
 			this.btnFolder.TabIndex = 6;
@@ -539,7 +568,7 @@
 			// 
 			this.panel2.Controls.Add(this.txbExitColor);
 			this.panel2.Controls.Add(this.lblExitColor);
-			this.panel2.Location = new System.Drawing.Point(753, 123);
+			this.panel2.Location = new System.Drawing.Point(753, 163);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(394, 34);
 			this.panel2.TabIndex = 26;
@@ -929,6 +958,8 @@
 		private System.Windows.Forms.ColorDialog colorDialog1;
 		private System.Windows.Forms.ToolStripButton tsbNewVersion;
 		private System.Windows.Forms.RichTextBox rtbOutput;
+		private System.Windows.Forms.Label label9;
+		private System.Windows.Forms.ComboBox cmbIsFixedColumnWidth;
 	}
 }
 
