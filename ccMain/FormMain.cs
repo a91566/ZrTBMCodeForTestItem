@@ -57,7 +57,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			this.Shown += (s, e) =>
 			{
 				this.initOtherControlData();
-				//this.updateVer();
+				this.updateVer();
 			};
 		}
 

@@ -65,7 +65,7 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 		/// <returns>整型数据</returns>
 		public static int GetInt(this string s)
 		{
-			string patten = @"^[1-9]\d*$";
+			string patten = @"[1-9]\d";
 			Match match = new Regex(patten).Match(s);
 			if (match.Success)
 			{
@@ -98,11 +98,16 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 		/// <summary>
 		/// 移除特殊字符
 		/// </summary>
-		/// <param name="obj">待处理的对象</param>
+		/// <param name="text">待处理的对象</param>
 		/// <returns>字符串</returns>
 		public static string RemoveSpecialChar(this string text)
 		{
-			return text.Replace("(","").Replace(")","")
+			//"lbl面积(mm²)" return lbl面积mm
+			//"lbl达到设计强度(%)" return lbl达到设计强度
+			//2017年6月19日 16:15:54 用正则去匹配，然后删除括号
+
+			//先替换特殊字符，再正则移除特殊字符
+			text = text.Replace("(", "").Replace(")", "")
 				.Replace(")", "")
 				.Replace("%", "")
 				.Replace("-", "")
@@ -116,8 +121,17 @@ namespace ZrTBMCodeForTestItem.ccEcternal
 				.Replace(">", "")
 				.Replace("（", "")
 				.Replace("）", "");
+
+			string patten = @"^[a-zA-Z]+[\u4e00-\u9fa5]+[a-zA-Z0-9]+";
+			Match match = new Regex(patten).Match(text); 
+			if (match.Success)
+			{
+				return match.Value;
+			}
+			return text;			
 		}
 
-		
+
+
 	}
 }

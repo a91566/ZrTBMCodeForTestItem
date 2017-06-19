@@ -301,7 +301,12 @@ namespace ZrTBMCodeForTestItem.ccCells
 						c.AutoSize = true;
 						c.TabIndex = tabIndex;
 						tabIndex++;
-						setControlLocation(c, false, tcInfo);						
+						setControlLocation(c, false, tcInfo);
+
+						c.Click += (s, e) =>
+						{
+							MessageBox.Show(c.Name.RemoveSpecialChar());
+						};
 					}
 				}
 			}

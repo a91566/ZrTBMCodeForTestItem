@@ -137,6 +137,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 								ZrDescription = sheet.Cells[$"B{rowIndex}"].Value.ToString().Trim(),
 								ZrField = sheet.Cells[$"C{rowIndex}"].Value.ToString().Trim(),
 								TypeLength = sheet.Cells[$"D{rowIndex}"].Value.ToString().Trim(),
+								ZrFieldLength = sheet.Cells[$"D{rowIndex}"].Value.ToString().Trim().GetInt(),
 								Default = sheet.Cells[$"E{rowIndex}"].Value.ObjToString().Trim(),
 								ZrFormat = sheet.Cells[$"F{rowIndex}"].Value.ObjToString().Trim(),
 								ZrIsEnum = sheet.Cells[$"G{rowIndex}"].Value.ObjToString().Contains("枚举"),
