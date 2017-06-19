@@ -301,12 +301,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 						c.AutoSize = true;
 						c.TabIndex = tabIndex;
 						tabIndex++;
-						setControlLocation(c, false, tcInfo);
-
-						c.Click += (s, e) =>
-						{
-							MessageBox.Show(c.Name.RemoveSpecialChar());
-						};
+						setControlLocation(c, false, tcInfo);						
 					}
 				}
 			}
@@ -320,7 +315,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <param name="cellvalue">文本</param>
 		private void setLabelName(Label lbl, string cellvalue)
 		{
-			string name = $"lbl{cellvalue.RemoveSpecialChar()}";
+			string name = $"lbl{cellvalue}".RemoveSpecialChar();
 			if (listLabelName.Contains(name))
 			{
 				var d = this.listLabelName.Where( i => i.StartsWith(name));
@@ -528,6 +523,11 @@ namespace ZrTBMCodeForTestItem.ccCells
 				else if (this.currentCell.GetStyle().HorizontalAlignment == TextAlignmentType.Right)
 				{
 					marginLeft = columnWidth - c.Width;
+					//如果是右对齐，就处理为右对齐
+					if (c is Label)
+					{
+						(c as Label).TextAlign = ContentAlignment.MiddleRight;
+					}
 				}
 				if (marginLeft > 0)
 				{

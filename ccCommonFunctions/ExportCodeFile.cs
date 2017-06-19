@@ -832,7 +832,8 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			List<string> list = new List<string>();
 			List<string> listStringPropertyInfo = new List<string>() { "ZrDescription", "ZrField", "ZrFormat", "ZrTable", "ZrVerify", "Text" };
 			List<string> listIntPropertyInfo = new List<string>() { "TabIndex", "ZrFieldLength" };
-
+			List<string> listBoolPropertyInfo = new List<string>() { "ZrIsNotNull", "ZrIsReadOnly", "ZrFieldLength", "ZrIsEnum" };
+			List<string> listEnumPropertyInfo = new List<string>() { "TextAlign", "BorderColor"};
 			Type type = c.GetType();
 			PropertyInfo property = null;
 			foreach (var item in listStringPropertyInfo)
@@ -848,6 +849,10 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 
 			foreach (var item in listIntPropertyInfo)
 			{
+				if (item == "TextAlign")
+				{
+					int sdsa = 1;
+				}
 				property = type.GetProperty(item);
 				if (property != null)
 				{
@@ -857,21 +862,39 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 				}
 			}
 
-			property = type.GetProperty("ZrIsNotNull");
-			if (property != null)
+			foreach (var item in listBoolPropertyInfo)
 			{
-				object obj = property.GetValue(c, null);
-				list.Add(string.Format("			this.{0}.ZrIsNotNull = {1};", c.Name,
-					obj == null ? "false" : obj.ToString().ToLower()));
+				property = type.GetProperty(item);
+				if (property != null)
+				{
+					object obj = property.GetValue(c, null);
+					list.Add(string.Format("			this.{0}.{1} = {2};", c.Name, item,
+						obj == null ? "false" : obj.ToString().ToLower()));
+				}
 			}
 
-			property = type.GetProperty("ZrIsReadOnly");
-			if (property != null)
+			foreach (var item in listEnumPropertyInfo)
 			{
-				object obj = property.GetValue(c, null);
-				list.Add(string.Format("			this.{0}.ZrIsReadOnly = {1};", c.Name,
-					obj == null ? "false" : obj.ToString().ToLower()));
+				property = type.GetProperty(item);
+				if (property != null)
+				{
+					object obj = property.GetValue(c, null);
+					string temp = null;
+					if (item == "BorderColor")
+					{
+						temp = ((Color)obj).Name;
+					}
+					else
+					{
+						temp = obj.ToString();
+					}
+					list.Add(string.Format("			this.{0}.{1} = {2}.{3};", c.Name, item, 
+						property.PropertyType.FullName, temp));
+				}
 			}
+
+
+			
 
 			property = type.GetProperty("BorderColor");
 			if (property != null)
