@@ -1,6 +1,6 @@
 ﻿/*
  * 2017年6月6日 14:16:22 郑少宝 扩展方法
- * 此扩展类 针对中润代码生成器，其他未必适用
+ * 此扩展类 针对中润代码生成器，其他未必适用，涉及C#7.0语法，如需使用删除或修改对应的语法即可
  * 
  * 从来不偷东西的你，却爱偷笑
  * 于是从来不偷东西的我
@@ -8,9 +8,9 @@
  */
 using System.Text.RegularExpressions;
 
-namespace ZrTBMCodeForTestItem.ccEcternal
+namespace ZrTBMCodeForTestItem.ccExtend
 {
-	public static class ExternalString
+	public static class ExtendString
     {
 		/// <summary>
 		/// 将文本转为转为 bool 类型, (1、是、true,返回 true，其余返回 false)

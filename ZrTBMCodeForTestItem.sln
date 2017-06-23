@@ -11,7 +11,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccCells", "ccCells\ccCells.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccSystemConfig", "ccSystemConfig\ccSystemConfig.csproj", "{670DEBD4-3196-41D7-9A66-3665769D9891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccExternal", "ccExternal\ccExternal.csproj", "{73D4881A-291D-4693-AC7C-56FFBDAFB16B}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccExtend", "ccExternal\ccExtend.csproj", "{73D4881A-291D-4693-AC7C-56FFBDAFB16B}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ccLanguage", "ccLanguage\ccLanguage.csproj", "{C542B2BE-FEF9-4CD7-9127-9697E24630DF}"
 EndProject

@@ -9,9 +9,9 @@ using System.IO;
 using System.Runtime.Serialization;
 using System.Runtime.Serialization.Formatters.Binary;
 
-namespace ZrTBMCodeForTestItem.ccEcternal
+namespace ZrTBMCodeForTestItem.ccExtend
 {
-	public static class ExternalObject
+	public static class ExtendObject
 	{
 		/// <summary>
 		/// 深复制

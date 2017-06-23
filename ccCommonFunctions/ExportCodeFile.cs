@@ -832,7 +832,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			List<string> list = new List<string>();
 			List<string> listStringPropertyInfo = new List<string>() { "ZrDescription", "ZrField", "ZrFormat", "ZrTable", "ZrVerify", "Text" };
 			List<string> listIntPropertyInfo = new List<string>() { "TabIndex", "ZrFieldLength" };
-			List<string> listBoolPropertyInfo = new List<string>() { "ZrIsNotNull", "ZrIsReadOnly", "ZrFieldLength", "ZrIsEnum" };
+			List<string> listBoolPropertyInfo = new List<string>() { "ZrIsNotNull", "ZrIsReadOnly", "ZrFieldLength", "ZrIsEnum", "AutoSize" };
 			List<string> listEnumPropertyInfo = new List<string>() { "TextAlign", "BorderColor"};
 			Type type = c.GetType();
 			PropertyInfo property = null;

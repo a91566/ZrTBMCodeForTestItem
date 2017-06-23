@@ -13,7 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using ZrTBMCodeForTestItem.ccCells;
 using ZrTBMCodeForTestItem.ccCommonFunctions;
-using ZrTBMCodeForTestItem.ccEcternal;
+using ZrTBMCodeForTestItem.ccExtend;
 using ZrTBMCodeForTestItem.ccLanguage;
 using ZrTBMCodeForTestItem.ccSystemConfig;
 using ccZrCHKCodeProduction.ccDataBaseProcess;

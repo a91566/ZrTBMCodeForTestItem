@@ -64,9 +64,9 @@
       <Project>{4950ed8e-19fe-4a21-8c27-d9d0a58d8bce}</Project>
       <Name>ccCommonFunctions</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ccExternal\ccExternal.csproj">
+    <ProjectReference Include="..\ccExternal\ccExtend.csproj">
       <Project>{73d4881a-291d-4693-ac7c-56ffbdafb16b}</Project>
-      <Name>ccExternal</Name>
+      <Name>ccExtend</Name>
     </ProjectReference>
     <ProjectReference Include="..\ccLanguage\ccLanguage.csproj">
       <Project>{c542b2be-fef9-4cd7-9127-9697e24630df}</Project>

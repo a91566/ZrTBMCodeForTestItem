@@ -7,8 +7,8 @@
     <ProjectGuid>{73D4881A-291D-4693-AC7C-56FFBDAFB16B}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ZrTBMCodeForTestItem.ccEcternal</RootNamespace>
-    <AssemblyName>ccExternal</AssemblyName>
+    <RootNamespace>ZrTBMCodeForTestItem.ccExtend</RootNamespace>
+    <AssemblyName>ccExtend</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -45,9 +45,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExternalObject.cs" />
-    <Compile Include="ExternalString.cs" />
-    <Compile Include="ExternalTextBox.cs" />
+    <Compile Include="ExtendObject.cs" />
+    <Compile Include="ExtendString.cs" />
+    <Compile Include="ExtendTextBox.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

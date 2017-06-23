@@ -10,7 +10,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using ZrTBMCodeForTestItem.ccEcternal;
+using ZrTBMCodeForTestItem.ccExtend;
 using ZrTBMCodeForTestItem.ccSystemConfig;
 
 namespace ZrTBMCodeForTestItem.ccCells
@@ -185,8 +185,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 				tc.Name = "tcTest";
 				tc.Parent = pan;
 				tc.Dock = DockStyle.Fill;
-
-				ToolTip toolTip = new ToolTip();
+				
 				for (int sheetIndex = 2; sheetIndex < workbook.Worksheets.Count; sheetIndex++)
 				{
 					//label 名称集合初始化
@@ -200,6 +199,8 @@ namespace ZrTBMCodeForTestItem.ccCells
 					tp.Name = $"tp{tp.Text}";
 					this.getSheetColumnWidthInfo();
 					createControlsForCurrentSheet(tp);
+					tp.MouseWheel += (s, e) =>
+					{ SendKeys.Send(e.Delta.ToString()); };
 				}
 			}
 			
@@ -221,9 +222,11 @@ namespace ZrTBMCodeForTestItem.ccCells
 			TabControlInfo tcInfo = new TabControlInfo();
 			int columnCount = currentSheet.Cells.MaxColumn;
 			int tabIndex = 1;
+
 			//行
 			for (int rowIndex = 1; rowIndex < 1000; rowIndex++)
 			{
+				
 				//遇到红色背景就退出
 				if (this.currentSheet.Cells[$"A{rowIndex}"].GetStyle().ForegroundColor.Name == this.exitColor)
 				{
@@ -239,70 +242,78 @@ namespace ZrTBMCodeForTestItem.ccCells
 				for (int columnIndex = 0; columnIndex <= columnCount; columnIndex++)
 				{
 					string letter = asciiEncoding.GetString(new byte[] { (byte)(columnIndex + 65) });
-					currentCell = currentSheet.Cells[$"{letter}{rowIndex}"];
-					var cellValue = currentCell.Value.ObjToString().Trim();
-					if (string.IsNullOrEmpty(cellValue)) continue;
-					//如果是分页控件的话，那么在这个分页控件创建完成之前，都不改变 currentCell，
-					if (cellValue.ToLower() == "tabcontrol")
+					try
 					{
-						var tab = createTabControl();
-						tcInfo = tab.tcInfo;
-						tcInfo.TabControl.Parent = parent;
-						this.setControlLocation(tab.tc, false, new Point(0,0));
-						//跳一行读取数据操作
-						rowIndex += 1;
-						break;
-					}
-					if (tcInfo.IsOperateTabControl)
-					{
-						//过了范围 置为 false 
-						if (rowIndex > tcInfo.ColumnRowIndexEnd[0].Y)
+						currentCell = currentSheet.Cells[$"{letter}{rowIndex}"];
+						var cellValue = currentCell.Value.ObjToString().Trim();
+						if (string.IsNullOrEmpty(cellValue)) continue;
+						//如果是分页控件的话，那么在这个分页控件创建完成之前，都不改变 currentCell，
+						if (cellValue.ToLower() == "tabcontrol")
 						{
-							tcInfo.IsOperateTabControl = false;
+							var tab = createTabControl();
+							tcInfo = tab.tcInfo;
+							tcInfo.TabControl.Parent = parent;
+							this.setControlLocation(tab.tc, false, new Point(0, 0));
+							//跳一行读取数据操作
+							rowIndex += 1;
+							break;
+						}
+						if (tcInfo.IsOperateTabControl)
+						{
+							//过了范围 置为 false 
+							if (rowIndex > tcInfo.ColumnRowIndexEnd[0].Y)
+							{
+								tcInfo.IsOperateTabControl = false;
+							}
+							else
+							{
+								int index = getCurrentCellTabPageIndex(tcInfo);
+								//不是 tabpage 的背景色
+								if (index == -1) continue;
+								realParent = tcInfo.TabControl.TabPages[index];
+							}
+						}
+
+						if (this.getCurrentCellFontColorName() == "Black" || this.getCurrentCellFontColorName() == "0")//黑色字体代表是控件cell.GetMergedRange().ColumnCount
+						{
+							//生成控件
+							ZrControlExternalInfoFromFile dbInfo = this.getZrControlExternalInfo(cellValue);
+							Control c = this.createControl.CreateZrControl(dbInfo);
+							c.TabIndex = tabIndex;
+							tabIndex++;
+							//TextBox c = new TextBox();
+							//c.ForeColor = Color.Gray;
+							//c.TextAlign = HorizontalAlignment.Center;
+							//c.Text = $"{letter}{rowIndex}";
+							c.Parent = realParent == null ? parent : realParent;
+							new ToolTip().SetToolTip(c, $"{letter}{rowIndex}:{cellValue}");
+							//第二个参数设置为 false 及不可调整大小
+							setControlLocation(c, !this.isFixedColumnWidth, tcInfo);
+
+							if (this.isFixedColumnWidth)
+							{
+								c.Size = new Size(100, 21);
+							}
 						}
 						else
 						{
-							int index = getCurrentCellTabPageIndex(tcInfo);
-							//不是 tabpage 的背景色
-							if (index == -1) continue;
-							realParent = tcInfo.TabControl.TabPages[index];
+							Label c = new Label();
+							this.setLabelName(c, cellValue);
+							c.Parent = realParent == null ? parent : realParent;
+							c.Text = cellValue;
+							c.Font = new System.Drawing.Font(currentCell.GetStyle().Font.Name, currentCell.GetStyle().Font.Size);
+							//c.Text = $"{letter}{rowIndex}";
+							c.AutoSize = true;
+							c.TabIndex = tabIndex;
+							tabIndex++;
+							setControlLocation(c, false, tcInfo);
 						}
+					}
+					catch (Exception ex)
+					{
+						ccCommonFunctions.Function.MsgError($"发生异常，工作簿：{this.currentSheet.Name},单元格:{$"{letter}{rowIndex}"}{Environment.NewLine}异常信息:{ex.Message}");
 					}
 					
-					if (this.getCurrentCellFontColorName() == "Black" || this.getCurrentCellFontColorName() == "0")//黑色字体代表是控件cell.GetMergedRange().ColumnCount
-					{
-						//生成控件
-						ZrControlExternalInfoFromFile dbInfo = this.getZrControlExternalInfo(cellValue);
-						Control c = this.createControl.CreateZrControl(dbInfo);
-						c.TabIndex = tabIndex;
-						tabIndex++;
-						//TextBox c = new TextBox();
-						//c.ForeColor = Color.Gray;
-						//c.TextAlign = HorizontalAlignment.Center;
-						//c.Text = $"{letter}{rowIndex}";
-						c.Parent = realParent == null ? parent : realParent; 
-						new ToolTip().SetToolTip(c, $"{letter}{rowIndex}:{cellValue}");
-						//第二个参数设置为 false 及不可调整大小
-						setControlLocation(c, !this.isFixedColumnWidth, tcInfo);
-
-						if (this.isFixedColumnWidth)
-						{
-							c.Size = new Size(100, 21);
-						}
-					}
-					else
-					{
-						Label c = new Label();
-						this.setLabelName(c, cellValue);
-						c.Parent = realParent == null ? parent : realParent; 
-						c.Text = cellValue;
-						c.Font = new System.Drawing.Font(currentCell.GetStyle().Font.Name, currentCell.GetStyle().Font.Size);
-						//c.Text = $"{letter}{rowIndex}";
-						c.AutoSize = true;
-						c.TabIndex = tabIndex;
-						tabIndex++;
-						setControlLocation(c, false, tcInfo);						
-					}
 				}
 			}
 
@@ -397,13 +408,19 @@ namespace ZrTBMCodeForTestItem.ccCells
 					tp.Name = $"tp{tpName}";
 					tp.Text = tpName;
 					tc.TabPages.Add(tp);
-					tcInfo.ListBackgroundColorName.Add(currentSheet.Cells[$"{letter}{this.currentCell.Row + 2}"].GetStyle().ForegroundColor.Name);
-										
-					tcInfo.ColumnRowIndex.Add(new Point(columnIndex, this.currentCell.Row + 2));
-					int mergeColumnCount = currentSheet.Cells[$"{letter}{this.currentCell.Row + 2}"].GetMergedRange().ColumnCount;
-					int rowCount = tc.Tag == null ? this.getTabControlRowCount(tc) : (int)tc.Tag;
-					tcInfo.ColumnRowCount.Add(new Size(mergeColumnCount, rowCount));
-					tcInfo.ColumnRowIndexEnd.Add(new Point(columnIndex + mergeColumnCount, this.currentCell.Row + rowCount + 2));
+					try
+					{
+						tcInfo.ListBackgroundColorName.Add(currentSheet.Cells[$"{letter}{this.currentCell.Row + 2}"].GetStyle().ForegroundColor.Name);
+						tcInfo.ColumnRowIndex.Add(new Point(columnIndex, this.currentCell.Row + 2));
+						int mergeColumnCount = currentSheet.Cells[$"{letter}{this.currentCell.Row + 2}"].GetMergedRange().ColumnCount;
+						int rowCount = tc.Tag == null ? this.getTabControlRowCount(tc) : (int)tc.Tag;
+						tcInfo.ColumnRowCount.Add(new Size(mergeColumnCount, rowCount));
+						tcInfo.ColumnRowIndexEnd.Add(new Point(columnIndex + mergeColumnCount, this.currentCell.Row + rowCount + 2));
+					}
+					catch (Exception ex)
+					{
+						ccCommonFunctions.Function.MsgError($"发生异常，工作簿：{this.currentSheet.Name},单元格:{letter}{this.currentCell.Row + 2},异常信息:{ex.Message}");
+					}
 				}
 			}
 			tcInfo.IsOperateTabControl = true;
@@ -481,26 +498,30 @@ namespace ZrTBMCodeForTestItem.ccCells
 			if (x == 0 && y == 0)
 			{
 				x = leftWidthRowcount.left;
-				y = this.currentCell.Row * 40;
+				y = this.currentCell.Row * this.rowHeight;
 			}
 
-			//文本框允许多行的属性 
-			if (leftWidthRowcount.rowCount > 1 && c is TextBox)
+			//合并多行的属性 
+			if (leftWidthRowcount.rowCount > 1)
 			{
-				(c as TextBox).Multiline = true;
-				//默认多出 n 行，也为了直观的辨别出是多行
-				c.Height = c.Height * leftWidthRowcount.rowCount;
+				if (c is TextBox)
+				{
+					(c as TextBox).Multiline = true;
+					//默认多出 n 行，也为了直观的辨别出是多行
+					c.Height = c.Height * leftWidthRowcount.rowCount;
+				}
 			}
+			
 
 			//垂直位置
 			int marginTop = 0;
 			if (this.currentCell.GetStyle().VerticalAlignment == TextAlignmentType.Center)
 			{
-				marginTop = (rowHeight - c.Height) / 2;
+				marginTop = ((rowHeight * leftWidthRowcount.rowCount) - c.Height) / 2;
 			}
 			else if (this.currentCell.GetStyle().VerticalAlignment == TextAlignmentType.Bottom)
 			{
-				marginTop = rowHeight - c.Height;
+				marginTop = (rowHeight * leftWidthRowcount.rowCount) - c.Height;
 			}
 			if (marginTop > 0)
 			{

@@ -7,7 +7,7 @@ using Aspose.Cells;
 using System;
 using System.Collections.Generic;
 using System.IO;
-using ZrTBMCodeForTestItem.ccEcternal;
+using ZrTBMCodeForTestItem.ccExtend;
 using ZrTBMCodeForTestItem.ccSystemConfig;
 
 namespace ZrTBMCodeForTestItem.ccCells
@@ -150,7 +150,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 					}
 					catch (Exception ex)
 					{
-						ccCommonFunctions.Function.MsgError($"发生异常，行号：{rowIndex},异常信息:{ex.Message}");
+						ccCommonFunctions.Function.MsgError($"发生异常，工作簿：{sheet.Name}，行号：{rowIndex}{Environment.NewLine}异常信息:{ex.Message}");
 						throw ex;
 					}
 				}

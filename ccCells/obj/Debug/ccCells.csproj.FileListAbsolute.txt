@@ -42,7 +42,6 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCells.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCells.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\Aspose.Cells.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCommonFunctions.dll
-E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccSystemConfig.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.ValueTuple.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ZrControl.dll
@@ -50,7 +49,6 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\DBHelper.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccCommonFunctions.pdb
-E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExternal.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccSystemConfig.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\MySql.Data.xml
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite.pdb
@@ -58,3 +56,5 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\System.Data.SQLite
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.csprojResolveAssemblyReference.cache
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\obj\Debug\ccCells.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExtend.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCells\bin\Debug\ccExtend.pdb

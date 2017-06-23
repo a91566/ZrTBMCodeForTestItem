@@ -50,7 +50,6 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccDataBa
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccDataBaseProcess.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCells.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCommonFunctions.dll
-E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccExternal.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccLanguage.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccSystemConfig.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\DBHelper.dll
@@ -61,7 +60,6 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\MySql.Da
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\System.Data.SQLite.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCells.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccCommonFunctions.pdb
-E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccExternal.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccLanguage.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccSystemConfig.pdb
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\MySql.Data.xml
@@ -70,3 +68,5 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\System.D
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.csprojResolveAssemblyReference.cache
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\obj\Debug\ccDataBaseProcess.pdb
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccExtend.dll
+E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccDataBaseProcess\bin\Debug\ccExtend.pdb

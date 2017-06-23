@@ -7,9 +7,9 @@
  */
 using System.Windows.Forms;
 
-namespace ZrTBMCodeForTestItem.ccEcternal
+namespace ZrTBMCodeForTestItem.ccExtend
 {
-	public static class ExternalTextBox
+	public static class ExtendTextBox
 	{
 		/// <summary>
 		/// 设置文本框只允许输入整型数据
