@@ -114,9 +114,10 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		/// </summary>
 		/// <param name="filepath"></param>
 		/// <returns></returns>
-		public static string[] ReadFile(string filepath)
+		public static string[] ReadFile(string filepath, Encoding encoding)
 		{
-			return File.ReadAllLines(filepath, Encoding.UTF8);
+			//Encoding.UTF8
+			return File.ReadAllLines(filepath, encoding);
 		}
 		#endregion
 

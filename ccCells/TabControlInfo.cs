@@ -34,5 +34,24 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// 内嵌页所占的 列数 width 与 行数 height，注意这个从 0 开始
 		/// </summary>
 		public List<Size> ColumnRowCount { get; set; }
+		/// <summary>
+		/// 内嵌页读取方式
+		/// </summary>
+		public ReadModal ReadPageModal { get; set; }
+	}
+
+	/// <summary>
+	/// 内嵌页从左到右读取还是从上到下读取
+	/// </summary>
+	public enum ReadModal
+	{
+		/// <summary>
+		/// 从左到右
+		/// </summary>
+		LeftToRight,
+		/// <summary>
+		/// 从上到下
+		/// </summary>
+		TopToBottom
 	}
 }

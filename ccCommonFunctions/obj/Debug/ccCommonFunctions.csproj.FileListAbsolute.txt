@@ -25,3 +25,12 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLangua
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.csprojResolveAssemblyReference.cache
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.pdb
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommonFunctions.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccCommonFunctions.pdb
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLanguage.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\System.ValueTuple.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ZrControl.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\bin\Debug\ccLanguage.pdb
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.csprojResolveAssemblyReference.cache
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccCommonFunctions\obj\Debug\ccCommonFunctions.pdb

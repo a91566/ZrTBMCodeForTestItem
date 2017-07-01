@@ -124,7 +124,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			outPut(Language.OutputInfo_CreateCsproj);
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\{sourceAssembly}.csproj";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains("ProjectGuid"))
@@ -153,7 +153,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			outPut(Language.OutputInfo_CreateControlClass);
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\CheckClassControl.cs";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
@@ -177,7 +177,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			outPut(Language.OutputInfo_CreateAssembly);
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\Properties\AssemblyInfo.cs";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
@@ -209,7 +209,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			outPut(Language.OutputInfo_CreateAssembly);
 			string sourcePath = $@"{Application.StartupPath}\masterplate\AssemblyInfo.cs";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains("#AssemblyName#"))
@@ -241,7 +241,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		{
 			outPut(Language.OutputInfo_CreateVSS);
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\mssccprj.scc";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
@@ -310,7 +310,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		private void export_Trust_CS()
 		{
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcSampleInfo.cs";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
@@ -330,7 +330,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		private void export_Trust_Designer(Control panModel, Size ucSize)
 		{
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcSampleInfo.Designer.cs";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
@@ -432,7 +432,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 			ref List<string> listControlsAdd, ref List<string> listDefine, Size ucSize)
 		{
 			//使用 Tab 制表符
-			listNewControl.Add("			this.SuspendLayout()");
+			listNewControl.Add("			this.SuspendLayout();");
 
 
 			listControlsAdd.Insert(0, $"			this.AutoScroll = true;");
@@ -479,7 +479,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		private void export_Trial_CS(Control panModel)
 		{
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcProcessInfo.cs";
-			List<string> words = Function.ReadFile(sourcePath).ToList();
+			List<string> words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8).ToList();
 			for (int i = 0; i < words.Count; i++)
 			{
 				if (words[i].Contains(sourceAssembly))
@@ -584,7 +584,7 @@ namespace ZrTBMCodeForTestItem.ccCommonFunctions
 		private void export_Trial_Designer(Control panModel, Size ucSize)
 		{
 			string sourcePath = $@"{Application.StartupPath}\masterplate\{sourceAssembly}\UcProcessInfo.Designer.cs";
-			string[] words = Function.ReadFile(sourcePath);
+			string[] words = Function.ReadFile(sourcePath, System.Text.Encoding.UTF8);
 			for (int i = 0; i < words.Length; i++)
 			{
 				if (words[i].Contains(sourceAssembly))

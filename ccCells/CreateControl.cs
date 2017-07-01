@@ -78,6 +78,11 @@ namespace ZrTBMCodeForTestItem.ccCells
 					c = new ZrControl.ZrDynamicCheckBox();
 					c.Name = $"ckb{item.ZrField}";
 				}
+				else if (columnType.StartsWith("image"))
+				{
+					c = new PictureBox();
+					c.Name = $"pic{item.ZrField}";
+				}
 				else
 				{
 					c = new Label();
@@ -112,5 +117,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 				};
 			}
 		}
+
+		
 	}
 }

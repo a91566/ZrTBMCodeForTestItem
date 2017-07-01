@@ -94,6 +94,25 @@ namespace ZrTBMCodeForTestItem.ccExtend
 			return obj == null ? false : obj.ToString().Trim().ToBool();
 		}
 
+		/// <summary>
+		/// 去掉换行符
+		/// </summary>
+		/// <param name="text">待处理的对象</param>
+		/// <returns></returns>
+		public static string RemoveNewLine(this string text)
+		{
+			return text.Replace(System.Environment.NewLine, "");
+		}
+
+		/// <summary>
+		/// 去掉空格
+		/// </summary>
+		/// <param name="text">待处理的对象</param>
+		/// <returns></returns>
+		public static string RemoveEmptyChar(this string text)
+		{
+			return text.Replace(" ", "").Replace(" ", "");
+		}
 
 		/// <summary>
 		/// 移除特殊字符
@@ -108,10 +127,12 @@ namespace ZrTBMCodeForTestItem.ccExtend
 
 			//先替换特殊字符，再正则移除特殊字符
 			text = text.Replace("(", "").Replace(")", "")
-				.Replace(")", "")
-				.Replace("%", "")
+				.Replace("（", "").Replace("）", "")
+				.Replace("+", "").Replace("-", "")
+				.Replace("÷", "").Replace("×", "")
+				.Replace("²", "").Replace("³", "")
 				.Replace("-", "")
-				.Replace("+", "")
+				.Replace("%", "")
 				.Replace("：", "")
 				.Replace(":", "")
 				.Replace("*", "")
@@ -119,18 +140,45 @@ namespace ZrTBMCodeForTestItem.ccExtend
 				.Replace("@", "")
 				.Replace("<", "")
 				.Replace(">", "")
-				.Replace("（", "")
-				.Replace("）", "");
+				.Replace("/", "")
+				.Replace("℃", "");
 
 			string patten = @"^[a-zA-Z]+[\u4e00-\u9fa5]+[a-zA-Z0-9]+";
 			Match match = new Regex(patten).Match(text); 
 			if (match.Success)
 			{
-				return match.Value;
+				return match.Value.Trim();
 			}
-			return text;			
+			return text.Trim();			
 		}
 
+		/// <summary>
+		/// 移除特殊字符
+		/// </summary>
+		/// <param name="text">待处理的对象</param>
+		/// <param name="chars">自定义的特殊字符串数组</param>
+		/// <returns>字符串</returns>
+		public static string RemoveSpecialChar(this string text, string[] chars)
+		{
+			if (chars != null)
+			{
+				foreach (var item in chars)
+				{
+					text = text.Replace(item, "");
+				}
+				string patten = @"^[a-zA-Z]+[\u4e00-\u9fa5]+[a-zA-Z0-9]+";
+				Match match = new Regex(patten).Match(text);
+				if (match.Success)
+				{
+					return match.Value;
+				}
+				return text;
+			}
+			else
+			{
+				return text.RemoveSpecialChar();
+			}			
+		}
 
 
 	}

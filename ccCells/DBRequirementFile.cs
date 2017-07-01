@@ -70,11 +70,14 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// 工作簿
 		/// </summary>
 		protected Workbook workbook;
-
 		/// <summary>
 		/// 退出颜色
 		/// </summary>
 		protected readonly string exitColor;
+		/// <summary>
+		/// 文件名
+		/// </summary>
+		protected string fileName;
 
 		/// <summary>
 		/// 需求文件处理类
@@ -90,16 +93,16 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <param name="filePath">文件路径</param>
 		public DBRequirementFile(string filePath):this()
 		{
-			this.InitFile(filePath);
+			this.fileName = filePath;
+			this.InitFile();
 		}
 
 		/// <summary>
 		/// 初始化需求文件
 		/// </summary>
-		/// <param name="filePath">文件路径</param>
-		public virtual void InitFile(string filePath)
+		public virtual void InitFile()
 		{
-			this.fstream = new FileStream(filePath, FileMode.Open);			
+			this.fstream = new FileStream(this.fileName, FileMode.Open);			
 			this.workbook = new Workbook(fstream);
 		}
 			
@@ -150,7 +153,9 @@ namespace ZrTBMCodeForTestItem.ccCells
 					}
 					catch (Exception ex)
 					{
-						ccCommonFunctions.Function.MsgError($"发生异常，工作簿：{sheet.Name}，行号：{rowIndex}{Environment.NewLine}异常信息:{ex.Message}");
+						ccCommonFunctions.Function.MsgError($"发生异常 GetControlDBInfoFromFile{Environment.NewLine}" +
+							$"文件：{System.IO.Path.GetFileName(this.fileName)}{Environment.NewLine}" +
+							$"工作簿：{sheet.Name}，行号：{rowIndex}{Environment.NewLine}异常信息:{ex.Message}");
 						throw ex;
 					}
 				}

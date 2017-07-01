@@ -291,8 +291,8 @@
 			this.tableLayoutPanel1.Controls.Add(this.label1, 0, 6);
 			this.tableLayoutPanel1.Controls.Add(this.txbAssemblyName, 1, 6);
 			this.tableLayoutPanel1.Controls.Add(this.txbFolder, 1, 7);
-			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 4, 7);
 			this.tableLayoutPanel1.Controls.Add(this.panel2, 3, 2);
+			this.tableLayoutPanel1.Controls.Add(this.btnFolder, 1, 8);
 			this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
 			this.tableLayoutPanel1.Location = new System.Drawing.Point(3, 3);
 			this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -331,7 +331,7 @@
 			this.cmbIsFixedColumnWidth.Items.AddRange(new object[] {
             "按比例计算列宽",
             "固定列宽"});
-			this.cmbIsFixedColumnWidth.Location = new System.Drawing.Point(203, 90);
+			this.cmbIsFixedColumnWidth.Location = new System.Drawing.Point(203, 88);
 			this.cmbIsFixedColumnWidth.Name = "cmbIsFixedColumnWidth";
 			this.cmbIsFixedColumnWidth.Size = new System.Drawing.Size(394, 24);
 			this.cmbIsFixedColumnWidth.TabIndex = 28;
@@ -380,7 +380,7 @@
 			// 
 			this.label8.AutoSize = true;
 			this.label8.Dock = System.Windows.Forms.DockStyle.Fill;
-			this.label8.Location = new System.Drawing.Point(603, 160);
+			this.label8.Location = new System.Drawing.Point(603, 80);
 			this.label8.Name = "label8";
 			this.label8.Size = new System.Drawing.Size(144, 40);
 			this.label8.TabIndex = 19;
@@ -557,7 +557,7 @@
 			this.btnFolder.FlatAppearance.BorderColor = System.Drawing.Color.White;
 			this.btnFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.btnFolder.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Folder_24;
-			this.btnFolder.Location = new System.Drawing.Point(1153, 283);
+			this.btnFolder.Location = new System.Drawing.Point(203, 323);
 			this.btnFolder.Name = "btnFolder";
 			this.btnFolder.Size = new System.Drawing.Size(52, 34);
 			this.btnFolder.TabIndex = 6;
@@ -568,7 +568,7 @@
 			// 
 			this.panel2.Controls.Add(this.txbExitColor);
 			this.panel2.Controls.Add(this.lblExitColor);
-			this.panel2.Location = new System.Drawing.Point(753, 163);
+			this.panel2.Location = new System.Drawing.Point(753, 83);
 			this.panel2.Name = "panel2";
 			this.panel2.Size = new System.Drawing.Size(394, 34);
 			this.panel2.TabIndex = 26;

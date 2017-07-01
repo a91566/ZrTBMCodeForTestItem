@@ -39,6 +39,11 @@ namespace ZrTBMCodeForTestItem.ccMain
 		/// </summary>
 		private RichTextBoxLog rtbLog;
 
+		/// <summary>
+		/// 特殊字符串数组
+		/// </summary>
+		private string[] specialChar;
+
 		public FormMain()
 		{
 			InitializeComponent();
@@ -59,6 +64,10 @@ namespace ZrTBMCodeForTestItem.ccMain
 				this.initOtherControlData();
 				this.updateVer();
 			};
+			if (System.IO.File.Exists($@"{Application.StartupPath}\SpecialChar.txt"))
+			{
+				//this.specialChar = Function.ReadFile($@"{Application.StartupPath}\SpecialChar.txt", System.Text.Encoding.UTF8);
+			}
 		}
 
 		/// <summary>
@@ -577,7 +586,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			bool occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
 			while (occupied)
 			{
-				if (Function.MsgOK($"文件：{System.IO.Path.GetFileName(filePath)} 被占用，是否重试？"))
+				if (Function.MsgOK($"文件：{System.IO.Path.GetFileName(filePath)} 无法读取，请检查是被占用或者设置了只读属性（上传到 vss 会导致此问题），是否重试？"))
 				{
 					occupied = ZsbApps.GetFileStatus.IsFileOccupied(filePath);
 				}
@@ -611,6 +620,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			var load = new Loading(this.Handle);
 			using (var rf = new FormRequirementFile(filePath))
 			{
+				rf.SpecialChar = this.specialChar;
 				rf.ccControl(this.panTrust, this.listZrControlInfo.Clone() as List<ZrControlExternalInfoFromFile>, true);
 			};
 			load.HideLoading();
@@ -634,6 +644,7 @@ namespace ZrTBMCodeForTestItem.ccMain
 			var load = new Loading(this.Handle);
 			using (var rf = new FormRequirementFile(filePath))
 			{
+				rf.SpecialChar = this.specialChar;
 				rf.ccControl(this.panTrial, this.listZrControlInfo.Clone() as List<ZrControlExternalInfoFromFile>, false);
 			};
 			load.HideLoading();
