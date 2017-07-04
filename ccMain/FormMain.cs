@@ -244,6 +244,12 @@ namespace ZrTBMCodeForTestItem.ccMain
 			for (int i = 0; i < openFileDialog.FileNames.Length; i++)
 			{
 				string name = openFileDialog.FileNames.GetValue(i).ToString();
+				System.IO.FileInfo fi = new System.IO.FileInfo(name);
+				if (fi.IsReadOnly)
+				{
+					Function.MsgError($"{System.IO.Path.GetFileName(name)}，被设为只读，无法读取。");
+					continue;
+				}
 				if (name.Contains("数据库") || name.Contains("字段"))
 				{
 					this.txbDBFile.Text = name;

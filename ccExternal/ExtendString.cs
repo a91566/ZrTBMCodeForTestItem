@@ -105,6 +105,16 @@ namespace ZrTBMCodeForTestItem.ccExtend
 		}
 
 		/// <summary>
+		/// 去掉 点号
+		/// </summary>
+		/// <param name="text">待处理的对象</param>
+		/// <returns></returns>
+		public static string RemoveDot(this string text)
+		{
+			return text.Replace(".", "");
+		}
+
+		/// <summary>
 		/// 去掉空格
 		/// </summary>
 		/// <param name="text">待处理的对象</param>
@@ -131,7 +141,7 @@ namespace ZrTBMCodeForTestItem.ccExtend
 				.Replace("+", "").Replace("-", "")
 				.Replace("÷", "").Replace("×", "")
 				.Replace("²", "").Replace("³", "")
-				.Replace("-", "")
+				.Replace("-", "").Replace("°", "")
 				.Replace("%", "")
 				.Replace("：", "")
 				.Replace(":", "")

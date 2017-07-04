@@ -203,9 +203,15 @@ namespace ZrTBMCodeForTestItem.ccCells
 					tc.TabPages.Add(tp);
 					tp.Text = this.currentSheet.Name;
 					tp.Name = $"tp{tp.Text}";
+					tp.MouseWheel += (s, e) =>
+					{
+						tp.VerticalScroll.Value += 10;
+						tp.Refresh();
+						tp.Invalidate();
+						tp.Update();
+					};
 					this.getSheetColumnWidthInfo();
 					createControlsForCurrentSheet(tp);
-					tp.MouseWheel += (s, e) => SendKeys.Send(e.Delta.ToString());
 				}
 			}
 			
@@ -296,10 +302,6 @@ namespace ZrTBMCodeForTestItem.ccCells
 							Control c = this.createControl.CreateZrControl(dbInfo);
 							c.TabIndex = tabIndex;
 							tabIndex++;
-							//TextBox c = new TextBox();
-							//c.ForeColor = Color.Gray;
-							//c.TextAlign = HorizontalAlignment.Center;
-							//c.Text = $"{letter}{rowIndex}";
 							c.Parent = realParent == null ? parent : realParent;
 							new ToolTip().SetToolTip(c, $"{letter}{rowIndex}:{cellValue}");
 							//第二个参数设置为 false 及不可调整大小
@@ -362,7 +364,7 @@ namespace ZrTBMCodeForTestItem.ccCells
 		/// <param name="cellvalue">文本</param>
 		private void setLabelName(Label lbl, string cellvalue)
 		{
-			string name = $"lbl{cellvalue}".RemoveNewLine().RemoveSpecialChar().RemoveEmptyChar();
+			string name = $"lbl{cellvalue}".RemoveNewLine().RemoveSpecialChar().RemoveEmptyChar().RemoveDot();
 			if (name == "lbl试样重量g")
 			{
 				int x = 1;

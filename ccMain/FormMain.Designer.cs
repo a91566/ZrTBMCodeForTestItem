@@ -66,10 +66,10 @@
 			this.label1 = new System.Windows.Forms.Label();
 			this.txbAssemblyName = new System.Windows.Forms.TextBox();
 			this.txbFolder = new System.Windows.Forms.TextBox();
-			this.btnFolder = new System.Windows.Forms.Button();
 			this.panel2 = new System.Windows.Forms.Panel();
 			this.txbExitColor = new System.Windows.Forms.TextBox();
 			this.lblExitColor = new System.Windows.Forms.Label();
+			this.btnFolder = new System.Windows.Forms.Button();
 			this.tabPage2 = new System.Windows.Forms.TabPage();
 			this.panTrust = new System.Windows.Forms.Panel();
 			this.panel1 = new System.Windows.Forms.Panel();
@@ -331,7 +331,7 @@
 			this.cmbIsFixedColumnWidth.Items.AddRange(new object[] {
             "按比例计算列宽",
             "固定列宽"});
-			this.cmbIsFixedColumnWidth.Location = new System.Drawing.Point(203, 88);
+			this.cmbIsFixedColumnWidth.Location = new System.Drawing.Point(203, 90);
 			this.cmbIsFixedColumnWidth.Name = "cmbIsFixedColumnWidth";
 			this.cmbIsFixedColumnWidth.Size = new System.Drawing.Size(394, 24);
 			this.cmbIsFixedColumnWidth.TabIndex = 28;
@@ -552,18 +552,6 @@
 			this.txbFolder.Size = new System.Drawing.Size(944, 26);
 			this.txbFolder.TabIndex = 5;
 			// 
-			// btnFolder
-			// 
-			this.btnFolder.FlatAppearance.BorderColor = System.Drawing.Color.White;
-			this.btnFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.btnFolder.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Folder_24;
-			this.btnFolder.Location = new System.Drawing.Point(203, 323);
-			this.btnFolder.Name = "btnFolder";
-			this.btnFolder.Size = new System.Drawing.Size(52, 34);
-			this.btnFolder.TabIndex = 6;
-			this.btnFolder.UseVisualStyleBackColor = true;
-			this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
-			// 
 			// panel2
 			// 
 			this.panel2.Controls.Add(this.txbExitColor);
@@ -590,6 +578,18 @@
 			this.lblExitColor.Name = "lblExitColor";
 			this.lblExitColor.Size = new System.Drawing.Size(56, 26);
 			this.lblExitColor.TabIndex = 25;
+			// 
+			// btnFolder
+			// 
+			this.btnFolder.FlatAppearance.BorderColor = System.Drawing.Color.White;
+			this.btnFolder.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.btnFolder.Image = global::ZrTBMCodeForTestItem.ccMain.Properties.Resources.Folder_24;
+			this.btnFolder.Location = new System.Drawing.Point(203, 323);
+			this.btnFolder.Name = "btnFolder";
+			this.btnFolder.Size = new System.Drawing.Size(52, 34);
+			this.btnFolder.TabIndex = 6;
+			this.btnFolder.UseVisualStyleBackColor = true;
+			this.btnFolder.Click += new System.EventHandler(this.btnFolder_Click);
 			// 
 			// tabPage2
 			// 

@@ -4,3 +4,9 @@ E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\bin\Debug\System.ValueTup
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExtend.csprojResolveAssemblyReference.cache
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExtend.dll
 E:\zsb\vs2017 projects\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExtend.pdb
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccExternal\bin\Debug\ccExtend.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccExternal\bin\Debug\ccExtend.pdb
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccExternal\bin\Debug\System.ValueTuple.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExtend.csprojResolveAssemblyReference.cache
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExtend.dll
+E:\zsb\vs2017 projects\201701+\ZrTBMCodeForTestItem\ccExternal\obj\Debug\ccExtend.pdb
